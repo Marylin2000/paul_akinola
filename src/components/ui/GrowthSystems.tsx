@@ -29,7 +29,7 @@ export default function GrowthSystems() {
   const tabs = [
     { id: "plg-motion", label: "PLG Motion" },
     { id: "lifecycle", label: "Lifecycle Nurture" },
-    { id: "scoring", label: "Scoring Models" },
+    { id: "scoring", label: "Scoring Models " },
     { id: "experiments", label: "Experiments" },
     { id: "community", label: "Community PLG" },
   ];
