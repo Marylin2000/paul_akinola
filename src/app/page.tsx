@@ -6,9 +6,11 @@ import Hero from "@/components/ui/Hero";
 import AppliedAI from "@/components/ui/AppliedAi";
 import FeaturedProjects from "@/components/ui/FeaturedProjects";
 import GrowthSystems from "@/components/ui/GrowthSystems";
-import GTMSystems from "@/components/ui/GMTSystems";
-import ExpansionStrategy from "@/components/ui/ExpasionStrategy";
+import GTMSystems from "@/components/ui/GTMSystems";
+import ExpansionStrategy from "@/components/ui/ExpansionStrategy";
 import Infrastructure from "@/components/ui/Infrastructure";
+import ToolsTemplates from "@/components/ui/ToolsTemplates";
+import AboutContact from "@/components/ui/AboutContact";
 import Footer from "@/components/ui/Footer";
 import Blog from "@/components/ui/Blog";
 
@@ -23,7 +25,9 @@ export default function Home() {
       <ExpansionStrategy />
       <Infrastructure />
       <AppliedAI />
+      <ToolsTemplates />
       <Blog />
+      <AboutContact />
       <Footer />
     </main>
   );

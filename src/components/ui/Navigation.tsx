@@ -29,8 +29,8 @@ export default function Navigation() {
                   "Expansion",
                   "Infrastructure",
                   "Applied AI",
+                  "Tools & Templates",
                   "Blog",
-                  "Tools",
                   "About",
                 ].map((item) => (
                   <button
