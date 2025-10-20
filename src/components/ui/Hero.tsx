@@ -24,8 +24,8 @@ export default function Hero() {
         className="absolute top-1/2 left-1/2 w-64 h-64 bg-accent/15 rounded-full blur-3xl animate-pulse-slow"
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative container-responsive section-padding">
+        <div className="grid-responsive-2 items-center">
           {/* Left Column - Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -38,17 +38,18 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-sm font-medium mb-8"
+              className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-primary to-secondary text-white text-xs sm:text-sm font-medium mb-6 sm:mb-8"
             >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Available for Consulting & Projects
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+              <span className="hidden sm:inline">Available for Consulting & Projects</span>
+              <span className="sm:hidden">Available for Projects</span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 leading-tight"
             >
               <span className="text-gradient block">Paul</span>
               <span className="text-gradient block">Akinola</span>
@@ -58,7 +59,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-2xl md:text-3xl font-light text-gray-600 dark:text-gray-300 mb-8"
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-gray-600 dark:text-gray-300 mb-6 sm:mb-8"
             >
               Growth Systems <span className="text-primary">+</span> GTM
               Architect
@@ -68,7 +69,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="text-lg text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-2xl"
+              className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 mb-8 sm:mb-12 leading-relaxed max-w-2xl"
             >
               Expertise in{" "}
               <span className="text-primary font-semibold">PLG motion</span>,{" "}
@@ -87,18 +88,18 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="grid grid-cols-3 gap-6 mb-12"
+              className="grid grid-cols-3 gap-3 sm:gap-6 mb-8 sm:mb-12"
             >
               {[
                 { number: "7+", label: "Years Experience", icon: Target },
                 { number: "50+", label: "Projects", icon: Zap },
                 { number: "25+", label: "Companies", icon: Rocket },
-              ].map((stat, index) => (
+              ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <div className="text-2xl md:text-3xl font-black text-gradient mb-2">
+                  <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-gradient mb-1 sm:mb-2">
                     {stat.number}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                     {stat.label}
                   </div>
                 </div>
@@ -110,15 +111,17 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
-              <button className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group">
-                <Rocket className="mr-2 w-5 h-5 group-hover:animate-bounce" />
-                Explore Portfolio
+              <button className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white btn-responsive rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group">
+                <Rocket className="mr-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:animate-bounce" />
+                <span className="hidden sm:inline">Explore Portfolio</span>
+                <span className="sm:hidden">Portfolio</span>
               </button>
-              <button className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all transform hover:scale-105 flex items-center justify-center group">
-                <Mail className="mr-2 w-5 h-5 group-hover:scale-110" />
-                Get in Touch
+              <button className="border-2 border-primary text-primary hover:bg-primary hover:text-white btn-responsive rounded-xl font-semibold transition-all transform hover:scale-105 flex items-center justify-center group">
+                <Mail className="mr-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110" />
+                <span className="hidden sm:inline">Get in Touch</span>
+                <span className="sm:hidden">Contact</span>
               </button>
             </motion.div>
           </motion.div>
