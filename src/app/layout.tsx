@@ -4,11 +4,15 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
+import { Playfair_Display, Outfit } from "next/font/google";
+
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "Paul Akinola - Growth Systems & GTM Architect",
-  description: "Expert in PLG motion, GTM systems, data infrastructure, and applied AI. Building scalable growth engines that transform customer acquisition, activation, and expansion.",
-  keywords: "growth systems, GTM architect, PLG motion, MarVis AI, signal routing, product-led growth, customer expansion, data infrastructure, attribution modeling",
+  title: "Paul Akinola | Systems at Work and in Life",
+  description: "Explore how systems shape performance, growth, identity, faith, and meaning. Work, Inner Life, Thoughts, and practical stories from Paul Akinola.",
+  keywords: "growth systems, performance, identity, faith, meaning, work life, inner life, transformation, clarity",
   authors: [{ name: "Paul Akinola" }],
   creator: "Paul Akinola",
   publisher: "Paul Akinola",
@@ -17,8 +21,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Paul Akinola - Growth Systems & GTM Architect",
-    description: "Expert in PLG motion, GTM systems, data infrastructure, and applied AI. Building scalable growth engines that transform customer acquisition, activation, and expansion.",
+    title: "Paul Akinola | Systems at Work and in Life",
+    description: "Explore how systems shape performance, growth, identity, faith, and meaning. Work, Inner Life, Thoughts, and practical stories from Paul Akinola.",
     url: "https://paulakinola.com",
     siteName: "Paul Akinola Portfolio",
     images: [
@@ -34,8 +38,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Paul Akinola - Growth Systems & GTM Architect",
-    description: "Expert in PLG motion, GTM systems, data infrastructure, and applied AI.",
+    title: "Paul Akinola | Systems at Work and in Life",
+    description: "Explore how systems shape performance, growth, identity, faith, and meaning.",
     images: ["/images/og-image.png"],
     creator: "@paulakinola",
   },
@@ -62,7 +66,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="anntialiased bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      <body className={`${playfair.variable} ${outfit.variable} font-sans antialiased bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 transition-colors duration-500`}>
 
         <ThemeProvider>
           

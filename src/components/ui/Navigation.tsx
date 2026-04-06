@@ -13,13 +13,9 @@ export default function Navigation() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "Growth Systems", href: "/growth-systems" },
-    { name: "GTM Systems", href: "/gtm-systems" },
-    { name: "Expansion", href: "/expansion-strategy" },
-    { name: "Infrastructure", href: "/infrastructure" },
-    { name: "Applied AI", href: "/applied-ai" },
-    { name: "Tools & Templates", href: "/tools-templates" },
-    { name: "Blog", href: "/blog" },
+    { name: "Work", href: "/work" },
+    { name: "Inner Life", href: "/inner-life" },
+    { name: "Thoughts", href: "/thoughts" },
     { name: "About", href: "/about" },
   ];
 
@@ -45,7 +41,7 @@ export default function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-700 z-50"
+        className="fixed top-0 left-0 right-0 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-gray-200 dark:border-stone-700 z-50"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -62,7 +58,7 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-500 dark:text-gray-300 hover:text-primary px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800"
+                  className="text-gray-500 dark:text-gray-300 hover:text-primary px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-stone-800"
                 >
                   {item.name}
                 </Link>
@@ -73,7 +69,7 @@ export default function Navigation() {
             <div className="flex items-center space-x-2 sm:space-x-4">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-stone-800 transition-colors"
                 aria-label="Toggle theme"
               >
                 {theme === "light" ? (
@@ -84,18 +80,18 @@ export default function Navigation() {
               </button>
 
               <Link
-                href="/contact"
+                href="/work-together"
                 className="hidden sm:flex bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-colors items-center"
               >
                 <Mail className="w-4 h-4 mr-2" />
-                <span className="hidden md:inline">Get in Touch</span>
+                <span className="hidden md:inline">Start a Conversation</span>
                 <span className="md:hidden">Contact</span>
               </Link>
 
               {/* Mobile menu button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-stone-800 transition-colors"
                 aria-label="Toggle mobile menu"
               >
                 {isMobileMenuOpen ? (
@@ -128,11 +124,11 @@ export default function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white dark:bg-slate-900 shadow-2xl z-50 lg:hidden"
+              className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white dark:bg-stone-900 shadow-2xl z-50 lg:hidden"
             >
               <div className="flex flex-col h-full">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700">
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-stone-700">
                   <Link 
                     href="/" 
                     className="text-2xl font-bold text-gradient"
@@ -142,7 +138,7 @@ export default function Navigation() {
                   </Link>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-stone-800 transition-colors"
                   >
                     <X className="w-6 h-6" />
                   </button>
@@ -161,7 +157,7 @@ export default function Navigation() {
                         <Link
                           href={item.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center w-full px-4 py-3 text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                          className="flex items-center w-full px-4 py-3 text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-100 dark:hover:bg-stone-800 rounded-lg transition-colors"
                         >
                           {item.name}
                         </Link>
@@ -171,14 +167,14 @@ export default function Navigation() {
                 </div>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-gray-200 dark:border-slate-700">
+                <div className="p-6 border-t border-gray-200 dark:border-stone-700">
                   <Link
-                    href="/contact"
+                    href="/work-together"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center justify-center w-full bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-lg font-medium transition-colors"
                   >
                     <Mail className="w-4 h-4 mr-2" />
-                    Get in Touch
+                    Start a Conversation
                   </Link>
                 </div>
               </div>

@@ -114,7 +114,7 @@ export default function AppliedAI() {
   return (
     <section
       id="applied-ai"
-      className="py-20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-900"
+      className="py-20 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-stone-800 dark:to-stone-900"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -124,7 +124,7 @@ export default function AppliedAI() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 font-serif">
             Applied AI in GTM
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -140,7 +140,7 @@ export default function AppliedAI() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <div className="bg-white dark:bg-slate-800 p-12 rounded-3xl shadow-2xl">
+          <div className="bg-white dark:bg-stone-800 p-12 rounded-3xl shadow-2xl">
             <motion.h3
               className="text-3xl font-bold mb-8 text-center flex items-center justify-center"
               initial={{ opacity: 0 }}
@@ -170,14 +170,14 @@ export default function AppliedAI() {
                     isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
                   }
                   transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
-                  className={`bg-gradient-to-br ${capability.gradient} dark:from-slate-700 dark:to-slate-600 p-8 rounded-2xl`}
+                  className={`bg-gradient-to-br ${capability.gradient} dark:from-stone-700 dark:to-stone-600 p-8 rounded-2xl`}
                 >
                   <div
                     className={`w-16 h-16 bg-${capability.color} rounded-2xl flex items-center justify-center mb-6 mx-auto`}
                   >
                     <capability.icon className="text-white text-2xl" />
                   </div>
-                  <h4 className="text-xl font-bold mb-4 text-center">
+                  <h4 className="text-xl font-bold mb-4 text-center font-serif">
                     {capability.title}
                   </h4>
                   <p className="text-gray-600 dark:text-gray-300 text-center mb-4">
@@ -204,7 +204,7 @@ export default function AppliedAI() {
               {aiResults.map((result, index) => (
                 <div
                   key={result.label}
-                  className="text-center p-6 bg-blue-50 dark:bg-slate-700 rounded-2xl"
+                  className="text-center p-6 bg-blue-50 dark:bg-stone-700 rounded-2xl"
                 >
                   <div
                     className={`text-3xl font-black text-${result.color} mb-2`}
@@ -227,9 +227,9 @@ export default function AppliedAI() {
               initial={{ opacity: 0, x: -30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl"
+              className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl"
             >
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
+              <h3 className="text-2xl font-bold mb-6 flex items-center font-serif">
                 <Code className="text-primary mr-3" />
                 Prompt Libraries & Templates
               </h3>
@@ -241,7 +241,7 @@ export default function AppliedAI() {
                 {promptLibraries.map((library, index) => (
                   <div
                     key={library.category}
-                    className="border border-gray-200 dark:border-slate-600 rounded-xl p-4"
+                    className="border border-gray-200 dark:border-stone-600 rounded-xl p-4"
                   >
                     <h4 className={`font-semibold mb-2 text-${library.color}`}>
                       {library.category}
@@ -249,7 +249,7 @@ export default function AppliedAI() {
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
                       {library.description}
                     </p>
-                    <code className="text-xs bg-gray-100 dark:bg-slate-700 px-2 py-1 rounded">
+                    <code className="text-xs bg-gray-100 dark:bg-stone-700 px-2 py-1 rounded">
                       {library.count}
                     </code>
                   </div>
@@ -261,9 +261,9 @@ export default function AppliedAI() {
               initial={{ opacity: 0, x: -30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 1 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl"
+              className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl"
             >
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
+              <h3 className="text-2xl font-bold mb-6 flex items-center font-serif">
                 <Sparkles className="text-warning mr-3" />
                 GPT-Scoring Integration
               </h3>
@@ -287,7 +287,7 @@ export default function AppliedAI() {
                 ].map((metric) => (
                   <div
                     key={metric.label}
-                    className={`flex items-center justify-between p-4 bg-${metric.color}-50 dark:bg-slate-700 rounded-xl`}
+                    className={`flex items-center justify-between p-4 bg-${metric.color}-50 dark:bg-stone-700 rounded-xl`}
                   >
                     <span className="font-medium">{metric.label}</span>
                     <span className={`text-xl font-bold text-${metric.color}`}>
@@ -305,9 +305,9 @@ export default function AppliedAI() {
               initial={{ opacity: 0, x: 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl"
+              className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl"
             >
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
+              <h3 className="text-2xl font-bold mb-6 flex items-center font-serif">
                 <Wand2 className="text-secondary mr-3" />
                 AI-Generated GTM Actions
               </h3>
@@ -319,9 +319,9 @@ export default function AppliedAI() {
                 {aiActions.map((action, index) => (
                   <div
                     key={action.title}
-                    className={`bg-gradient-to-r ${action.gradient} dark:from-slate-700 dark:to-slate-600 p-6 rounded-xl`}
+                    className={`bg-gradient-to-r ${action.gradient} dark:from-stone-700 dark:to-stone-600 p-6 rounded-xl`}
                   >
-                    <h4 className="font-bold mb-3 flex items-center">
+                    <h4 className="font-bold mb-3 flex items-center font-serif">
                       <action.icon className="w-5 h-5 mr-2" />
                       {action.title}
                     </h4>
@@ -341,16 +341,16 @@ export default function AppliedAI() {
               initial={{ opacity: 0, x: 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
               transition={{ duration: 0.6, delay: 1 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl"
+              className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl"
             >
-              <h3 className="text-2xl font-bold mb-6 flex items-center">
+              <h3 className="text-2xl font-bold mb-6 flex items-center font-serif">
                 <Lightbulb className="text-accent mr-3" />
                 Before & After Examples
               </h3>
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-                    <h4 className="font-semibold text-red-700 dark:text-red-300 mb-2">
+                    <h4 className="font-semibold text-red-700 dark:text-red-300 mb-2 font-serif">
                       Before AI
                     </h4>
                     <div className="space-y-2 text-sm">
@@ -363,7 +363,7 @@ export default function AppliedAI() {
                     </div>
                   </div>
                   <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
-                    <h4 className="font-semibold text-green-700 dark:text-green-300 mb-2">
+                    <h4 className="font-semibold text-green-700 dark:text-green-300 mb-2 font-serif">
                       After AI
                     </h4>
                     <div className="space-y-2 text-sm">
@@ -376,7 +376,7 @@ export default function AppliedAI() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-700 dark:to-slate-600 p-4 rounded-xl">
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-stone-700 dark:to-stone-600 p-4 rounded-xl">
                   <div className="flex items-center">
                     <CheckCircle className="w-5 h-5 text-purple-500 mr-2" />
                     <span className="text-sm font-medium">

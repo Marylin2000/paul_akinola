@@ -46,7 +46,7 @@ export default function FeaturedProjects() {
   return (
     <section
       id="featured-projects"
-      className="py-20 bg-white dark:bg-slate-900"
+      className="py-20 bg-white dark:bg-stone-900"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -56,7 +56,7 @@ export default function FeaturedProjects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 font-serif">
             Featured Projects
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -72,7 +72,7 @@ export default function FeaturedProjects() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className={`group bg-gradient-to-br ${project.gradient} dark:from-slate-800 dark:to-slate-700 p-8 rounded-2xl border border-gray-200 dark:border-slate-600 hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
+              className={`group bg-gradient-to-br ${project.gradient} dark:from-stone-800 dark:to-stone-700 p-8 rounded-2xl border border-gray-200 dark:border-stone-600 hover:shadow-xl transition-all duration-300 transform hover:scale-105`}
             >
               <div className="flex items-center mb-6">
                 <div
@@ -80,7 +80,7 @@ export default function FeaturedProjects() {
                 >
                   <project.icon className="text-white text-xl" />
                 </div>
-                <h3 className="text-2xl font-bold">{project.title}</h3>
+                <h3 className="text-2xl font-bold font-serif">{project.title}</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                 {project.description}

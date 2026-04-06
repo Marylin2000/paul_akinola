@@ -9,7 +9,7 @@ export default function Hero() {
   const parallaxOffset = useParallax(0.3);
 
   return (
-    <section className="pt-16 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-purple-900 relative overflow-hidden">
+    <section className="pt-16 min-h-screen bg-gradient-to-br from-stone-50 via-blue-50 to-purple-50 dark:from-stone-900 dark:via-stone-800 dark:to-purple-900 relative overflow-hidden">
       {/* Enhanced Parallax Background Elements */}
       <motion.div
         style={{ y: parallaxOffset * 0.5 }}
@@ -162,7 +162,7 @@ export default function Hero() {
 
               {/* Outer Glass Ring with 3D depth */}
               <div
-                className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 to-white/10 dark:from-slate-700/40 dark:to-slate-800/10 blur-sm scale-105"
+                className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 to-white/10 dark:from-stone-700/40 dark:to-stone-800/10 blur-sm scale-105"
                 style={{
                   transform: "translateZ(-20px)",
                   boxShadow:
@@ -386,7 +386,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -transtone-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}

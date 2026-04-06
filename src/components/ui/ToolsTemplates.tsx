@@ -69,7 +69,7 @@ export default function ToolsTemplates() {
   return (
     <section
       id="tools-templates"
-      className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+      className="py-20 bg-gradient-to-br from-stone-50 to-blue-50 dark:from-stone-900 dark:to-stone-800"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -79,7 +79,7 @@ export default function ToolsTemplates() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 font-serif">
             Tools & Templates
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -96,14 +96,14 @@ export default function ToolsTemplates() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl"
+              className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl"
             >
               <div className={`w-12 h-12 bg-${tool.color}-500 rounded-2xl flex items-center justify-center mb-6`}>
                 <tool.icon className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4">{tool.title}</h3>
+              <h3 className="text-xl font-bold mb-4 font-serif">{tool.title}</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-6">{tool.description}</p>
-              <div className="bg-blue-50 dark:bg-slate-700 p-4 rounded-lg mb-6">
+              <div className="bg-blue-50 dark:bg-stone-700 p-4 rounded-lg mb-6">
                 <p className="text-sm font-semibold text-primary">{tool.metrics}</p>
               </div>
               <button className={`w-full bg-${tool.color}-500 hover:bg-${tool.color}-600 text-white px-6 py-3 rounded-xl font-semibold transition-all flex items-center justify-center`}>
@@ -119,9 +119,9 @@ export default function ToolsTemplates() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl mb-12"
+          className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl mb-12"
         >
-          <h3 className="text-2xl font-bold mb-6 text-center">Resource Impact</h3>
+          <h3 className="text-2xl font-bold mb-6 text-center font-serif">Resource Impact</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               { metric: "6,000+", label: "Total Downloads", icon: Download, color: "blue" },

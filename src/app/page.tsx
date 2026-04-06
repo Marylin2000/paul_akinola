@@ -1,30 +1,28 @@
 // app/page.tsx
 "use client";
 
-import Hero from "@/components/ui/Hero";
-import StructuredData from "@/components/StructuredData";
-import AppliedAI from "@/components/ui/AppliedAi";
-import FeaturedProjects from "@/components/ui/FeaturedProjects";
-import GrowthSystems from "@/components/ui/GrowthSystems";
-import GTMSystems from "@/components/ui/GTMSystems";
-import ExpansionStrategy from "@/components/ui/ExpansionStrategy";
-import Infrastructure from "@/components/ui/Infrastructure";
-import ToolsTemplates from "@/components/ui/ToolsTemplates";
-import Blog from "@/components/ui/Blog";
+import Hero from "@/components/home/Hero";
+import CoreLens from "@/components/home/CoreLens";
+import WhatIDo from "@/components/home/WhatIDo";
+import Recognition from "@/components/home/Recognition";
+import PathSplit from "@/components/home/PathSplit";
+import StoriesPreview from "@/components/home/StoriesPreview";
+import ThoughtsPreview from "@/components/home/ThoughtsPreview";
+import PersonalAnchor from "@/components/home/PersonalAnchor";
+import WorkTogetherPreview from "@/components/home/WorkTogetherPreview";
 
 export default function Home() {
   return (
-    <main className="bg-white dark:bg-slate-900 text-gray-900 dark:text-white transition-colors duration-300">
-      <StructuredData />
+    <main className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
       <Hero />
-      <FeaturedProjects />
-      <GrowthSystems />
-      <GTMSystems />
-      <ExpansionStrategy />
-      <Infrastructure />
-      <AppliedAI />
-      <ToolsTemplates />
-      <Blog />
+      <CoreLens />
+      <WhatIDo />
+      <Recognition />
+      <PathSplit />
+      <StoriesPreview />
+      <ThoughtsPreview />
+      <PersonalAnchor />
+      <WorkTogetherPreview />
     </main>
   );
 }

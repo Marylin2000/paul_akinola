@@ -89,7 +89,7 @@ export default function Blog() {
       : blogPosts.filter((post) => post.category.includes(activeFilter));
 
   return (
-    <section id="blog" className="py-20 bg-white dark:bg-slate-900">
+    <section id="blog" className="py-20 bg-white dark:bg-stone-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -98,7 +98,7 @@ export default function Blog() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 font-serif">
             Latest Insights
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -121,7 +121,7 @@ export default function Blog() {
               className={`px-6 py-3 rounded-full font-medium transition-all ${
                 activeFilter === filter.id
                   ? "bg-primary text-white shadow-lg"
-                  : "text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-slate-800"
+                  : "text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-stone-800"
               }`}
             >
               {filter.label}
@@ -143,7 +143,7 @@ export default function Blog() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              className="bg-white dark:bg-stone-800 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
               <div
                 className={`h-48 bg-gradient-to-br ${post.gradient} relative`}
@@ -157,7 +157,7 @@ export default function Blog() {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 hover:text-primary transition-colors cursor-pointer">
+                <h3 className="text-xl font-bold mb-3 hover:text-primary transition-colors cursor-pointer font-serif">
                   {post.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">

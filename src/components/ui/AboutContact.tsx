@@ -85,7 +85,7 @@ export default function AboutContact() {
   return (
     <section
       id="about-contact"
-      className="py-20 bg-white dark:bg-slate-900"
+      className="py-20 bg-white dark:bg-stone-900"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -95,7 +95,7 @@ export default function AboutContact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 font-serif">
             About Paul Akinola
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -112,7 +112,7 @@ export default function AboutContact() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-1"
           >
-            <div className="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-800 dark:to-slate-700 p-8 rounded-2xl shadow-xl">
+            <div className="bg-gradient-to-br from-stone-50 to-blue-50 dark:from-stone-800 dark:to-stone-700 p-8 rounded-2xl shadow-xl">
               <div className="text-center mb-8">
                 <div className="w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-full mx-auto mb-6 flex items-center justify-center">
                   <img
@@ -121,7 +121,7 @@ export default function AboutContact() {
                     className="w-28 h-28 rounded-full object-cover"
                   />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Paul Akinola</h3>
+                <h3 className="text-2xl font-bold mb-2 font-serif">Paul Akinola</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   Growth Systems + GTM Architect
                 </p>
@@ -134,7 +134,7 @@ export default function AboutContact() {
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {stats.map((stat) => (
-                  <div key={stat.label} className="text-center p-4 bg-white dark:bg-slate-800 rounded-xl">
+                  <div key={stat.label} className="text-center p-4 bg-white dark:bg-stone-800 rounded-xl">
                     <div className="text-2xl font-bold text-primary mb-1">{stat.number}</div>
                     <div className="text-xs text-gray-600 dark:text-gray-300">{stat.label}</div>
                   </div>
@@ -151,7 +151,7 @@ export default function AboutContact() {
                   <a
                     key={contact.label}
                     href={contact.href}
-                    className="flex items-center p-3 bg-white dark:bg-slate-800 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors group"
+                    className="flex items-center p-3 bg-white dark:bg-stone-800 rounded-lg hover:bg-gray-50 dark:hover:bg-stone-700 transition-colors group"
                   >
                     <contact.icon className="w-5 h-5 text-gray-400 group-hover:text-primary mr-3" />
                     <span className="text-sm">{contact.label}</span>
@@ -169,8 +169,8 @@ export default function AboutContact() {
             className="lg:col-span-2 space-y-8"
           >
             {/* Bio */}
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl">
-              <h4 className="text-2xl font-bold mb-6">Professional Background</h4>
+            <div className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl">
+              <h4 className="text-2xl font-bold mb-6 font-serif">Professional Background</h4>
               <div className="prose dark:prose-invert max-w-none">
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
                   Paul Akinola is a Growth Systems and GTM Architect with over 7 years of experience 
@@ -194,12 +194,12 @@ export default function AboutContact() {
             </div>
 
             {/* Skills */}
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl">
-              <h4 className="text-2xl font-bold mb-6">Core Competencies</h4>
+            <div className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl">
+              <h4 className="text-2xl font-bold mb-6 font-serif">Core Competencies</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {skills.map((skill) => (
                   <div key={skill.category}>
-                    <h5 className="font-semibold mb-3 text-primary">{skill.category}</h5>
+                    <h5 className="font-semibold mb-3 text-primary font-serif">{skill.category}</h5>
                     <div className="space-y-2">
                       {skill.technologies.map((tech) => (
                         <div key={tech} className="flex items-center text-sm">
@@ -222,16 +222,16 @@ export default function AboutContact() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
-          <h3 className="text-3xl font-bold mb-8 text-center">Professional Experience</h3>
+          <h3 className="text-3xl font-bold mb-8 text-center font-serif">Professional Experience</h3>
           <div className="space-y-8">
             {experience.map((exp, index) => (
-              <div key={exp.role} className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl">
+              <div key={exp.role} className="bg-white dark:bg-stone-800 p-8 rounded-2xl shadow-xl">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <div>
-                    <h4 className="text-xl font-bold">{exp.role}</h4>
+                    <h4 className="text-xl font-bold font-serif">{exp.role}</h4>
                     <p className="text-gray-600 dark:text-gray-300">{exp.company}</p>
                   </div>
-                  <span className="text-sm text-gray-500 bg-gray-100 dark:bg-slate-700 px-3 py-1 rounded-full mt-2 md:mt-0">
+                  <span className="text-sm text-gray-500 bg-gray-100 dark:bg-stone-700 px-3 py-1 rounded-full mt-2 md:mt-0">
                     {exp.period}
                   </span>
                 </div>
@@ -256,14 +256,14 @@ export default function AboutContact() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mb-16"
         >
-          <h3 className="text-3xl font-bold mb-8 text-center">Certifications & Credentials</h3>
+          <h3 className="text-3xl font-bold mb-8 text-center font-serif">Certifications & Credentials</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {certifications.map((cert) => (
-              <div key={cert.name} className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg">
+              <div key={cert.name} className="bg-white dark:bg-stone-800 p-6 rounded-xl shadow-lg">
                 <div className="flex items-center">
                   <Award className="w-8 h-8 text-yellow-500 mr-4" />
                   <div>
-                    <h4 className="font-semibold">{cert.name}</h4>
+                    <h4 className="font-semibold font-serif">{cert.name}</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-300">{cert.issuer} • {cert.year}</p>
                   </div>
                 </div>
@@ -279,7 +279,7 @@ export default function AboutContact() {
           transition={{ duration: 0.6, delay: 1 }}
           className="bg-gradient-to-r from-primary to-secondary p-8 rounded-2xl text-white text-center"
         >
-          <h3 className="text-3xl font-bold mb-4">Let's Build Something Great Together</h3>
+          <h3 className="text-3xl font-bold mb-4 font-serif">Let's Build Something Great Together</h3>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
             Ready to transform your growth systems? Let's discuss how we can accelerate your 
             revenue operations and build scalable GTM architecture.

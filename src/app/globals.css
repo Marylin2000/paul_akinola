@@ -1,98 +1,72 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #EA2264;
-  --secondary: #F78D60;
-  --accent: #bb25b3;
-  --warning: #C5172E;
-}
-
-
 @custom-variant dark (&:where(.dark, .dark *));
-
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-primary:var(--primary);
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
-  --color-warning:var(--warning);
+}
+
+:root {
+  --background: #FAFAF9; /* stone-50 */
+  --foreground: #1C1917; /* stone-900 */
+  --primary: #9A3412; /* rich terracotta / burnt orange */
+  --secondary: #A8A29E; /* warm grey / stone-400 */
+  --accent: #57534E; /* deeper stone */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0C0A09; /* stone-950 */
+    --foreground: #F5F5F4; /* stone-100 */
+    --primary: #C2410C; /* vibrant terracotta */
+    --secondary: #78716C; /* stone-500 */
+    --accent: #D6D3D1; /* stone-300 */
   }
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif);
+}
 
 @layer base {
-  * {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  
   html {
     scroll-behavior: smooth;
   }
   
   /* Mobile-first responsive base styles */
   h1, .h1 {
-    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight font-serif;
   }
   
   h2, .h2 {
-    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight font-serif;
   }
   
   h3, .h3 {
-    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight;
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight font-serif;
   }
   
   p, .body-text {
-    @apply text-sm sm:text-base md:text-lg leading-relaxed;
+    @apply text-base sm:text-lg leading-relaxed font-sans font-light;
   }
   
   /* Container utilities */
   .container-responsive {
-    @apply w-full px-4 sm:px-6 lg:px-8 mx-auto;
-    max-width: 1280px;
-  }
-  
-  /* Padding utilities */
-  .section-padding {
-    @apply py-12 sm:py-16 md:py-20 lg:py-24;
-  }
-  
-  .content-padding {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-  
-  /* Grid utilities */
-  .grid-responsive {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8;
-  }
-  
-  .grid-responsive-2 {
-    @apply grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12;
-  }
-  
-  /* Button utilities */
-  .btn-responsive {
-    @apply px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base;
+    @apply w-full px-6 sm:px-8 lg:px-12 mx-auto;
+    max-width: 1400px;
   }
   
   /* Hidden scrollbar */
@@ -107,78 +81,22 @@ body {
 }
 
 @layer components {
+  /* Elegant soft text mask */
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    @apply text-stone-900 dark:text-stone-100;
+  }
+
+  /* Quiet organic shadows instead of harsh drop shadows */
+  .organic-shadow {
+    box-shadow: 0 4px 40px -4px rgba(28, 25, 23, 0.08);
   }
   
-  .glass-effect {
-    @apply backdrop-blur-md bg-white/10 dark:bg-black/20;
-  }
-  
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .animate-pulse-slow {
-    animation: pulse 3s infinite;
+  .dark .organic-shadow {
+    box-shadow: 0 4px 40px -4px rgba(0, 0, 0, 0.4);
   }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-/* Add to your globals.css */
-@layer components {
-  .text-gradient {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
-  }
-
-  .glass-bubble {
-    background: linear-gradient(135deg, 
-      rgba(197, 13, 13, 0.705) 0%, 
-      rgba(255, 255, 255, 0.05) 100%);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-      0 8px 32px 0 rgba(31, 38, 135, 0.37),
-      inset 0 4px 8px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .dark .glass-bubble {
-    background: linear-gradient(135deg, 
-      rgba(0, 0, 0, 0.1) 0%, 
-      rgba(0, 0, 0, 0.05) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-}
-
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Enhanced floating animation */
-@keyframes float-3d {
-  0%, 100% { 
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg); 
-  }
-  33% { 
-    transform: translateY(-10px) rotateX(5deg) rotateY(2deg); 
-  }
-  66% { 
-    transform: translateY(-5px) rotateX(-2deg) rotateY(5deg); 
-  }
-}
-
-.animate-float-3d {
-  animation: float-3d 6s ease-in-out infinite;
-  transform-style: preserve-3d;
-  perspective: 1000px;
+/* Subtly textured background */
+.bg-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
