@@ -55,7 +55,7 @@ export default function ThoughtsPreview() {
             >
               <Link 
                 href={thought.destination}
-                className="group block h-full py-2 group"
+                className="group block h-full py-2"
               >
                 <div className="text-sm tracking-widest text-stone-400 dark:text-stone-500 mb-3">
                   {thought.category}
@@ -68,7 +68,7 @@ export default function ThoughtsPreview() {
                 </p>
                 <div className="flex items-center text-sm font-medium text-stone-900 dark:text-white pb-2 border-b border-transparent group-hover:border-stone-900 dark:group-hover:border-white inline-flex transition-colors">
                   Read more
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:transtone-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             </motion.div>
