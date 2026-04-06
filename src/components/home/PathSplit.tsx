@@ -63,7 +63,7 @@ export default function PathSplit() {
                   </p>
                   <div className="flex items-center text-primary font-medium">
                     {path.ctaLabel}
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:transtone-x-2 transition-transform duration-300" />
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                   </div>
                 </Link>
               </motion.div>

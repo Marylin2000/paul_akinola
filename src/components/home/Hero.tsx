@@ -35,12 +35,17 @@ export default function Hero() {
             </div>
 
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-serif font-medium leading-[1.1] text-stone-900 dark:text-stone-50 mb-8 md:mb-12 font-serif">
-              See what is <span className="italic font-light text-primary">shaping</span> your results.
+        
+              
+              
+              When
+              
+              
+               <span className="italic font-light text-primary">{" "}something</span> isn't adding up.
             </h1>
 
             <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-300 mb-12 max-w-lg leading-relaxed font-light">
-              Explore how underlying systems structure your performance, decisions, resilience, and personal transformation.
-            </p>
+Most outcomes are driven by systems you may not fully see yet. I help individuals, teams, and organisations understand those systems more clearly so they can move with better judgment, clearer direction, and stronger outcomes.            </p>
 
             <div className="flex flex-col sm:flex-row gap-6">
               <Link 
@@ -68,7 +73,7 @@ export default function Hero() {
             className="lg:col-span-6 flex justify-center lg:justify-end relative"
           >
             {/* Elegant Image Frame */}
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-[3/4] organic-shadow rounded-[2rem] overflow-hidden bg-stone-200 dark:bg-stone-800 isolate">
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-[3/3] organic-shadow rounded-[2rem] overflow-hidden bg-stone-200 dark:bg-stone-800 isolate">
               <img
                 src="/images/3.png"
                 alt="Paul Akinola portrait"

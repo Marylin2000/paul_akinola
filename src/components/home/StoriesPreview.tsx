@@ -65,7 +65,7 @@ export default function StoriesPreview() {
             >
               <Link 
                 href={story.ctaDestination}
-                className="group flex flex-col h-full bg-white dark:bg-stone-900 rounded-2xl p-8 border border-stone-200 dark:border-stone-800 transition-all hover:shadow-lg hover:-transtone-y-1"
+                className="group flex flex-col h-full bg-white dark:bg-stone-900 rounded-2xl p-8 border border-stone-200 dark:border-stone-800 transition-all hover:shadow-lg hover:-translate-y-1"
               >
                 <div className="text-xs uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-6 font-semibold">
                   {story.type} Story
@@ -78,7 +78,7 @@ export default function StoriesPreview() {
                 </p>
                 <div className="flex items-center text-sm font-medium text-stone-900 dark:text-white group-hover:text-primary transition-colors">
                   {story.ctaLabel}
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:transtone-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             </motion.div>
