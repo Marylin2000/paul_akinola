@@ -155,9 +155,7 @@ export default function WhatIDo() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs sm:text-sm font-sans tracking-[0.2em] uppercase text-stone-500 dark:text-stone-400 mb-4">
-            What I do
-          </p>
+        
           <p className="text-2xl sm:text-3xl text-stone-800 dark:text-stone-100 font-light leading-snug font-serif">
             I help people understand what is shaping their outcomes, at work and
             in life.

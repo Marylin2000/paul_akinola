@@ -51,9 +51,7 @@ export default function Recognition() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto mb-14 max-w-3xl text-center md:mb-16"
         >
-          <p className="mb-4 font-sans text-xs tracking-[0.22em] text-stone-500 uppercase dark:text-stone-400">
-            Recognition
-          </p>
+      
           <h2 className="font-serif text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl md:text-[2.75rem] md:leading-[1.12] dark:text-white">
             <span className="block">Most problems do not start</span>
             <span className="mt-3 block font-light text-stone-700 dark:text-stone-200">

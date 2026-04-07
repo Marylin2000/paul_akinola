@@ -4,12 +4,13 @@ import { useParallax } from "@/hooks/useParallax";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   const parallaxOffset = useParallax(0.15);
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-stone-50 dark:bg-stone-950 pt-24">
+    <section className="relative flex min-h-screen items-center overflow-hidden bg-stone-50 dark:bg-stone-950">
       {/* Base colour wash + texture */}
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-br from-stone-50 via-amber-50/25 to-stone-200/40 dark:from-stone-950 dark:via-stone-950 dark:to-primary/[0.07]"
@@ -81,7 +82,7 @@ export default function Hero() {
               Systems at Work & in Life
             </div>
 
-            <h1 className="mb-8 font-serif text-5xl font-medium leading-[1.1] text-stone-900 dark:text-stone-50 sm:text-6xl md:mb-12 md:text-7xl lg:text-[5rem]">
+            <h1 className="mb-8 font-serif text-3xl font-medium leading-[1.1] text-stone-900 dark:text-stone-50 sm:text-6xl md:mb-12 md:text-7xl lg:text-[5rem]">
               When{" "}
               <span className="bg-gradient-to-r from-primary via-amber-700 to-orange-800 bg-clip-text font-light italic text-transparent dark:from-orange-300 dark:via-primary dark:to-amber-100">
                 something
@@ -90,10 +91,9 @@ export default function Hero() {
             </h1>
 
             <p className="mb-12 max-w-lg text-xl font-light leading-relaxed text-stone-600 dark:text-stone-300 md:text-2xl">
-              Most outcomes are driven by systems you may not fully see yet. I
-              help individuals, teams, and organisations understand those
-              systems more clearly so they can move with better judgment,
-              clearer direction, and stronger outcomes.
+              Most outcomes are being shaped by something beneath the surface.
+
+              I help you see it clearly so you can move with better judgment, stronger direction, and real change
             </p>
 
             <div className="flex flex-col gap-6 sm:flex-row">
@@ -114,68 +114,42 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Right — portrait */}
-          {/* <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative flex justify-center lg:col-span-6 lg:justify-end"
-          >
-            <div className="relative ">
-              <div
-                className="absolute -inset-3 rounded-[2.4rem] bg-gradient-to-br from-primary/30 via-amber-400/15 to-indigo-400/10 opacity-80 blur-2xl dark:from-primary/25 dark:via-orange-900/30 dark:to-indigo-900/25"
-                aria-hidden
-              />
-              <div className="relative rounded-[2rem] bg-gradient-to-br from-primary/35 via-stone-300/50 to-amber-400/30 p-[1px] dark:from-primary/45 dark:via-stone-600/50 dark:to-amber-600/25">
-                <div className="relative  w-full aspect-[3/3] max-w-md overflow-hidden rounded-[1.95rem] bg-stone-200 dark:bg-stone-800 lg:max-w-lg organic-shadow">
-                  <img
-                    src="/images/3.png"
-                    alt="Paul Akinola portrait"
-                    className="absolute inset-0 bg-red-500 h-full w-full object-cover opacity-95 transition-transform duration-[2s] ease-out mix-blend-multiply hover:scale-105 dark:mix-blend-normal"
-                  />
-                  <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-stone-900/45 via-transparent to-stone-900/5 dark:from-black/55 dark:to-transparent" />
-                  <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-transparent via-transparent to-primary/10" />
-                </div>
-              </div>
-            </div>
-
-            <motion.div
-              style={{ y: parallaxOffset * -0.5 }}
-              className="absolute -bottom-8 -left-8 z-20 max-w-[200px] rounded-3xl border border-white/60 bg-white/85 p-8 organic-shadow backdrop-blur-md dark:border-stone-600 dark:bg-stone-900/85 lg:-bottom-12 lg:-left-12"
-            >
-              <div className="mb-2 font-serif text-3xl text-primary">
-                &ldquo;
-              </div>
-              <p className="text-sm font-medium italic leading-relaxed text-stone-600 dark:text-stone-300">
-                Most problems do not start where they show up.
-              </p>
-            </motion.div>
-          </motion.div> */}
-
-          {/* Right Column - Editorial Portrait */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6 flex justify-center lg:justify-end relative"
           >
-            {/* Elegant Image Frame */}
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-[3/3] organic-shadow rounded-[2rem] overflow-hidden bg-stone-200 dark:bg-stone-800 isolate">
-              <img
-                src="/images/bg-clean.png"
-                alt="Paul Akinola portrait"
-                className="absolute inset-0 w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal opacity-95 hover:scale-105 transition-transform duration-[2s] ease-out"
+            <div className="relative mx-auto aspect-[3/3] w-full max-w-[min(100%,18rem)] sm:max-w-[19rem] lg:max-w-[30rem]">
+              <div
+                className="pointer-events-none absolute -inset-5 rounded-full bg-gradient-to-br from-primary/30 via-amber-400/20 to-orange-600/25 opacity-80 blur-2xl dark:from-primary/25 dark:via-orange-900/30 dark:to-orange-950/40 dark:opacity-70"
+                aria-hidden
               />
-              {/* Very soft inner gradient for depth instead of harsh vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-stone-900/0 to-stone-900/0 dark:from-black/60 z-10 pointer-events-none" />
+              {/* Gradient border: stroke only — inner stays transparent */}
+              <div className="relative h-full w-full rounded-full border-10< p-[3px] shadow-[0_24px_50px_-20px_rgba(28,25,23,0.22)]  dark:via-primary dark:to-stone-700 dark:shadow-[0_28px_60px_-24px_rgba(0,0,0,0.5)]">
+                <div className="relative h-full w-full overflow-hidden rounded-full bg-transparent">
+                  <Image
+                    src="/images/bg-clean.png"
+                    alt="Paul Akinola portrait"
+                    fill
+                    sizes="(max-width: 1024px) 90vw, 20rem"
+                    priority
+                    className="object-contain p-2 transition-transform duration-[2s] ease-out hover:scale-[1.03]"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_0_0_1px_rgba(255,255,255,0.35)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]"
+                    aria-hidden
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Floating Editorial Accent */}
             <motion.div
               style={{ y: parallaxOffset * -0.5 }}
-              className="absolute -bottom-8 -left-8 lg:-bottom-12 lg:-left-12 bg-white dark:bg-stone-900 p-8 rounded-3xl organic-shadow z-20 max-w-[200px]"
+              className="absolute -bottom-8 -left-8 lg:-bottom-2 lg:-left-12 bg-white dark:bg-stone-900 p-4 rounded-3xl organic-shadow z-20 max-w-[200px]"
             >
-              <div className="font-serif text-3xl text-primary mb-2">"</div>
+              <div className="font-serif text-3xl text-primary">&ldquo;</div>
               <p className="text-sm text-stone-600 dark:text-stone-300 font-medium italic leading-relaxed">
                 Most problems do not start where they show up.
               </p>
