@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Systems at Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --ink-mid: #3d3d3a;
+    --ink-light: #7a7a74;
+    --paper: #f5f2ed;
+    --paper-warm: #ede9e2;
+    --accent: #8b6f47;
+    --accent-light: #c4a882;
+    --rule: rgba(26,26,24,0.12);
+    --rule-light: rgba(26,26,24,0.06);
+    --max-text: 720px;
+    --max-wide: 1200px;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,242,237,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 clamp(24px, 5vw, 60px);
+  }
+  .nav-inner {
+    max-width: var(--max-wide);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+    font-size: 0.8rem; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--ink-light);
+    transition: color 0.2s;
+    padding-bottom: 2px;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.active {
+    color: var(--ink);
+    border-bottom: 1px solid var(--accent);
+  }
+  .nav-menu-btn {
+    display: none; background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-menu-btn span {
+    display: block; width: 22px; height: 1px; background: var(--ink);
+    transition: all 0.3s;
+  }
+
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .nav-menu-btn { display: flex; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 64px; left: 0; right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      padding: 24px clamp(24px, 5vw, 60px);
+      gap: 20px;
+    }
+  }
+
+  /* ─── LAYOUT HELPERS ─── */
+  .container {
+    max-width: var(--max-wide);
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 60px);
+  }
+  .text-col {
+    max-width: var(--max-text);
+  }
+
+  /* ─── FADE IN ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+  .reveal-d5 { transition-delay: 0.5s; }
+
+  /* ─── SECTION 1 · OPENING ─── */
+  #opening {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .opening-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(139,111,71,0.055) 0%, transparent 70%);
+  }
+  .opening-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--rule-light) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-light) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+  }
+  .opening-inner {
+    position: relative;
+    padding: clamp(80px, 12vw, 140px) 0 clamp(80px, 10vw, 120px);
+  }
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--accent-light);
+  }
+  .opening-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 36px;
+  }
+  .opening-support {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: var(--ink-mid);
+    line-height: 1.75;
+    max-width: 520px;
+  }
+  .opening-support p + p { margin-top: 0.5em; }
+  .opening-support .but {
+    margin-top: 20px;
+    font-style: italic;
+    color: var(--ink-light);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2em;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px; left: clamp(24px, 5vw, 60px);
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .scroll-hint::before {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--accent-light));
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* ─── SECTION 2 · SURFACE VS ROOT ─── */
+  #surface {
+    padding: clamp(80px, 10vw, 130px) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 40px;
+  }
+  #surface .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 28px;
+    max-width: 580px;
+  }
+  #surface .body-copy {
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    max-width: 540px;
+    line-height: 1.8;
+  }
+
+  /* ─── SECTION 3 · REFRAMES ─── */
+  #reframes {
+    padding: clamp(80px, 10vw, 130px) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .reframes-header { margin-bottom: clamp(56px, 8vw, 96px); }
+  .reframes-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 400;
+    color: var(--ink-light);
+    letter-spacing: 0.01em;
+  }
+  .reframes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .reframe-block {
+    background: var(--paper);
+    padding: clamp(36px, 5vw, 60px);
+    transition: background 0.3s;
+  }
+  .reframe-block:hover { background: var(--paper-warm); }
+  .reframe-marker {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .reframe-marker::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--accent-light);
+  }
+  .reframe-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.15;
+  }
+  .reframe-title .neq {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 300;
+  }
+  .reframe-body {
+    font-size: 0.92rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+  }
+  .reframe-body p + p { margin-top: 12px; }
+  .reframe-body .but-line {
+    color: var(--ink);
+    font-style: italic;
+    border-left: 2px solid var(--accent-light);
+    padding-left: 14px;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 680px) {
+    .reframes-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── SECTION 4 · THE SHIFT ─── */
+  #shift {
+    background: var(--ink);
+    padding: clamp(80px, 12vw, 140px) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .shift-noise {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+  .shift-line {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    opacity: 0.5;
+  }
+  #shift .section-label { color: rgba(255,255,255,0.3); }
+  #shift .shift-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: #f5f2ed;
+    max-width: 680px;
+    margin-bottom: 28px;
+  }
+  #shift .shift-support {
+    font-size: 1.05rem;
+    color: rgba(245,242,237,0.55);
+    max-width: 480px;
+    line-height: 1.8;
+  }
+  #shift .shift-support strong {
+    color: rgba(245,242,237,0.85);
+    font-weight: 400;
+  }
+
+  /* ─── SECTION 5 · SYSTEM STORIES ─── */
+  #stories {
+    padding: clamp(80px, 10vw, 130px) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .stories-header {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: start;
+    margin-bottom: clamp(56px, 7vw, 96px);
+  }
+  .stories-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .stories-header .intro-text {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    padding-top: 8px;
+  }
+  @media (max-width: 720px) {
+    .stories-header { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .stories-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .story-card {
+    background: var(--paper);
+    padding: clamp(32px, 4vw, 52px);
+    cursor: pointer;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .story-card:hover { background: var(--paper-warm); }
+  .story-card.full { grid-column: 1 / -1; }
+  .story-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 500;
+    margin-bottom: 18px;
+  }
+  .story-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .story-preview {
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+  .story-full-text {
+    display: none;
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    margin-top: 0;
+  }
+  .story-full-text p + p { margin-top: 14px; }
+  .story-full-text .outcome {
+    margin-top: 18px;
+    padding: 16px 20px;
+    background: var(--paper-warm);
+    border-left: 2px solid var(--accent);
+    font-style: italic;
+    color: var(--ink);
+    font-size: 0.88rem;
+  }
+  .story-toggle {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 20px;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    border: none; background: none; cursor: pointer;
+    padding: 0;
+    transition: gap 0.2s;
+  }
+  .story-toggle:hover { gap: 12px; }
+  .story-toggle svg { transition: transform 0.3s; }
+  .story-card.expanded .story-preview { display: none; }
+  .story-card.expanded .story-full-text { display: block; }
+  .story-card.expanded .story-toggle svg { transform: rotate(45deg); }
+
+  @media (max-width: 680px) {
+    .stories-grid { grid-template-columns: 1fr; }
+    .story-card.full { grid-column: 1; }
+  }
+
+  /* ─── SECTION 6 · GO DEEPER ─── */
+  #go-deeper {
+    background: var(--paper-warm);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: clamp(80px, 10vw, 130px) 0;
+    text-align: center;
+  }
+  #go-deeper .deeper-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  #go-deeper .deeper-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+    max-width: 580px;
+    margin: 0 auto 20px;
+  }
+  #go-deeper .deeper-support {
+    font-size: 1rem;
+    color: var(--ink-light);
+    margin-bottom: 44px;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 36px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: background 0.25s, color 0.25s, gap 0.2s;
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--ink);
+    gap: 16px;
+  }
+
+  /* ─── SECTION 7 · NEXT PATHS ─── */
+  #next-paths {
+    padding: clamp(80px, 10vw, 130px) 0;
+  }
+  .next-paths-header { margin-bottom: clamp(48px, 6vw, 72px); }
+  .next-paths-header .section-label { margin-bottom: 12px; }
+  .next-paths-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 400;
+    color: var(--ink-light);
+  }
+  .paths-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .path-card {
+    background: var(--paper);
+    padding: clamp(40px, 5vw, 64px);
+    display: flex; flex-direction: column; gap: 16px;
+    transition: background 0.25s;
+  }
+  .path-card:hover { background: var(--paper-warm); }
+  .path-card-tag {
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 500;
+    color: var(--accent-light);
+  }
+  .path-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .path-card p {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    flex: 1;
+  }
+  .btn-text {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500; color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+    align-self: flex-start;
+    transition: gap 0.2s, border-color 0.2s;
+  }
+  .btn-text:hover { gap: 16px; border-color: var(--accent); }
+  @media (max-width: 580px) {
+    .paths-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: clamp(40px, 6vw, 72px) 0 clamp(32px, 4vw, 48px);
+  }
+  .footer-inner {
+    max-width: var(--max-wide);
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 60px);
+  }
+  .footer-transition {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-light);
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+  .footer-nav {
+    display: flex; flex-wrap: wrap; gap: 24px 36px;
+    list-style: none;
+    font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400;
+  }
+  .footer-nav a { text-decoration: none; color: var(--ink-light); transition: color 0.2s; }
+  .footer-nav a:hover { color: var(--ink); }
+  .footer-base {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule-light);
+    font-size: 0.72rem; color: var(--ink-light); letter-spacing: 0.06em;
+  }
+
+  /* Arrow svg inline */
+  .arrow-right {
+    width: 14px; height: 14px; stroke: currentColor;
+    fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .plus-icon {
+    width: 12px; height: 12px; stroke: currentColor;
+    fill: none; stroke-width: 1.5; stroke-linecap: round;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">clarity</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#">Home</a></li>
+      <li><a href="#" class="active">Work</a></li>
+      <li><a href="#">Inner Life</a></li>
+      <li><a href="#">Thoughts</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work Together</a></li>
+    </ul>
+    <button class="nav-menu-btn" id="menuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── SECTION 1 · OPENING ─── -->
+<section id="opening">
+  <div class="opening-bg"></div>
+  <div class="opening-grid"></div>
+  <div class="container">
+    <div class="opening-inner text-col">
+      <div class="eyebrow reveal">Systems at Work</div>
+      <h1 class="opening-headline reveal reveal-d1">Something isn't<br>adding up.</h1>
+      <div class="opening-support reveal reveal-d2">
+        <p>You're putting in the work. The team is active. Things are moving.</p>
+        <p class="but">But the results don't fully reflect it.</p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ─── SECTION 2 · SURFACE VS ROOT ─── -->
+<section id="surface">
+  <div class="container">
+    <div class="text-col">
+      <div class="section-label reveal">02 — Surface vs Root Cause</div>
+      <h2 class="section-heading reveal reveal-d1">What you're seeing is only part of the picture.</h2>
+      <p class="body-copy reveal reveal-d2">Most of what shapes performance, growth, and decision-making sits underneath — in how things are structured, how signals move, and how work actually connects.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 3 · REFRAMES ─── -->
+<section id="reframes">
+  <div class="container">
+    <div class="reframes-header text-col">
+      <div class="section-label reveal">03 — Reframes</div>
+      <h2 class="reveal reveal-d1">The visible problem is rarely the real one.</h2>
+    </div>
+    <div class="reframes-grid">
+
+      <div class="reframe-block reveal">
+        <div class="reframe-marker">Reframe 01</div>
+        <h3 class="reframe-title">Effort <span class="neq">≠</span> Outcome</h3>
+        <div class="reframe-body">
+          <p>It looks like a performance problem. The team is active. Work is happening. Effort is there.</p>
+          <p class="but-line">But it is not really performance. It is how the system is shaping what that effort turns into.</p>
+        </div>
+      </div>
+
+      <div class="reframe-block reveal reveal-d1">
+        <div class="reframe-marker">Reframe 02</div>
+        <h3 class="reframe-title">Pipeline <span class="neq">≠</span> Signal</h3>
+        <div class="reframe-body">
+          <p>It looks like a pipeline problem. Numbers are moving, but confidence is low.</p>
+          <p class="but-line">But it is not just pipeline. It is how signals, decisions, and timing are interacting underneath it.</p>
+        </div>
+      </div>
+
+      <div class="reframe-block reveal reveal-d2">
+        <div class="reframe-marker">Reframe 03</div>
+        <h3 class="reframe-title">Decisions <span class="neq">≠</span> Clarity</h3>
+        <div class="reframe-body">
+          <p>It looks like a decision problem. Conversations are happening, but clarity is missing.</p>
+          <p class="but-line">But it is not really decision-making. It is a clarity gap inside the system those decisions depend on.</p>
+        </div>
+      </div>
+
+      <div class="reframe-block reveal reveal-d3">
+        <div class="reframe-marker">Reframe 04</div>
+        <h3 class="reframe-title">Execution <span class="neq">≠</span> Structure</h3>
+        <div class="reframe-body">
+          <p>It looks like an execution gap. Work is being done, but it is not flowing or compounding.</p>
+          <p class="but-line">But it is not just execution. It is how the work is structured, connected, and supported.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 4 · THE SHIFT ─── -->
+<section id="shift">
+  <div class="shift-noise"></div>
+  <div class="shift-line"></div>
+  <div class="container">
+    <div class="section-label reveal">04 — The Shift</div>
+    <h2 class="shift-headline reveal reveal-d1">Most of what you're trying to fix is not the real problem.</h2>
+    <p class="shift-support reveal reveal-d2"><strong>It is the system underneath it.</strong><br><br>When you see that clearly, the problem — and your response — both change.</p>
+  </div>
+</section>
+
+<!-- ─── SECTION 5 · SYSTEM STORIES ─── -->
+<section id="stories">
+  <div class="container">
+    <div class="stories-header">
+      <div>
+        <div class="section-label reveal">05 — System Stories</div>
+        <h2 class="reveal reveal-d1">Real examples of how structure changes outcomes.</h2>
+      </div>
+      <p class="intro-text reveal reveal-d2">These stories are where systems thinking becomes practical. They show how motion, architecture, signal, and workflow design change what teams can see, trust, and act on.</p>
+    </div>
+
+    <div class="stories-grid">
+
+      <!-- Card 1 -->
+      <div class="story-card reveal" onclick="toggleStory(this)">
+        <div class="story-num">Story 01</div>
+        <h3 class="story-title">When the growth motion does not fit the business</h3>
+        <div class="story-preview">The brief was growth. More installs, more users, more momentum. The team was focused on acquisition — getting people in. But installs were not the real problem. People were coming in and leaving.</div>
+        <div class="story-full-text">
+          <p>The brief was growth. More installs, more users, more momentum. The team was focused on acquisition: getting people in. That was the motion they had inherited — and it felt like the right one because the numbers were moving.</p>
+          <p>But installs were not the real problem. People were coming in and leaving. The funnel was filling at the top and emptying underneath. The motion was built for a consumer app. The business needed subscribers.</p>
+          <p>What I found underneath: there was no activation logic connecting the install to the product's actual value. No lifecycle to carry someone from curious to committed. The growth machine was optimized for a less impactful result.</p>
+          <div class="outcome">When the focus shifted from installs to activation, and from acquisition to subscription growth, the subscriber base grew by 196%. Monthly signups increased 500%. Churn fell to single digits.</div>
+          <p>The motion wasn't wrong because of poor execution. It was ineffective because it didn't fit what the business needed to grow.</p>
+        </div>
+        <button class="story-toggle">
+          <svg class="plus-icon" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          Read story
+        </button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="story-card reveal reveal-d1" onclick="toggleStory(this)">
+        <div class="story-num">Story 02</div>
+        <h3 class="story-title">When CRM architecture blocks revenue clarity</h3>
+        <div class="story-preview">The pipeline existed. Leads were coming in. Marketing was active. Sales was working. On the surface, the revenue system looked functional. But when you looked at what the CRM was actually doing, the picture changed.</div>
+        <div class="story-full-text">
+          <p>The pipeline existed. Leads were coming in. Marketing was active. Sales was working. On the surface, the revenue system looked functional.</p>
+          <p>But when you looked at what the CRM was doing — how leads were routed, how lifecycle stages were defined, how handoffs between marketing and sales were structured — the picture changed. Data was inconsistent. Stage definitions meant different things to different people. Leads were moving through the funnel without actually progressing.</p>
+          <p>The CRM was recording activity. It was not supporting decisions.</p>
+          <div class="outcome">When the architecture was rebuilt — lifecycle stages redesigned, lead scoring restructured, routing logic made consistent — qualified pipeline increased by 40%. The sales cycle shortened by 25%.</div>
+          <p>The problem was never effort. It was what the system underneath the effort was doing with it.</p>
+        </div>
+        <button class="story-toggle">
+          <svg class="plus-icon" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          Read story
+        </button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="story-card reveal" onclick="toggleStory(this)">
+        <div class="story-num">Story 03</div>
+        <h3 class="story-title">When revenue systems hide what matters</h3>
+        <div class="story-preview">The reporting existed. Dashboards were built. Numbers were visible. But when leadership looked at the data, they weren't confident in what they were seeing. Forecasts felt unreliable.</div>
+        <div class="story-full-text">
+          <p>The reporting existed. Dashboards were built. Numbers were visible. But when leadership looked at the data, they weren't confident in what they were seeing. Forecasts felt unreliable. Pipeline reviews felt uncertain.</p>
+          <p>The issue wasn't a lack of data. It was what the data was built on. Attribution was inconsistent. UTM taxonomies hadn't been standardized. CRM data had gaps. The reporting layer was built on top of a foundation that hadn't been designed for clarity.</p>
+          <div class="outcome">When the underlying architecture was addressed — UTM and event taxonomy standardized, data flows unified, pipeline visibility frameworks built to surface risk early — forecast confidence improved and deal risk became visible earlier.</div>
+          <p>Reporting is only as trustworthy as the structure underneath it. Fix the structure first.</p>
+        </div>
+        <button class="story-toggle">
+          <svg class="plus-icon" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          Read story
+        </button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="story-card reveal reveal-d1" onclick="toggleStory(this)">
+        <div class="story-num">Story 04</div>
+        <h3 class="story-title">When product signal never becomes go-to-market action</h3>
+        <div class="story-preview">There was no shortage of product data. Users were interacting, signals were being generated. But that data was not reaching the people responsible for pipeline. Sales didn't know which accounts were active.</div>
+        <div class="story-full-text">
+          <p>There was no shortage of product data. Users were interacting with the product, signals were being generated, and the product team had visibility into what was happening. But that data was not reaching the people responsible for pipeline.</p>
+          <p>Sales didn't know which accounts were active in the product. Marketing wasn't targeting based on usage behavior. SDRs were working from static lists while product signals that indicated real intent were sitting in a system the commercial team couldn't see or use.</p>
+          <p>The architecture was fragmented — Segment, BigQuery, Salesforce, and Demandbase were all running, but not connected in a way that turned product behavior into GTM action.</p>
+          <div class="outcome">When a unified data layer was built connecting product signals to the CRM in real time, core activation improved by 50% within 30 days. Time-to-first insight was reduced by 96%.</div>
+          <p>Product signal is only valuable when it becomes action. Until then, it is just data.</p>
+        </div>
+        <button class="story-toggle">
+          <svg class="plus-icon" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          Read story
+        </button>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="story-card reveal" onclick="toggleStory(this)">
+        <div class="story-num">Story 05</div>
+        <h3 class="story-title">When lifecycle structure weakens the funnel</h3>
+        <div class="story-preview">There was volume entering the funnel. Campaigns were running. Leads were being captured. But conversion wasn't following. The funnel looked active. It wasn't really working.</div>
+        <div class="story-full-text">
+          <p>There was volume entering the funnel. Campaigns were running. Leads were being captured. But conversion wasn't following.</p>
+          <p>When I looked at the lifecycle architecture, what I found was a structure that moved people forward on paper — through stages, through sequences — without actually progressing them in any meaningful way. Scoring thresholds didn't reflect real buyer behavior. Nurture sequences were generic, heavily time-based. There was no clear signal telling the system or the sales team when someone was genuinely ready.</p>
+          <div class="outcome">When the lifecycle was rebuilt around clear stage definitions, behavioral triggers, and scoring that reflected actual progression, conversion rates increased by 38%. In another instance, lead-to-customer conversion increased by 40%, WAU grew, and churn fell to single digits.</div>
+          <p>A funnel that moves people without progressing them isn't a growth system. It's a leaking pipe with good-looking numbers at the top.</p>
+        </div>
+        <button class="story-toggle">
+          <svg class="plus-icon" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          Read story
+        </button>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="story-card reveal reveal-d1" onclick="toggleStory(this)">
+        <div class="story-num">Story 06</div>
+        <h3 class="story-title">Attribution and Reporting Confidence</h3>
+        <div class="story-preview">The numbers were there. Dashboards had been built. Reports were shared in leadership meetings. On the surface, the business had visibility. But nobody fully trusted what they were looking at.</div>
+        <div class="story-full-text">
+          <p>The numbers were there. Dashboards had been built. Reports were shared in leadership meetings. On the surface, the business had visibility. But nobody fully trusted what they were looking at.</p>
+          <p>Decisions were being made cautiously — hedged, qualified, delayed — not because the team lacked judgment, but because the data underneath the reports hadn't been built to reflect how the business actually moved. Channels were being measured inconsistently. Attribution logic had been set up at a point in time and never revisited. Definitions that marketing used didn't match what sales meant by the same terms.</p>
+          <p>The reports were real. The foundation they were built on wasn't reliable.</p>
+          <div class="outcome">When the underlying architecture was addressed — attribution logic rebuilt, taxonomy standardized, CRM definitions aligned — the numbers started to mean something again. Forecast conversations changed. Decisions got faster and more comfortable.</div>
+          <p>Data without trustworthy foundations isn't insight. It's noise with good formatting.</p>
+        </div>
+        <button class="story-toggle">
+          <svg class="plus-icon" viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          Read story
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 6 · GO DEEPER ─── -->
+<section id="go-deeper">
+  <div class="container">
+    <div class="deeper-eyebrow reveal">06 — Go Deeper</div>
+    <h2 class="deeper-headline reveal reveal-d1">If this resonates, the next step is not to do more.</h2>
+    <p class="deeper-support reveal reveal-d2">It is to understand what is actually shaping these outcomes.</p>
+    <div class="reveal reveal-d3">
+      <a href="#" class="btn-primary">
+        Go deeper into Work
+        <svg class="arrow-right" viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7"/><polyline points="8,2 13,7 8,12"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 7 · NEXT PATHS ─── -->
+<section id="next-paths">
+  <div class="container">
+    <div class="next-paths-header">
+      <div class="section-label reveal">07 — Next Paths</div>
+      <h2 class="reveal reveal-d1">Where would you like to go next?</h2>
+    </div>
+    <div class="paths-grid">
+      <div class="path-card reveal">
+        <div class="path-card-tag">Work Together</div>
+        <h3>Bring clarity to what's actually going on.</h3>
+        <p>If you're dealing with this in your team or organization, this is where I help bring clarity to what is actually going on beneath the surface.</p>
+        <a href="#" class="btn-text">
+          Work Together
+          <svg class="arrow-right" viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7"/><polyline points="8,2 13,7 8,12"/></svg>
+        </a>
+      </div>
+      <div class="path-card reveal reveal-d1">
+        <div class="path-card-tag">Systems in Life</div>
+        <h3>Clarity at work often connects to clarity within.</h3>
+        <p>The way people work is also shaped by what they carry into those systems. Clarity at work often connects to clarity in how we think, respond, and show up.</p>
+        <a href="#" class="btn-text">
+          Systems in Life
+          <svg class="arrow-right" viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7"/><polyline points="8,2 13,7 8,12"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-transition">Clarity on the systems that shape how we live, lead, and grow.</p>
+    <ul class="footer-nav">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Inner Life</a></li>
+      <li><a href="#">Thoughts</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work Together</a></li>
+    </ul>
+    <p class="footer-base">© 2025 — All systems considered.</p>
+  </div>
+</footer>
+
+<script>
+  // ─── Mobile nav ───
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  // ─── Scroll reveal ───
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // ─── Story expand/collapse ───
+  function toggleStory(card) {
+    const wasExpanded = card.classList.contains('expanded');
+    // Collapse all first
+    document.querySelectorAll('.story-card.expanded').forEach(c => c.classList.remove('expanded'));
+    if (!wasExpanded) card.classList.add('expanded');
+    if (!wasExpanded) {
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    }
+  }
+
+  // ─── Trigger reveals already in view ───
+  window.addEventListener('load', () => {
+    reveals.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
+  });
+</script>
+</body>
+</html>

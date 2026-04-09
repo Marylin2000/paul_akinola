@@ -10,14 +10,20 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-rule: var(--rule);
 }
 
 :root {
   --background: #FAFAF9; /* stone-50 */
   --foreground: #1C1917; /* stone-900 */
-  --primary: #9A3412; /* rich terracotta / burnt orange */
-  --secondary: #A8A29E; /* warm grey / stone-400 */
+  --primary: #9A3412; /* rich terracotta */
+  --secondary: #A8A29E; /* warm grey */
   --accent: #57534E; /* deeper stone */
+  --rule: rgba(28, 25, 23, 0.1);
+  --rule-light: rgba(28, 25, 23, 0.05);
+  --paper-warm: #F5F5F4; /* stone-100 */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,7 +33,21 @@
     --primary: #C2410C; /* vibrant terracotta */
     --secondary: #78716C; /* stone-500 */
     --accent: #D6D3D1; /* stone-300 */
+    --rule: rgba(245, 245, 244, 0.1);
+    --rule-light: rgba(245, 245, 244, 0.05);
+    --paper-warm: #1C1917; /* stone-900 */
   }
+}
+
+html.dark {
+  --background: #0C0A09;
+  --foreground: #F5F5F4;
+  --primary: #C2410C;
+  --secondary: #78716C;
+  --accent: #D6D3D1;
+  --rule: rgba(245, 245, 244, 0.1);
+  --rule-light: rgba(245, 245, 244, 0.05);
+  --paper-warm: #1C1917;
 }
 
 body {

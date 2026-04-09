@@ -1,0 +1,170 @@
+Inner Life Page Implementation Spec
+Build-ready handoff for web designer and developer. This document translates the Inner Life sitemap branch and uploaded wireframes into exact page content, layout direction, CTA logic, and implementation notes.
+1. Sitemap reference and page position
+This page must reflect the Inner Life branch of the site exactly. Nothing in the sitemap should be implied. Each sitemap section should appear as a visible or clearly represented block on the page.
+User flow for this page
+• Entry -> Recognition -> Reflection -> Reframe -> Shift -> Proof through Life Stories -> Deeper reading -> Conversation or crossover
+• This page should feel calm, clear, human, and grounded. It should not feel clinical, preachy, or self-help heavy.
+Page purpose
+Primary outcome
+Page destination
+Help the visitor understand themselves more clearly by introducing the inner systems lens.
+They leave seeing what might be shaping how they think, feel, and respond.
+From recognition to deeper understanding, then into Thoughts, Work Together, or Systems at Work.
+INNER LIFE├── Opening├── Inner Systems Setup├── Reframes│   ├── Not Discipline│   ├── Not Stuck│   ├── Not Clarity│   └── Not Inconsistency├── The Shift├── Life Stories│   ├── Patterns Beneath Behaviour│   ├── Identity and Inner Conflict│   ├── Hope in Confusion│   ├── Faith and Formation│   ├── The Unseen Shaping the Seen│   └── Clarity Before Change├── Go Deeper → Thoughts└── Next Paths    ├── Work Together    └── Systems at Work
+2. Global page build rules
+• Header navigation: Home | Work | Inner Life | Thoughts | About | Work Together. 'Inner Life' should appear as the active item.
+• Tone: Soft, reflective, and clear. Human language over abstract theory. No hype, pressure, or overly polished wellness language.
+• Layout character: Minimal, text-led, generous spacing, light visual texture only where helpful. This page should feel quieter and slightly more intimate than the Work page.
+• Content width: Main text blocks: 680 to 760 px max. Full-width bands can expand to 1200 px max with strong side padding.
+• Responsive behavior: Two-column sections stack to one column on tablet and mobile. Reframe blocks and story cards should preserve generous spacing when stacked.
+• Buttons and links: Keep interactions subtle. Use clean text links or restrained pill buttons. Avoid aggressive animation or heavy shadows.
+3. Section-by-section implementation
+Section 1. Opening
+Role: Immediate recognition. The visitor should feel understood without feeling analysed.
+Layout: Clean hero section. Full width. Headline and support copy can be centered or slightly left-aligned within a restrained content column. Softer background treatment than Work.
+Build note: Do not add testimonials, statistics, or extra proof here. This section is about emotional recognition, not validation.
+Section 2. Inner Systems Setup
+Role: This is the transition from frustration to explanation.
+Layout: Narrow text block with strong whitespace above and below. Keep it quiet and readable.
+Build note: This should feel like the sentence that helps the visitor exhale and keep reading.
+Section 3. Reframes
+Role: This is the core teaching moment on the page. Each block reframes a visible inner struggle as a systems issue beneath the surface.
+Layout: Four stacked reframe blocks with generous spacing. Each block should read like reflection, not diagnosis.
+Build note: Desktop can use a single column with strong vertical rhythm, or a two-by-two grid if the calmer reading experience is preserved. Mobile should stack every reframe.
+Section 4. The Shift
+Role: This section names the lens clearly and anchors the page message.
+Layout: Single highlighted band or callout block. Stronger text treatment than surrounding sections, but still gentle.
+Build note: This should feel like the quiet centre of the page. Give it room.
+Section 5. Life Stories
+Role: This is the proof layer for the Inner Life page. It shows recurring inner patterns and lived realities common to the audience.
+Layout: Section title and short intro, followed by a grid of six cards. Desktop: 3 columns or 2 columns, depending on the visual system. Tablet: 2 columns. Mobile: 1 column.
+Build note: These are not memoir cards and not inspirational quotes. They should feel like grounded pattern-stories that help the visitor recognise what may be shaping them.
+Section 6. Go Deeper into Life
+Role: Primary path forward from the page. This should be the strongest CTA on the page.
+Layout: Full-width CTA band. Strong visual priority but still restrained.
+Build note: This is the page's main forward motion. Keep the call to action singular and clear.
+Section 7. Next Paths
+Role: Secondary routes for people who are ready to talk or want to explore the crossover into Systems at Work.
+Layout: Two equal cards side by side on desktop, stacked on mobile.
+Build note: These two paths should feel clearly secondary to the Go Deeper CTA, but still warm and inviting.
+Section 8. Footer transition
+Role: Close the page cleanly and keep the site language consistent.
+Layout: Simple footer line above the main footer links, or folded into the footer itself.
+Build note: Footer links should remain: Home | Work | Inner Life | Thoughts | About | Work Together.
+4. Content model and CMS notes
+• Life Stories should be built as repeatable content cards. At launch, cards can be static if no deeper story pages exist yet.
+• Go Deeper into Life should support linking to a Life collection, Life category, or Life tag on the Thoughts page.
+• If article filtering is not ready at launch, the CTA can route to the main Thoughts page with Life stories visually prioritized at the top.
+• The page should be easy to update later with new life-story cards, featured reflections, or route changes without redesigning the whole page.
+• If faith-oriented writing becomes more explicit later, the Life Stories and Thoughts structure should support tags such as Life, Faith, Hope, or Formation without changing the page layout.
+5. Exact copy for implementation
+Section 1. Opening
+Field
+Content
+Exact copy
+Eyebrow: Systems in LifeHeadline: You can feel it, but you can't fully explain it.Support copy: You're thinking. You're trying. You're moving forward.But something still doesn't sit right.Primary CTA: None in this section. Keep the focus on recognition.
+Section 2. Inner Systems Setup
+Field
+Content
+Exact copy
+Section body: What you're experiencing is not random.How you think, respond, and move through life is shaped by systems — beliefs, patterns, identity, memory, and pressure.Most of it runs quietly in the background.
+Section 3. Reframes
+Field
+Content
+Reframe 1 title
+Not discipline
+Reframe 1 body
+You tell yourself you need more discipline. You know what to do, but you're not doing it consistently.But it's not just discipline. Something underneath is shaping how you show up.
+Reframe 2 title
+Not stuck
+Reframe 2 body
+It feels like you're stuck. Like something isn't moving, even though you want it to.But it's not just being stuck. There's something you haven't fully seen yet.
+Reframe 3 title
+Not clarity
+Reframe 3 body
+You think you need more clarity. Like if you could just figure things out, everything would settle.But it's not just clarity. It's how your inner system is shaping what you're able to see.
+Reframe 4 title
+Not inconsistency
+Reframe 4 body
+You notice the inconsistency. Your intentions are clear, but your actions don't always follow.But it's not just inconsistency. There are patterns running deeper than the plans you're trying to follow.
+Section 4. The Shift
+Field
+Content
+Exact copy
+Section heading: What you're experiencing is not random.Body copy: There are systems within you shaping how you think, respond, and move.When you begin to see them, things start to make more sense.
+Section 5. Life Stories
+Field
+Content
+Section heading
+Life Stories
+Section intro
+Recurring patterns that help make sense of what may be happening underneath the surface.
+Card 1 title
+Patterns Beneath Behaviour
+Card 1 body
+Sometimes the issue is not motivation but a pattern beneath it. The same reaction keeps returning because something deeper has been shaping how you respond long before the moment itself.
+Card 2 title
+Identity and Inner Conflict
+Card 2 body
+Growth becomes hard when part of you wants change and another part is still protecting an older way of being. Inner conflict often looks like hesitation, delay, or self-sabotage.
+Card 3 title
+Hope in Confusion
+Card 3 body
+There are seasons when you cannot name what is wrong, only that something feels unsettled. Hope matters here, not as denial, but as the belief that what feels unclear can still be understood.
+Card 4 title
+Faith and Formation
+Card 4 body
+Change is not only about insight or effort. It is also about what is forming you over time. Faith shapes how people interpret pressure, waiting, direction, and meaning.
+Card 5 title
+The Unseen Shaping the Seen
+Card 5 body
+Not everything shaping a life is visible on the surface. Beliefs, fears, spiritual convictions, memory, and unseen pressures all influence what eventually shows up in choices and behaviour.
+Card 6 title
+Clarity Before Change
+Card 6 body
+Many people try to force a new outcome before they understand the system producing the old one. Real change often starts when you can name what has been quietly shaping you.
+Section 6. Go Deeper into Life
+Field
+Content
+Exact copy
+Section heading: If this resonates, the next step is not to force change.Body copy: It's to understand yourself more clearly.CTA label: Go deeper into LifeCTA destination: /thoughts?category=lifeFallback destination if filtering is unavailable: /thoughts
+Section 7. Next Paths
+Field
+Content
+Card 1 title
+Work Together
+Card 1 body
+If this connects to something you're working through, this is where I help people think more clearly about what's shaping them.
+Card 1 CTA
+Work Together
+Card 1 destination
+/work-together
+Card 2 title
+Systems at Work
+Card 2 body
+How you think and respond shows up in how you work, lead, and make decisions.Clarity here often connects back to how you perform in the systems around you.
+Card 2 CTA
+Systems at Work
+Card 2 destination
+/work
+Section 8. Footer transition
+Field
+Content
+Exact copy
+Footer transition line: Clarity on the systems that shape how we live, lead, and grow.
+6. Designer notes
+• Keep the page mostly neutral or monochrome with one restrained accent color.
+• The Inner Life page should feel softer than the Work page without feeling vague.
+• Use typography and spacing to create emphasis before using boxes or decorative graphics.
+• Reframes should feel like lived experience and recognition, not diagnosis or therapy language.
+• Life Stories should feel structured and grounded, not inspirational-card driven.
+• If faith language appears in linked content later, the page should still feel accessible and coherent from the first read.
+7. Launch checklist
+□ Confirm 'Inner Life' is active in the header nav.
+□ Confirm all sitemap sections are visible on the page.
+□ Confirm the main CTA routes to Thoughts -> Life.
+□ Confirm the two secondary cards route to Work Together and Work.
+□ Confirm Life Stories copy is editable in CMS or page builder.
+□ Confirm spacing is generous on desktop and mobile.
+□ Confirm there are no heavy graphics or visual clutter.

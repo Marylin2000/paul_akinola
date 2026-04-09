@@ -1,0 +1,149 @@
+Work Page Implementation Spec
+Page purpose
+Primary outcome
+Page destination
+Help the visitor see their problem differently by introducing the systems lens.
+They leave seeing what might actually be shaping their results.
+From recognition to deeper understanding, then into Thoughts, Work Together, or Inner Life.
+1. Sitemap reference and page position
+This page must reflect the Work branch of the site exactly. Nothing in the sitemap should be implied. Each sitemap section should appear as a visible or clearly represented block on the page.
+WORK├── Opening├── Surface vs Root Cause├── Reframes│   ├── Effort ≠ Outcome│   ├── Pipeline ≠ Signal│   ├── Decisions ≠ Clarity│   └── Execution ≠ Structure├── The Shift├── System Stories│   ├── Growth Motion Fit│   ├── CRM Architecture and Revenue│   ├── Revenue Systems and Visibility│   ├── Product Signal to GTM Action│   └── Lifecycle and Funnel Structure├── Go Deeper → Thoughts└── Next Paths    ├── Work Together    └── Systems in Life
+User flow for this page
+• Entry -> Recognition -> Surface tension -> Reframe -> Shift -> Proof through System Stories -> Deeper reading -> Conversation or crossover
+• This page should feel calm, clear, and intelligent. It should not feel sales-led or crowded.
+2. Global page build rules
+Header navigation: Home | Work | Inner Life | Thoughts | About | Work Together. 'Work' should appear as the active item.
+Tone: Clear, grounded, and thoughtful. No hype, no heavy marketing language, and no hard-sell pressure.
+Layout character: Minimal, text-led, generous spacing, subtle structure lines or node patterns only where helpful.
+Content width: Main text blocks: 680 to 760 px max. Full-width bands can expand to 1200 px max with strong side padding.
+Responsive behavior: Two-column sections stack to one column on tablet and mobile. Reframe blocks and story cards should preserve clear spacing when stacked.
+Buttons and links: Keep interactions subtle. Use text buttons or clean pill buttons. Avoid aggressive shadows or animated effects.
+3. Section-by-section implementation
+Section 1. Opening
+Role: Immediate recognition. This section should quickly make the visitor feel seen.
+Layout: Clean hero section. Full width. Headline and support copy can be left-aligned within a restrained content column. Optional subtle line pattern in the background.
+Exact copy
+Eyebrow: Systems at Work
+Headline: Something isn't adding up.
+Support copy: You're putting in the work. The team is active. Things are moving.But the results don't fully reflect it.
+Primary CTA: 
+Build note: Do not overcrowd the hero with extra proof, logos, or statistics. The point is recognition, not validation yet.
+Section 2. Surface vs Root Cause
+Role: This is the transition from frustration to diagnosis.
+Layout: Narrow text block with strong whitespace above and below. Keep this section quiet and readable.
+Exact copy
+Section heading: What you're seeing is only part of the picture.
+Body copy: Most of what shapes performance, growth, and decision-making sits underneath, in how things are structured, how signals move, and how work actually connects.
+Build note: This should feel like a pause that changes how the rest of the page is read.
+Section 3. Reframes
+Role: This is the core teaching moment on the page. Each block reframes a visible problem as a systems problem.
+Layout: Four stacked reframe blocks with generous spacing. Each block should read like a thought, not a framework diagram.
+Exact copy for each reframe block
+Reframe 1 title: Effort ≠ Outcome
+Reframe 1 body: It looks like a performance problem. The team is active. Work is happening. Effort is there.But it is not really performance. It is how the system is shaping what that effort turns into.
+Reframe 2 title: Pipeline ≠ Signal
+Reframe 2 body: It looks like a pipeline problem. Numbers are moving, but confidence is low.But it is not just pipeline. It is how signals, decisions, and timing are interacting underneath it.
+Reframe 3 title: Decisions ≠ Clarity
+Reframe 3 body: It looks like a decision problem. Conversations are happening, but clarity is missing.But it is not really decision-making. It is a clarity gap inside the system those decisions depend on.
+Reframe 4 title: Execution ≠ Structure
+Reframe 4 body: It looks like an execution gap. Work is being done, but it is not flowing or compounding.But it is not just execution. It is how the work is structured, connected, and supported.
+Build note: Desktop can use a single column with strong vertical rhythm, or a two-by-two grid if spacing remains calm. Mobile should stack every reframe.
+Section 4. The Shift
+Role: This section names the lens clearly and anchors the page message.
+Layout: Single highlighted band or callout block. Stronger text treatment than surrounding sections.
+Exact copy
+Headline: Most of what you're trying to fix is not the real problem.
+Support copy: It is the system underneath it.When you see that clearly, the problem, and your response, both change.
+Build note: This section should feel like the clearest sentence on the page. Give it room.
+Section 5. System Stories
+Role: This is the proof layer for the Work page. It shows real categories of work that solve pains common to the audience.
+Layout: Section title and short intro, followed by a grid of five cards. Desktop: 2 columns on the first two rows and a final full-width or centered fifth card. Tablet: 2 columns where possible. Mobile: 1 column.
+Exact copy
+Section title: System Stories
+Section intro: Real examples of how structure changes outcomes.These stories are where systems thinking becomes practical. They show how motion, architecture, signal, and workflow design change what teams can see, trust, and act on.
+Card 1 title: When the growth motion does not fit the business
+Card 1 body: The brief was growth. More installs, more users, more momentum. The team was focused on acquisition: getting people in. That was the motion they had inherited- literarily, and it felt like the right one because the numbers were moving.
+But installs were not the real problem. People were coming in and leaving. The funnel was filling at the top and emptying underneath. The motion was built for a consumer app. The business needed subscribers.
+What I found underneath: there was no activation logic connecting the install to the product's actual value. No lifecycle to carry someone from curious to committed. The growth machine was optimized for a less impactful result. Not that it was a wrong signal entirely, but not the one that will take the company to their desired destination.
+When the system changed: when the focus shifted from installs to activation, and from acquisition to subscription growth, the subscriber base grew by 196%. Monthly signups increased 500%. Churn fell to single digits.
+The motion wasn't wrong because of poor execution. It was ineffective because it didn't fit what the business needed to grow.
+Card 2 title: When CRM architecture blocks revenue clarity
+Card 2 body: The pipeline existed. Leads were coming in. Marketing was active. Sales was working. On the surface, the revenue system looked functional.
+But when you looked at what the CRM was doing: how leads were routed, how lifecycle stages were defined, how handoffs between marketing and sales were structured - the picture changed. Data was inconsistent. Stage definitions meant different things to different people. Leads were moving through the funnel without actually progressing.
+The CRM was recording activity. It was not supporting decisions.
+When the architecture was rebuilt: lifecycle stages redesigned, lead scoring restructured, routing logic made consistent, handoffs made explicit - qualified pipeline increased by 40%. The sales cycle shortened by 25%. The same team, working with the same leads and demand generation campaigns, started producing clearer and faster results.
+The problem was never effort. It was what the system underneath the effort was doing with it.
+Card 3 title: When revenue systems hide what matters
+Card 3 body: Here, the reporting existed. Dashboards were built. Numbers were visible. But when leadership looked at the data, they weren't confident in what they were seeing. Forecasts felt unreliable. Pipeline reviews felt uncertain. Decisions were being made carefully, not because the team lacked judgment, but because they didn't fully trust what the data was telling them. Not a good place to be for any CRO or CFO.
+The issue wasn't a lack of data. It was what the data was built on.
+Attribution was inconsistent. UTM taxonomies hadn't been standardized, so different channels were being measured differently. CRM data had gaps. The reporting layer was built on top of a foundation that hadn't been designed for clarity.
+When the underlying architecture was addressed: UTM and event taxonomy standardized, data flows unified, unified identity, pipeline visibility frameworks built to surface risk early, the numbers started to add up and evidently reveal more meaning. Forecast confidence improved. Deal risk became visible earlier. Leadership could see what was actually happening instead of interpreting what they hoped was happening.
+Reporting is only as trustworthy as the structure underneath it. Fix the structure first.
+Card 4 title: When product signal never becomes go-to-market action
+Card 4 body: There was no shortage of product data. Users were interacting with the product, signals were being generated, and the product team had visibility into what was happening. But that data was not reaching the people responsible for pipeline.
+Sales didn't know which accounts were active in the product. Marketing wasn't targeting based on usage behavior. SDRs were working from static lists while product signals that indicated real intent were sitting in a system the commercial team couldn't see or use.
+The architecture was fragmented — Segment, BigQuery, Salesforce, and Demandbase were all running, but not connected in a way that turned product behavior into GTM action.
+When a unified data layer was built connecting product signals to the CRM in real time, the commercial team could finally see what was actually happening. Accounts using the product heavily rose to the top- a big lift for white space analysis and expansion. SDRs had context before they reached out- You would save so much time and money with this. Prioritization became signal-led instead of assumption-led. Core activation improved by 50% within 30 days. Time-to-first insight was reduced by 96%, it literarily reshaped the company flagship product and advert line.
+Product signal is only valuable when it becomes action. Until then, it is just data.
+Card 5 title: When lifecycle structure weakens the funnel
+Card 5 body: There was volume entering the funnel. Campaigns were running. Leads were being captured. But conversion wasn't following.
+When I looked at the lifecycle architecture, what I found was a structure that moved people forward on paper- through stages, through sequences, without actually progressing them in any meaningful way. The stages were defined, but the logic holding them together was weak. Scoring thresholds didn't reflect real buyer behaviour. Nurture sequences were generic, heavily time-based. There was no clear signal telling the system or the sales team when someone was genuinely ready.
+The funnel looked active. It wasn't really working.
+When the lifecycle was rebuilt around clear stage definitions, behavioural triggers, and scoring that reflected actual progression, conversion rates increased by 38%. In another instance lead-to-customer conversion increased by 40%, WAU grew, and churn fell to single digits.
+A funnel that moves people without progressing them isn't a growth system. It's a leaking pipe with good-looking numbers at the top.
+Card 6 Title: Attribution and Reporting Confidence
+Card 6 Body: The numbers were there. Dashboards had been built. Reports were shared in leadership meetings. On the surface, the business had visibility.
+But nobody fully trusted what they were looking at.
+Decisions were being made cautiously; hedged, qualified, delayed, not because the team lacked judgment, but because the data underneath the reports hadn't been built to reflect how the business actually moved. The worst place to be is when this is already causing discord among teams. Influence and contributions to revenue are arguable. Channels were being measured inconsistently. Attribution logic had been set up at a point in time and never revisited as the GTM motion evolved. Definitions that marketing used didn't match what sales meant by the same terms.
+The reports were real. The foundation they were built on wasn't reliable.
+When the underlying architecture was addressed, attribution logic rebuilt, taxonomy standardized across all GTM channels, CRM definitions aligned across teams, and pipeline risk surfaced earlier through cleaner frameworks, the numbers started to mean something again. Leadership could see what was actually happening. Forecast conversations changed. Decisions got faster and more comfortable.
+Data without trustworthy foundations isn't insight. It's noise with good formatting.
+Optional link treatment: If related articles or deeper pages are available, use a quiet inline link such as 'Read related thought'. If not, launch these as static cards with no CTA.
+Build note: This section replaces the generic idea of proof. It should not feel like a brag section. It should feel useful, pattern-led, and relevant to the reader's real pains.
+Section 6. Go Deeper into Work
+Role: Primary path forward from the page. This should be the strongest CTA on the page.
+Layout: Full-width CTA band. Strong visual priority but still restrained.
+Exact copy
+Headline: If this resonates, the next step is not to do more.
+Support copy: It is to understand what is actually shaping these outcomes.
+Primary CTA label: Go deeper into Work
+CTA destination: Thoughts page, filtered or grouped under Work
+Build note: This is the page's main forward motion. Keep the call to action singular and clear.
+Section 7. Next Paths
+Role: Secondary routes for people who are ready to talk or want to explore the crossover into Inner Life.
+Layout: Two equal cards side by side on desktop, stacked on mobile.
+Exact copy
+Left card title: Work Together
+Left card body: If you're dealing with this in your team or organization, this is where I help bring clarity to what is actually going on beneath the surface.
+Left card CTA: Work Together
+Left card destination: Work Together page
+Right card title: Systems in Life
+Right card body: The way people work is also shaped by what they carry into those systems. Clarity at work often connects to clarity in how we think, respond, and show up.
+Right card CTA: Systems in Life
+Right card destination: Inner Life page
+Build note: These two paths should feel clearly secondary to the Go Deeper CTA, but still present and inviting.
+Section 8. Footer transition
+Role: Close the page cleanly and keep the site language consistent.
+Layout: Simple footer line above the main footer links, or folded into the footer itself.
+Exact copy
+Footer transition line: Clarity on the systems that shape how we live, lead, and grow.
+Build note: Footer links should remain: Home | Work | Inner Life | Thoughts | About | Work Together.
+4. Content model and CMS notes
+• System Stories should be built as repeatable content cards. At launch, cards can be static if no deeper story pages exist yet.
+• Go Deeper into Work should support linking to a Work collection, Work category, or Work tag on the Thoughts page.
+• If article filtering is not ready at launch, the CTA can route to the main Thoughts page with Work stories visually prioritized at the top.
+• The page should be easy to update later with new story cards, featured thoughts, or route changes without redesigning the whole page.
+5. Designer notes
+• Keep the page mostly monochrome or neutral with one restrained accent color.
+• Use typography and spacing to create emphasis before using boxes, lines, or background changes.
+• Reframes should feel like pauses in thought, not feature cards from a SaaS landing page.
+• System Stories should feel structured and real, but still quiet. Avoid making them look like a carousel of sales proof.
+• This page should build trust through clarity, not through noise.
+6. Launch checklist
+□ Confirm 'Work' is active in the header nav.
+□ Confirm all sitemap sections are visible on the page.
+□ Confirm the main CTA routes to Thoughts -> Work.
+□ Confirm the two secondary cards route to Work Together and Inner Life.
+□ Confirm System Stories copy is editable in CMS or page builder.
+□ Confirm spacing is generous on desktop and mobile.
+□ Confirm there are no heavy graphics or visual clutter.
