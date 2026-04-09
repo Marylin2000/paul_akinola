@@ -1,0 +1,188 @@
+About Page Implementation Spec
+Page role
+The human bridge that helps visitors understand who Paul is, why he sees things this way, and why Work and Inner Life belong in the same ecosystem.
+Primary outcome
+The visitor leaves with trust in the lens, a sense of the person behind it, and a clear path to keep exploring.
+1. Sitemap reference and page position
+This page must reflect the About branch of the sitemap clearly. Nothing should be left implied. Each sitemap section should appear as a visible or clearly represented block on the page.
+Approved sitemap path for About
+Opening
+How You See the World
+Journey
+What You Care About
+How You Work
+Site Meaning
+Next Steps
+Closing Line
+Footer transition
+User flow for this page
+Entry -> Personal connection -> Worldview -> Story -> Values -> Way of working -> How the site fits together -> Exploration
+This page should feel human, grounded, reflective, and quietly confident.
+It should not feel like a resume, a polished founder bio, or an inspirational manifesto.
+2. Global page build rules
+Header navigation: Home | Work | Inner Life | Thoughts | About | Work Together. 'About' should appear as the active item.
+Tone: Personal, honest, thoughtful, and calm. No corporate bio language. No hype. No over-packaged authority claims.
+Layout character: Minimal, text-led, warm whitespace, restrained visual system. This page should feel slightly more intimate than Home and more personal than Work or Thoughts.
+Content width: Main text blocks should stay between 680 and 760 px max. Wider sections can expand to 1100 or 1200 px max only where needed.
+Responsive behavior: Any 2-column layout should stack to one column on tablet and mobile. Reading experience should always feel calm and narrow.
+Buttons and links: Keep interactions subtle. Use text links or restrained buttons only. Avoid loud CTA styling.
+Visual direction: If an image is used, use one thoughtful portrait only. No collage, no logo wall, no gallery.
+Page aim: Help the visitor understand who Paul is, why he sees the world this way, and why the site holds work and life together under one lens.
+3. Section-by-section implementation
+Section 1. Opening
+Role: Establish honest presence immediately. This section should feel like meeting a real person, not reading a formal profile.
+Layout: Clean opening section with narrow content width. Headline and support copy can sit beside or beneath one portrait image, but the text must remain the focus.
+Build note: If a portrait is used, keep it simple and calm. Do not style this like a speaker profile or executive headshot page.
+Section 2. How I See the World
+Role: State the core lens behind the entire site. This is where the visitor understands the worldview that connects Work, Inner Life, and Thoughts.
+Layout: Slightly wider text block or a two-column text-and-quote layout. The section should feel stable and central.
+Build note: This is one of the most important parts of the page. Give it room and typographic emphasis.
+Section 3. Journey
+Role: Show how the lens was formed through lived experience, not theory alone.
+Layout: Story-driven section with two or three short paragraphs. A minimal timeline treatment is optional only if it stays quiet.
+Build note: Do not turn this into a chronological career history. Keep it reflective and selective.
+Section 4. What I Care About
+Role: Show the values that guide the work and the writing.
+Layout: Short list, staggered statements, or a 2-column value grid. Keep it airy.
+Build note: This section should feel like convictions, not slogans.
+Section 5. How I Work
+Role: Explain how Paul engages with people, teams, and organisations without turning the page into a service pitch.
+Layout: Calm paragraph block or three short cards for Individuals, Teams, and Organisations.
+Build note: This section should bridge naturally toward Work Together without sounding commercial too early.
+Section 6. Site Meaning
+Role: Explain why this site holds work and life together and why the Thoughts page matters.
+Layout: Full-width reflective section or highlighted text band. A slightly stronger visual distinction is allowed here.
+Build note: This section should make the architecture of the site feel intentional.
+Section 7. Next Steps
+Role: Give clear onward routes after the visitor understands the person and the lens.
+Layout: Four soft navigation cards or links: Systems at Work, Systems in Life, Notes and Reflections, Work Together.
+Build note: These should feel invitational, not conversion-heavy.
+Section 8. Closing Line
+Role: End the page with a simple human sentence that stays with the reader.
+Layout: Narrow closing text block above the footer transition.
+Build note: Do not over-design this. Let the line carry the weight.
+Section 9. Footer transition
+Role: Close the page cleanly and keep site language consistent.
+Layout: Footer line above the main footer links, or integrated into the footer itself.
+Build note: Footer links should remain: Home | Work | Inner Life | Thoughts | About | Work Together.
+4. Content model and CMS notes
+This page can be built as a static page at launch.
+If the design uses a portrait image, the image should be manageable from the CMS as a single page-level asset.
+Next Steps should be built as editable route cards so destinations or labels can be updated later without redesign.
+If the site later introduces an explicit faith, hope, or formation taxonomy inside Thoughts, the About page should still work unchanged. It should hint at depth without depending on future categories.
+The About page should not duplicate Work Together. It should build trust and orientation, then allow the visitor to choose where to go next.
+If short pull-quotes or highlighted lines are used, keep them editable so phrasing can be refined later without code changes.
+5. Exact copy for implementation
+Section 1. Opening
+Headline:
+I pay attention to what most people overlook.
+Support copy:
+I pay attention to how things work, in systems, in people, and in myself.
+This is the simplest place to understand the person behind the lens.
+Section 2. How I See the World
+Section heading:
+How I see the world
+Body copy:
+Over time, I’ve come to see that most outcomes are not random.
+At work, results are shaped by systems, how decisions are made, how signals move, how teams align, and how things connect beneath the surface.
+In life, the same is true. Behaviour, clarity, direction, and even the way we respond under pressure are shaped by systems within us, beliefs, patterns, memory, identity, and what we carry quietly.
+And underneath both, there is often more going on than what is immediately visible.
+That is the lens I keep returning to.
+Optional pull-quote:
+Most visible problems are being shaped by something deeper.
+Section 3. Journey
+Section heading:
+My journey
+Body copy:
+I did not start with this language.
+I started by trying to make things work, growth, teams, decisions, outcomes, momentum. Like most people, I focused first on what I could see. The numbers. The movement. The visible friction.
+But over time, I kept running into the same truth: the visible problem is rarely the real one.
+That changed how I worked. I began paying closer attention to structure, signal, behaviour, and what was happening underneath the surface.
+And slowly, that shift moved beyond work.
+It changed how I thought about people. About growth. About clarity. About the inner life. About faith, formation, and the things that shape us long before they show up in visible outcomes.
+This site is an expression of that journey. Not a finished answer. A clearer way of seeing.
+Section 4. What I Care About
+Section heading:
+What I care about
+Intro line:
+A few things keep returning in how I think, write, and work.
+Clarity over noise
+I would rather see what is true than move quickly with the wrong assumptions.
+Understanding before action
+Real change usually starts with seeing what is actually shaping the problem.
+Systems over surface fixes
+Short-term fixes can help, but lasting progress usually depends on what sits underneath.
+Growth that can hold
+I care about change that is not just impressive in the moment, but sustainable over time.
+Honesty about what I do not yet understand
+Part of paying attention is staying teachable.
+The deeper layer matters
+Not everything shaping a person, a team, or a season is visible on the surface.
+Section 5. How I Work
+Section heading:
+How I work
+Body copy:
+I work with individuals, teams, and organisations who are trying to make sense of what is really shaping their outcomes.
+Sometimes that shows up in work, performance, growth, decisions, revenue, structure, or how teams move together.
+Sometimes it shows up more personally, clarity, direction, behaviour, identity, or the tension between what someone intends and how they are actually living.
+Most of the time, it is both.
+I am most useful where something important is happening, but the real issue has not been named clearly enough yet.
+Optional format if cards are preferred:
+Individuals
+Awareness, clarity, direction, and personal growth.
+Teams
+Shared understanding, aligned effort, and healthier ways of working together.
+Organisations
+Structure, signal, performance, growth, and systems that support better decisions.
+Section 6. Site Meaning
+Section heading:
+Why this site is built this way
+Body copy:
+This site brings together ideas that are often kept apart.
+Work and life are not separate here.
+They are two ways of looking at the same deeper reality: systems shape outcomes, whether those outcomes are visible in performance, relationships, choices, growth, leadership, or the inner life.
+That is why there is a Work page and an Inner Life page.
+That is why Thoughts sits in the middle.
+And that is why this page matters.
+The goal is not to present a polished version of certainty.
+The goal is to make room for clearer seeing.
+Section 7. Next Steps
+Section heading:
+Where to go next
+Intro line:
+You can keep exploring from whichever door feels closest to where you are.
+Systems at Work
+How systems shape performance, decisions, growth, and what is happening beneath visible results.
+Go to Work → /work
+Systems in Life
+How inner systems shape behaviour, resilience, identity, direction, and meaning.
+Go to Inner Life → /inner-life
+Notes and reflections
+Writing, observations, and connected thinking across work, life, and the deeper layer underneath both.
+Go to Thoughts → /thoughts
+Work Together
+If this connects with something real you are working through, this is where a conversation can begin.
+Go to Work Together → /work-together
+Section 8. Closing Line
+Closing line:
+I’m still learning. Still paying attention. Still connecting the dots.
+Section 9. Footer transition
+Footer line:
+Clarity on the systems that shape how we live, lead, and grow.
+6. Designer notes
+This page should feel like a person, not a personal brand deck.
+Keep typography calm and confident. Avoid oversized decorative treatments.
+If an image is used, it should support presence, not status.
+The strongest design tools here should be spacing, reading width, and hierarchy.
+Values can be shown as short cards or statements, but they should not feel like corporate principles.
+The Site Meaning section can carry a slightly stronger background or divider treatment to signal its importance.
+The page should create trust by sounding real, not by trying to impress.
+About should feel like the bridge that makes the whole site make sense.
+7. Launch checklist
+About is active in the header navigation.
+All sitemap sections are visibly represented on the page.
+Copy does not read like a resume or corporate biography.
+Work, Inner Life, Thoughts, and Work Together all have clear onward routes.
+Portrait image, if used, is optional and not required for the page to work.
+Mobile reading width stays calm and uncluttered.
+Footer language matches the rest of the site.

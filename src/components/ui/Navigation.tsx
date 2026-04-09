@@ -1,8 +1,7 @@
-// components/ui/Navigation.tsx
-"use client";
-
+"use client"
 import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
+import { usePathname } from "next/navigation";
 import { Moon, Sun, Mail, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -10,6 +9,7 @@ import { useState, useEffect } from "react";
 export default function Navigation() {
   const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -17,12 +17,18 @@ export default function Navigation() {
     { name: "Inner Life", href: "/inner-life" },
     { name: "Thoughts", href: "/thoughts" },
     { name: "About", href: "/about" },
+    { name: "Together", href: "/together" },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "/" && pathname !== "/") return false;
+    return pathname.startsWith(href);
+  };
 
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, []);
+  }, [pathname]);
 
   // Prevent scroll when mobile menu is open
   useEffect(() => {
@@ -54,11 +60,15 @@ export default function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
-              {navItems.map((item) => (
+              {navItems.filter(item => item.name !== "Work Together").map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-500 dark:text-gray-300 hover:text-primary px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-stone-800"
+                  className={`px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-stone-800 ${
+                    isActive(item.href) 
+                      ? "text-primary dark:text-primary font-bold" 
+                      : "text-gray-500 dark:text-gray-300 hover:text-primary"
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -81,7 +91,9 @@ export default function Navigation() {
 
               <Link
                 href="/work-together"
-                className="hidden sm:flex bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-colors items-center"
+                className={`hidden sm:flex bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-colors items-center ${
+                  isActive("/work-together") ? "ring-2 ring-primary ring-offset-2 dark:ring-offset-stone-900" : ""
+                }`}
               >
                 <Mail className="w-4 h-4 mr-2" />
                 <span className="hidden md:inline">Start a Conversation</span>
@@ -157,7 +169,11 @@ export default function Navigation() {
                         <Link
                           href={item.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex items-center w-full px-4 py-3 text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-100 dark:hover:bg-stone-800 rounded-lg transition-colors"
+                          className={`flex items-center w-full px-4 py-3 rounded-lg transition-colors ${
+                            isActive(item.href)
+                              ? "text-primary bg-primary/5 font-bold"
+                              : "text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-100 dark:hover:bg-stone-800"
+                          }`}
                         >
                           {item.name}
                         </Link>

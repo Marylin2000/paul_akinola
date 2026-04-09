@@ -1,0 +1,184 @@
+Work Together Page Implementation Spec
+Page goal
+Turn clarity into conversation without pressure.
+Primary outcome
+The visitor feels seen, understands how the conversation starts, and knows where to respond.
+Page character
+Calm, thoughtful, low-pressure, and clear.
+1. Sitemap reference and page position
+This page must directly represent the Work Together branch of the sitemap. Nothing should be implied. Each sitemap section should appear as a visible page block or as a clearly defined interaction element.
+Sitemap structure: Opening → Who this is for → What we do → How it starts → Context (Work / Life) → CTA → Return paths
+User flow for this page: Recognition → Relevance → Trust → Low-pressure process → Context selection → Conversation or continued exploration
+Role in the wider site: This page is where recognition from Work, Inner Life, Thoughts, or About becomes a clear next step. It should not feel like a sales page. It should feel like the place where understanding becomes conversation.
+2. Global page build rules
+• Header navigation: Home | Work | Inner Life | Thoughts | About | Work Together. 'Work Together' should appear as the active item.
+• Tone: Clear, grounded, personal, and calm. No hype, no consultant-style claims, and no pressure language.
+• Layout character: Text-led, spacious, and restrained. Use typography, spacing, and very light tonal shifts before using heavy boxes or decorative elements.
+• Content width: Reading sections should stay around 680 to 760 px max. Wider bands can extend to 1200 px max with strong side padding.
+• Responsive behaviour: Any two-column section stacks cleanly on tablet and mobile. Recognition lists and return-path cards should preserve spacing when stacked.
+• Interactions: Buttons, cards, and form states should be subtle. No aggressive animation, hard shadows, or loud hover treatments.
+• Conversion style: The page must lower resistance. It should make conversation feel simple, safe, and useful.
+3. Section-by-section implementation
+Section 1. Opening
+Role: Welcome the visitor into conversation without sounding transactional.
+Layout: Clean hero section. Full width. Headline and support copy in a restrained column. Optional faint structural line pattern in the background, but keep it very light.
+Build note: This section should feel warm and confident. It should read like an invitation, not a pitch.
+Final copy: 
+Eyebrow: Work Together
+Headline: If this feels familiar, this is a good place to start.
+Support copy: Sometimes what is missing is not more effort. It is a clearer understanding of what is actually shaping the outcome. This page is where that understanding turns into conversation.
+Section 2. Who this is for
+Role: Help the visitor recognise themselves quickly. This is the key relevance block on the page.
+Layout: Section heading, short intro, then a recognition list. Desktop can use a two-column list. Mobile should stack to one column. Keep the list readable and not overly boxed in.
+Build note: The list should feel like recognition, not qualification. Avoid making it sound exclusive or application-based.
+Final copy: 
+Section heading: This may be for you if any of these feel familiar.
+Section intro: You do not need to arrive with the full language for it. Sometimes it is enough to know that something is not adding up.
+Recognition points:
+• Your team is active, but the results still feel weaker than they should.
+• Decisions are being made, but not from a place of full clarity.
+• Revenue, pipeline, growth, or execution feels noisy rather than trustworthy.
+• You know something deeper is shaping the outcome, but you have not been able to name it clearly.
+• You feel stuck in a pattern that does not make sense on the surface.
+• You are trying to move forward, but something within you keeps interrupting the process.
+• You want to understand what is really going on before jumping into more action.
+• You are looking for a calmer, clearer way to think about what comes next.
+Section 3. What we do
+Role: Explain the nature of the work without turning the page into a services menu.
+Layout: Short intro copy followed by four simple principle blocks or a four-step horizontal / vertical sequence.
+Build note: This section should communicate how the conversation works. Keep the language human and exact. Avoid packaged-offer language.
+Final copy: 
+Section heading: We start by understanding what is actually going on.
+Intro: I do not start by forcing a framework over your situation. I start by listening carefully, looking for what sits underneath the surface, and helping you see the structure more clearly.
+Principle 1 title: Name what is visible
+Principle 1 body: We begin with what is not adding up on the surface.
+Principle 2 title: Look underneath it
+Principle 2 body: We look for the systems, patterns, pressures, or hidden assumptions shaping the outcome.
+Principle 3 title: Clarify what matters
+Principle 3 body: We separate signal from noise so the real issue becomes easier to see.
+Principle 4 title: Decide the next move
+Principle 4 body: Once there is clarity, it becomes easier to know what to address, what to change, and what not to force.
+Section 4. How it starts
+Role: Reduce friction by making the first step simple and concrete.
+Layout: Three-step sequence or three compact cards. Keep visual treatment lighter than a SaaS process diagram.
+Build note: The visitor should feel that this is easy to begin. Simplicity matters more than sophistication here.
+Final copy: 
+Section heading: How it starts
+Intro: Simple. Start with a short note about what is not adding up.
+Step 1 title: Share what feels unclear
+Step 1 body: Tell me, in plain language, what feels off, stuck, noisy, or hard to name.
+Step 2 title: We have a first conversation
+Step 2 body: We look at what is happening on the surface and what may be shaping it underneath.
+Step 3 title: We decide what makes sense
+Step 3 body: If there is useful next work, we define it clearly. If not, you still leave with better language and direction.
+Section 5. Context
+Role: Show that the page holds both sides of the site: work and inner life.
+Layout: Two equal cards side by side on desktop, stacked on mobile. Both cards should feel equally valid. Do not visually subordinate one to the other.
+Build note: This section matters because the whole site holds these two paths together. It should feel integrated, not split between business and personal branding.
+Final copy: 
+Section heading: Where this usually shows up
+Work card title: In work
+Work card body: This may show up in performance, growth, revenue, CRM structure, team alignment, leadership decisions, or the gap between activity and real outcomes.
+Work card CTA label: See Systems at Work
+Work card CTA destination: /work
+Life card title: In life
+Life card body: This may show up in clarity, identity, internal conflict, repeated patterns, direction, faith, hope, or the sense that something deeper is shaping how you respond.
+Life card CTA label: See Systems in Life
+Life card CTA destination: /inner-life
+Section 6. Primary CTA
+Role: Create the clearest conversion point on the page.
+Layout: A quiet full-width CTA band followed immediately by the contact method. This can be a compact form block, an email CTA, or both. Keep it minimal.
+Build note: The main CTA must feel like the natural next step, not a demand. This is the most important section on the page.
+Final copy: 
+Section heading: Start a conversation.
+Body copy: If you are trying to make sense of what is not adding up, send a short note. Start where you are. We can work out the rest from there.
+Primary CTA label: Start a Conversation
+Section 7. Return paths
+Role: Give visitors a softer next step if they are not ready to reach out yet.
+Layout: Three lighter cards or text links. Desktop can use a three-column layout. Mobile should stack cleanly.
+Build note: These are genuine alternatives, not distractions. The page should still feel generous even when someone is not ready to convert.
+Final copy: 
+Section heading: Or keep exploring first.
+Thoughts title: Notes and reflections
+Thoughts body: Read the ideas behind the site and follow the thinking more deeply.
+Thoughts CTA label: Go to Thoughts
+Thoughts CTA destination: /thoughts
+Work title: Systems at Work
+Work body: Explore how systems shape performance, decisions, revenue, and growth.
+Work CTA label: Go to Work
+Work CTA destination: /work
+Life title: Systems in Life
+Life body: Explore how inner systems shape behaviour, identity, resilience, faith, and meaning.
+Life CTA label: Go to Inner Life
+Life CTA destination: /inner-life
+Section 8. Footer transition
+Role: Close the page cleanly and keep the site language consistent.
+Layout: Simple line above the main footer, or incorporated directly into the footer.
+Build note: Keep it quiet.
+Final copy: Footer line: Clarity on the systems that shape how we live, lead, and grow.
+4. Contact block implementation spec
+Recommended implementation: place a compact contact form directly beneath the main CTA. If a form is not possible at launch, use a mailto link or booking link, but the page should still preserve the same heading and helper copy.
+Field
+Type
+Required
+Final label / helper text
+Name
+Text
+Yes
+Label: Your name
+Email
+Email
+Yes
+Label: Your email
+Context
+Select
+Yes
+Label: Where is this showing up?
+Options: Work | Life | Both
+Recognition fit
+Select or checkboxes
+No
+Label: What feels most familiar?
+Options: Clarity | Growth | Revenue / systems | Patterns / behaviour | Direction | Something else
+Message
+Textarea
+Yes
+Label: What is not adding up?
+Helper text: A few honest lines is enough.
+Submit
+Button
+—
+Label: Start a Conversation
+• Success state message: Thanks. I have your note and will come back to you soon.
+• Error tone: Keep it plain and helpful. Example: Please add your email so I can reply.
+• If there is a booking link instead of a form, keep the same CTA heading and body, then use button label: Start a Conversation.
+Add this personal note to give assurance – ‘I read every note personally and respond within a few days.’
+5. Content model and CMS notes
+• The recognition list should be editable as individual items in the CMS or page builder.
+• The two context cards and three return-path cards should be editable blocks so titles, body copy, and destinations can change later without redesign.
+• The page should support either a contact form, a booking link, or a mailto pattern without changing the overall layout.
+• If analytics are added later, track clicks on Start a Conversation, form submissions, and clicks to Work, Inner Life, and Thoughts from the return-path section.
+• Use UK spelling throughout.
+6. Designer notes
+• This page should feel more relational than the Work page and more practical than the About page.
+• Avoid the visual language of a typical agency contact page. No oversized contact icons, no busy sidebars, and no overdesigned forms.
+• Let typography and spacing carry most of the page. Use tonal shifts or thin dividers only where helpful.
+• Recognition and process sections should feel trustworthy and easy to read, not like boxed feature modules.
+• The context cards should visibly belong to the same site family as Work and Inner Life.
+• The CTA area should feel clear and calm. The goal is to reduce friction, not create urgency.
+7. Launch checklist
+• Confirm 'Work Together' is active in the header nav.
+• Confirm all sitemap sections are visible on the page.
+• Confirm the main CTA is visible without sounding sales-heavy.
+• Confirm the form or contact method is placed directly under the CTA section.
+• Confirm the Work and Life context cards route to /work and /inner-life.
+• Confirm the return paths route to /thoughts, /work, and /inner-life.
+• Confirm the page feels consistent with Home, Work, Inner Life, Thoughts, and About.
+• Confirm spacing remains generous on desktop and mobile.
+8. Technical content map
+Browser title: Paul Akinola | Work Together
+Meta description: Start a conversation about what is not adding up in your work, your team, or your inner life. A calm place to turn clarity into conversation.
+Primary H1: If this feels familiar, this is a good place to start.
+Suggested section IDs: opening | who-this-is-for | what-we-do | how-it-starts | context | start-a-conversation | return-paths | footer
+CTA URL map: See Systems at Work → /work | See Systems in Life → /inner-life | Go to Thoughts → /thoughts | Start a Conversation → on-page form, mailto, or booking link set by Paul
+This page should feel like a clear and generous invitation. It should help people feel understood before they are asked to respond.

@@ -11,7 +11,7 @@ export default function Footer() {
     { name: "Inner Life", href: "/inner-life" },
     { name: "Thoughts", href: "/thoughts" },
     { name: "About", href: "/about" },
-    { name: "Work Together", href: "/work-together" },
+    { name: "Together", href: "/together" },
   ];
 
   return (
