@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function AboutMechanics() {
   return (
-    <section className="py-24 border-y border-rule">
+    <section className="border-y border-rule bg-background py-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">

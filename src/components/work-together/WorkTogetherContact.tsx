@@ -18,7 +18,7 @@ export default function WorkTogetherContact() {
 
   if (formState === "success") {
     return (
-      <section className="py-24 bg-stone-900 text-white text-center transition-colors duration-700">
+      <section id="contact" className="scroll-mt-24 bg-stone-900 py-24 text-center text-white transition-colors duration-700">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -36,7 +36,7 @@ export default function WorkTogetherContact() {
   }
 
   return (
-    <section id="start-a-conversation" className="py-32 bg-background border-t border-rule">
+    <section id="contact" className="border-t border-rule bg-background py-32 scroll-mt-24">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto">
           <header className="mb-16 text-center">

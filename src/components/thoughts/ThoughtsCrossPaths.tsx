@@ -22,7 +22,7 @@ const paths = [
   {
     label: "Work Together",
     support: "Start a conversation if the thinking connects to something real.",
-    href: "/work-together"
+    href: "/together#contact"
   }
 ];
 

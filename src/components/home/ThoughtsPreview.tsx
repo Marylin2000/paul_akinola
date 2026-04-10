@@ -10,19 +10,19 @@ export default function ThoughtsPreview() {
       category: "Work",
       title: "Why pipeline problems rarely start in the pipeline",
       excerpt: "Pipeline weakness is often the visible result of poor signal design, weak handoffs, and systems that were never built for clarity.",
-      destination: "/thoughts"
+      destination: "/thoughts/pipeline-volume-hides-weak-signal"
     },
     {
       category: "Life",
       title: "The patterns beneath behaviour",
       excerpt: "Not everything can be explained by willpower. Some of what shapes us sits deeper than habits and shows up in how we respond to pressure, fear, and uncertainty.",
-      destination: "/thoughts"
+      destination: "/thoughts/fighting-the-nameable"
     },
     {
       category: "Core",
-      title: "Not everything shaping a life is visible",
-      excerpt: "Some realities are structural. Some are internal. Some are spiritual. Clarity begins when we stop reducing life to only what can be measured.",
-      destination: "/thoughts"
+      title: "When you start seeing systems",
+      excerpt: "The moment you stop treating outcomes as isolated events, you start seeing what is really shaping them. The shift from symptom to structure.",
+      destination: "/thoughts/start-seeing-systems"
     }
   ];
 

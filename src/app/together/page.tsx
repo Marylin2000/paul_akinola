@@ -4,10 +4,12 @@ import WorkTogetherMethod from "@/components/work-together/WorkTogetherMethod";
 import WorkTogetherContact from "@/components/work-together/WorkTogetherContact";
 import WorkTogetherContext from "@/components/work-together/WorkTogetherContext";
 import WorkTogetherReturnPaths from "@/components/work-together/WorkTogetherReturnPaths";
+import ScrollToHash from "@/components/work-together/ScrollToHash";
 
 export default function WorkTogetherPage() {
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">
+      <ScrollToHash />
       <WorkTogetherHero />
       <WorkTogetherRelevance />
       <WorkTogetherMethod />

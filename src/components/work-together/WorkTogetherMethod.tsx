@@ -38,7 +38,7 @@ const steps = [
 
 export default function WorkTogetherMethod() {
   return (
-    <section className="py-24 border-t border-rule">
+    <section className="border-t border-rule bg-background py-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           {/* Principles */}

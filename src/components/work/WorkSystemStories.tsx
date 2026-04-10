@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, Minus, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 const stories = [
   {
@@ -40,6 +41,7 @@ const stories = [
   {
     num: "03",
     title: "When revenue systems hide what matters",
+    slug: "revenue-systems-hide-matters",
     preview: "The reporting existed. Dashboards were built. Numbers were visible. But when leadership looked at the data, they weren&apos;t confident in what they were seeing. Forecasts felt unreliable.",
     full: (
       <>
@@ -55,6 +57,7 @@ const stories = [
   {
     num: "04",
     title: "When product signal never becomes go-to-market action",
+    slug: "product-signal-gtm-action",
     preview: "There was no shortage of product data. Users were interacting, signals were being generated. But that data was not reaching the people responsible for pipeline. Sales didn&apos;t know which accounts were active.",
     full: (
       <>
@@ -127,6 +130,14 @@ export default function WorkSystemStories() {
                   >
                     <div className="space-y-4 text-[0.88rem] font-light leading-relaxed text-foreground/70">
                       {story.full}
+                    </div>
+                    <div className="mt-8 pt-8 border-t border-stone-100 dark:border-stone-800">
+                      <Link 
+                        href={`/thoughts/${story.slug}`}
+                        className="inline-flex items-center text-sm font-medium text-stone-900 dark:text-stone-100 hover:gap-2 transition-all"
+                      >
+                        Read the full story <ArrowRight className="ml-2 w-4 h-4" />
+                      </Link>
                     </div>
                   </motion.div>
                 ) : (

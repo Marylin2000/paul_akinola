@@ -4,7 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
+import FloatingParticles from "@/components/ui/FloatingParticles";
 import { Playfair_Display, Outfit } from "next/font/google";
+import Script from "next/script";
 
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -66,10 +68,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.variable} ${outfit.variable} font-sans antialiased bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 transition-colors duration-500`}>
-
+      <body className={`${playfair.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground transition-colors duration-500`}>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();`}
+        </Script>
         <ThemeProvider>
-          
+          <FloatingParticles />
         <Navigation/>
           {children}
         <Footer/>

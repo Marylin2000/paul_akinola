@@ -21,11 +21,11 @@ export default function WorkTogetherPreview() {
             If you are trying to make sense of what is not adding up in your work, your team, or your inner life, start with a conversation.
           </p>
           <Link 
-            href="/work-together"
+            href="/together#contact"
             className="group inline-flex items-center justify-center px-8 py-4 bg-white text-stone-900 rounded-full font-medium transition-transform hover:scale-105"
           >
             Start a Conversation
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:transtone-x-1 transition-transform" />
+            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </motion.div>
       </div>

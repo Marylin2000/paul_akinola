@@ -90,9 +90,9 @@ export default function Navigation() {
               </button>
 
               <Link
-                href="/work-together"
+                href="/together/#contact"
                 className={`hidden sm:flex bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-colors items-center ${
-                  isActive("/work-together") ? "ring-2 ring-primary ring-offset-2 dark:ring-offset-stone-900" : ""
+                  isActive("/together") ? "ring-2 ring-primary ring-offset-2 dark:ring-offset-stone-900" : ""
                 }`}
               >
                 <Mail className="w-4 h-4 mr-2" />
@@ -185,7 +185,7 @@ export default function Navigation() {
                 {/* Footer */}
                 <div className="p-6 border-t border-gray-200 dark:border-stone-700">
                   <Link
-                    href="/work-together"
+                    href="/together#contact"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center justify-center w-full bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-lg font-medium transition-colors"
                   >

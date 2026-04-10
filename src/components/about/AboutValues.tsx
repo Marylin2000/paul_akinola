@@ -31,7 +31,7 @@ const values = [
 
 export default function AboutValues() {
   return (
-    <section className="py-32">
+    <section className="bg-background py-32 transition-colors duration-500">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div

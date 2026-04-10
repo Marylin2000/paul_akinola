@@ -1,113 +1,109 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { thoughts } from "@/data/thoughts";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-const journalItems = [
-  {
-    title: "Growth motion only works when it fits the business",
-    excerpt: "A growth model can look right on paper and still fail in practice when it does not match the product, the buyer, or the stage.",
-    tag: "Work"
-  },
-  {
-    title: "When pipeline volume hides weak signal",
-    excerpt: "More pipeline does not automatically mean more confidence. The real question is whether the signal underneath it can be trusted.",
-    tag: "Work"
-  },
-  {
-    title: "When CRM structure quietly shapes revenue outcomes",
-    excerpt: "CRM problems often show up as reporting or routing issues, but the real effect is deeper: the system starts shaping revenue itself.",
-    tag: "Work"
-  },
-  {
-    title: "Why busy teams still lose clarity",
-    excerpt: "Activity can create the feeling of momentum while the system underneath keeps decisions fragmented and outcomes weak.",
-    tag: "Work"
-  },
-  {
-    title: "Why inconsistency is rarely the real problem",
-    excerpt: "The struggle is often not a lack of intention. It is the inner pattern underneath the effort.",
-    tag: "Life"
-  },
-  {
-    title: "What hope is doing underneath confusion",
-    excerpt: "Hope is not denial. Sometimes it is the quiet force that keeps a person moving before clarity fully arrives.",
-    tag: "Life"
-  },
-  {
-    title: "When clarity is blocked by the system beneath it",
-    excerpt: "You can want clarity badly and still not reach it when the inner system is shaping what you can see.",
-    tag: "Life"
-  },
-  {
-    title: "You are not always fighting the thing you can name",
-    excerpt: "Sometimes the struggle you can describe is only the surface of something deeper that has not yet been understood.",
-    tag: "Life"
-  },
-  {
-    title: "What changes when you start seeing systems",
-    excerpt: "The shift is not only intellectual. It changes how you read outcomes, relationships, and your own decisions.",
-    tag: "Core"
-  },
-  {
-    title: "The same lack of clarity shows up in work and life",
-    excerpt: "We often separate professional problems from personal ones, but the same hidden patterns can shape both.",
-    tag: "Core"
-  },
-  {
-    title: "Clarity is not the end goal. It is the beginning.",
-    excerpt: "Clarity matters because it becomes the starting point for better judgment, better direction, and better action.",
-    tag: "Core"
-  }
-];
+function JournalContent() {
+  const searchParams = useSearchParams();
+  const categoryFilter = searchParams.get("category");
+
+  const filteredThoughts = categoryFilter 
+    ? thoughts.filter(t => t.tag.toLowerCase() === categoryFilter.toLowerCase())
+    : thoughts;
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, x: -10 },
+    show: { opacity: 1, x: 0 },
+  };
+
+  return (
+    <section className="py-24 px-6 bg-stone-50 dark:bg-stone-900/30 transition-colors">
+      <div className="max-w-3xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <h2 className="text-sm font-medium text-stone-400 dark:text-stone-600 uppercase tracking-widest mb-4">
+              Notes and Reflections
+            </h2>
+            <p className="text-stone-600 dark:text-stone-400">
+              {categoryFilter ? `Showing reflections tagged with "${categoryFilter}"` : "Ongoing reading, observations, and inquiries."}
+            </p>
+          </div>
+          
+          {categoryFilter && (
+            <Link 
+              href="/thoughts" 
+              className="text-xs font-medium text-stone-900 dark:text-stone-100 hover:underline decoration-stone-300 underline-offset-4"
+            >
+              Clear filter
+            </Link>
+          )}
+        </div>
+
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          {filteredThoughts.map((thought) => (
+            <motion.div 
+              key={thought.slug} 
+              variants={item}
+              className="group border-b border-stone-100 dark:border-stone-800 pb-12 last:border-0"
+            >
+              <Link href={`/thoughts/${thought.slug}`} className="block">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[10px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-widest px-2 py-0.5 border border-stone-200 dark:border-stone-800 rounded">
+                    {thought.tag}
+                  </span>
+                </div>
+                
+                <h3 className="text-2xl md:text-3xl font-serif text-stone-900 dark:text-stone-100 mb-4 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors leading-tight">
+                  {thought.title}
+                </h3>
+                
+                <p className="text-stone-500 dark:text-stone-400 text-base md:text-lg leading-relaxed mb-6 line-clamp-2">
+                  {thought.excerpt}
+                </p>
+                
+                <span className="inline-flex items-center text-xs font-medium text-stone-900 dark:text-stone-100 group-hover:translate-x-1 transition-transform">
+                  Read reflection <ArrowRight className="ml-2 w-3 h-3" />
+                </span>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+        
+        {filteredThoughts.length === 0 && (
+          <div className="py-20 text-center border border-dashed border-stone-200 dark:border-stone-800 rounded-lg">
+            <p className="text-stone-400">No reflections found in this category.</p>
+            <Link href="/thoughts" className="text-stone-900 dark:text-stone-100 text-sm mt-4 inline-block hover:underline">Show all</Link>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 export default function ThoughtsJournal() {
   return (
-    <section className="py-24 bg-stone-50/30 dark:bg-stone-900/10 border-t border-rule">
-      <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto">
-          <header className="mb-16">
-            <h2 className="font-serif text-3xl mb-4">Notes and reflections</h2>
-            <div className="w-12 h-px bg-primary/30" />
-          </header>
-          
-          <div className="space-y-16">
-            {journalItems.map((item, index) => (
-              <motion.article
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="group relative"
-              >
-                <Link 
-                  href={`/thoughts/${item.title.toLowerCase().replace(/ /g, '-')}`}
-                  className="block"
-                >
-                  <span className="text-[0.6rem] font-bold uppercase tracking-widest text-primary/40 block mb-3">
-                    {item.tag}
-                  </span>
-                  <h3 className="font-serif text-2xl mb-4 group-hover:text-primary transition-colors duration-300 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-foreground/60 leading-relaxed font-light mb-6 line-clamp-2">
-                    {item.excerpt}
-                  </p>
-                  <span className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-foreground/30 group-hover:text-primary/60 transition-colors">
-                    Read Reflection
-                  </span>
-                </Link>
-                
-                {/* Visual Separator */}
-                {index !== journalItems.length - 1 && (
-                  <div className="absolute -bottom-8 left-0 w-8 h-px bg-rule/40" />
-                )}
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+    <Suspense fallback={<div className="py-24 text-center">Loading journal...</div>}>
+      <JournalContent />
+    </Suspense>
   );
 }

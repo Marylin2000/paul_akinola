@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function AboutWorldview() {
   return (
-    <section className="py-24 border-t border-rule">
+    <section className="border-t border-rule bg-background py-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-4">

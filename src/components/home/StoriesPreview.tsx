@@ -10,29 +10,29 @@ export default function StoriesPreview() {
       type: "Work",
       title: "When growth motion and business stage do not match",
       excerpt: "Sometimes the problem is not execution. It is a mismatch between the company's stage, the motion it is trying to run, and the systems needed to support it.",
-      ctaLabel: "View Work Story",
-      ctaDestination: "/work#system-stories"
+      ctaLabel: "Read Story",
+      ctaDestination: "/thoughts/growth-motion-fits-business"
     },
     {
       type: "Work",
       title: "When CRM structure hides revenue truth",
       excerpt: "A CRM can collect a lot of information and still fail to create clarity. Structure, lifecycle design, and signal quality shape whether the revenue story can actually be trusted.",
-      ctaLabel: "View Work Story",
-      ctaDestination: "/work#system-stories"
+      ctaLabel: "Read Story",
+      ctaDestination: "/thoughts/crm-structure-revenue-outcomes"
     },
     {
       type: "Life",
       title: "When discipline is not the real issue",
       excerpt: "What looks like inconsistency on the surface is often rooted in deeper patterns of fear, identity, belief, and internal strain.",
-      ctaLabel: "View Life Story",
-      ctaDestination: "/inner-life#life-stories"
+      ctaLabel: "Read Story",
+      ctaDestination: "/thoughts/inconsistency-rarely-real-problem"
     },
     {
       type: "Life",
       title: "When hope gets lost in confusion",
       excerpt: "People do not only need answers. They need language for what is happening within them, and hope that change is still possible.",
-      ctaLabel: "View Life Story",
-      ctaDestination: "/inner-life#life-stories"
+      ctaLabel: "Read Story",
+      ctaDestination: "/thoughts/hope-underneath-confusion"
     }
   ];
 

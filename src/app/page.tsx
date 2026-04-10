@@ -13,7 +13,7 @@ import WorkTogetherPreview from "@/components/home/WorkTogetherPreview";
 
 export default function Home() {
   return (
-    <main className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Hero />
       <CoreLens />
       <WhatIDo />
