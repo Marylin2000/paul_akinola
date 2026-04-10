@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-const leftImage =
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80";
+const leftImage ="/images/img3.png"
 const rightImage =
-  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+  "/images/img4.png";
 
 function SideImage({
   src,
