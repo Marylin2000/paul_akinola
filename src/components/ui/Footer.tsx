@@ -16,7 +16,7 @@ export default function Footer({ transitionLine }: FooterProps) {
     { name: "Inner Life", href: "/inner-life" },
     { name: "Thoughts", href: "/thoughts" },
     { name: "About", href: "/about" },
-    { name: "Work Together", href: "/together#contact" },
+    { name: "Together", href: "/together#contact" },
   ];
 
   return (
@@ -38,9 +38,9 @@ export default function Footer({ transitionLine }: FooterProps) {
           </p>
           </div>
           <div className="flex grid grid-cols-2 flex-wrap justify-center gap-6 mb-8">
-            {footerLinks.map((link) => (
+            {footerLinks.map((link,index) => (
               <Link
-                key={link.name}
+                key={index}
                 href={link.href}
                 className="text-stone-300 hover:text-white transition-colors text-sm font-medium"
               >
@@ -76,12 +76,12 @@ export default function Footer({ transitionLine }: FooterProps) {
                     href: "https://github.com/paul_ankinola",
                     icon: <FaGithub size={25} />
                   }
-                ].map((social)=>{
+                ].map((social,index)=>{
                   return (
 
                     <div> 
                       <Link
-                        key={social.name}
+                        key={index}
                         href={social.href}
                         className="text-stone-300 hover:text-white transition-colors text-sm font-medium"
                       >
