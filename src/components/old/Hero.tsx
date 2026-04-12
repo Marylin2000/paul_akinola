@@ -9,7 +9,7 @@ export default function Hero() {
   const parallaxOffset = useParallax(0.3);
 
   return (
-    <section className="pt-16 min-h-screen bg-gradient-to-br from-stone-50 via-blue-50 to-purple-50 dark:from-stone-900 dark:via-stone-800 dark:to-purple-900 relative overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-gradient-to-br from-stone-50 via-blue-50 to-purple-50 dark:from-stone-900 dark:via-stone-800 dark:to-purple-900">
       {/* Enhanced Parallax Background Elements */}
       <motion.div
         style={{ y: parallaxOffset * 0.5 }}
@@ -386,7 +386,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 transform -transtone-x-1/2"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}

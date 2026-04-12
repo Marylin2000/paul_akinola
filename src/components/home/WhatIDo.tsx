@@ -50,7 +50,7 @@ const offerings: Offering[] = [
       },
     ],
     imageSrc:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+      "/images/32.png",
     imageAlt: "Calm mountain vista suggesting space for reflection",
   },
   {
@@ -80,7 +80,7 @@ const offerings: Offering[] = [
       },
     ],
     imageSrc:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      "/images/9a.png",
     imageAlt: "Team collaborating around a table",
   },
   {
@@ -110,7 +110,7 @@ const offerings: Offering[] = [
       },
     ],
     imageSrc:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+      "/images/2.png",
     imageAlt: "City buildings representing organisational structure",
   },
 ];

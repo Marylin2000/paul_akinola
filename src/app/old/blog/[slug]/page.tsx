@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import BlogPost from "@/components/BlogPost";
+import BlogPost from "@/components/old/BlogPost";
 import { getPostBySlug, getAllPosts, getRelatedPosts } from "@/lib/blog";
 
 interface BlogPostPageProps {

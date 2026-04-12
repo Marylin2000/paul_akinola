@@ -1,0 +1,529 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;padding:1rem;background:#fafaf8}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tab{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid #ccc;cursor:pointer;color:#555;background:#fff;transition:all .15s}
+.tab.active{background:#534AB7;color:#fff;border-color:#534AB7}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:10px}
+.card{border-radius:14px;padding:14px;border:1px solid #e8e6e0;background:#fff;margin-bottom:10px}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.card-title{font-size:14px;font-weight:500;color:#1a1818}
+.card-tag{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:500;margin-left:auto}
+.card-body{font-size:12px;color:#555;line-height:1.6;margin-bottom:8px}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:3px 10px;border-radius:8px;font-weight:500}
+
+/* IDE mockup */
+.ide-wrap{background:#1e1e2e;border-radius:14px;overflow:hidden;margin-bottom:10px;font-family:monospace}
+.ide-bar{background:#2d2d3f;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.ide-dot{width:10px;height:10px;border-radius:50%}
+.ide-tab{font-size:11px;color:#ccc;padding:3px 10px;background:#1e1e2e;border-radius:4px 4px 0 0}
+.ide-body{padding:12px;font-size:11px;line-height:1.8}
+.kw{color:#c792ea}.fn{color:#82aaff}.str{color:#c3e88d}.cm{color:#546e7a}.var{color:#f07178}.num{color:#f78c6c}
+.terminal{background:#0d1117;border-radius:10px;padding:12px;font-family:monospace;font-size:11px;line-height:1.8;margin-bottom:10px}
+.t-prompt{color:#4ade80}.t-cmd{color:#fff}.t-out{color:#94a3b8}.t-err{color:#f87171}.t-ok{color:#4ade80}
+
+/* Doctor canvas */
+.patient-card{background:#fff;border-radius:12px;border:1px solid #e8e6e0;padding:12px;margin-bottom:8px}
+.vitals-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.vital{border-radius:10px;padding:8px 10px;text-align:center;flex:1;min-width:70px}
+.vital-val{font-size:16px;font-weight:500}
+.vital-label{font-size:10px;color:#888;margin-top:2px}
+.chart-bar{height:6px;border-radius:3px;margin-top:4px}
+.drug-chip{border-radius:8px;padding:5px 10px;font-size:11px;font-weight:500;cursor:pointer;display:inline-block;margin:3px;border:1px solid;transition:all .15s}
+.drug-chip:hover{transform:scale(1.05)}
+.drug-chip.selected{border-width:2px}
+
+/* Farm canvas */
+.farm-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:10px}
+.plot{width:100%;aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:1px solid;transition:all .2s}
+.plot:hover{transform:scale(1.1)}
+.sensor-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.sensor{border-radius:10px;padding:8px;flex:1;min-width:80px;text-align:center}
+.sensor-val{font-size:14px;font-weight:500}
+.sensor-label{font-size:10px;color:#888}
+
+/* Design canvas */
+.design-canvas{background:#f8f7f5;border-radius:12px;border:2px dashed #ccc;padding:16px;text-align:center;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:8px;position:relative;overflow:hidden}
+.layer-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:#f5f4f0;margin-bottom:4px;cursor:pointer}
+.layer-eye{font-size:12px;color:#888}
+.layer-name{font-size:12px;color:#333;flex:1}
+.layer-type{font-size:10px;color:#888}
+
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.feature-card{border-radius:12px;padding:12px;border:1px solid #e8e6e0;background:#fff}
+.feature-title{font-size:12px;font-weight:500;color:#1a1818;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.feature-desc{font-size:11px;color:#555;line-height:1.5}
+
+.arch-box{border-radius:10px;padding:10px 12px;border-left:3px solid;margin-bottom:6px;font-size:12px;line-height:1.6}
+.arch-title{font-weight:500;margin-bottom:2px}
+
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.compare-card{border-radius:12px;padding:12px;border:1px solid #e8e6e0}
+.compare-title{font-size:12px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.compare-item{font-size:11px;color:#555;padding:3px 0;display:flex;align-items:flex-start;gap:5px;line-height:1.4}
+.bullet{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+</style>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="sw('overview')">Overview</button>
+  <button class="tab" onclick="sw('dev')">Developer canvas</button>
+  <button class="tab" onclick="sw('doctor')">Doctor canvas</button>
+  <button class="tab" onclick="sw('farmer')">Farmer canvas</button>
+  <button class="tab" onclick="sw('designer')">Designer canvas</button>
+  <button class="tab" onclick="sw('tech')">How to build it</button>
+  <button class="tab" onclick="sw('impact')">Business impact</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="panel-overview" class="panel active">
+  <div class="sec">The big idea — CareerWorld Sandbox</div>
+  <div style="border-radius:12px;padding:14px;background:#EEEDFE;border:1px solid #AFA9EC;margin-bottom:14px;font-size:13px;color:#3C3489;line-height:1.7">
+    <strong style="color:#26215C;font-size:14px">From gamified learning → real career simulation.</strong><br>
+    After completing the 5-mission story path, kids unlock a <strong>real-world sandbox canvas</strong> for each career. It's not pretend anymore — they write actual code that runs, diagnose simulated patients with real medical logic, manage real farm sensors, design with real tools. The game becomes a career launchpad.
+  </div>
+
+  <div class="sec">What changes at each stage</div>
+  <div style="display:flex;flex-direction:column;gap:0;margin-bottom:14px">
+    <div style="display:flex;gap:12px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center"><div style="width:32px;height:32px;border-radius:50%;background:#E1F5EE;border:2px solid #1D9E75;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#085041;flex-shrink:0">1</div><div style="width:2px;flex:1;background:#9FE1CB;margin:3px 0"></div></div>
+      <div style="background:#E1F5EE;border-radius:12px;padding:10px 12px;flex:1;margin-bottom:8px"><div style="font-size:12px;font-weight:500;color:#085041">Story missions (ages 4–10)</div><div style="font-size:11px;color:#0F6E56">Cartoon narrative, guided missions, drag-and-drop activities. Introduces career concepts through play.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center"><div style="width:32px;height:32px;border-radius:50%;background:#FAEEDA;border:2px solid #EF9F27;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#633806;flex-shrink:0">2</div><div style="width:2px;flex:1;background:#FAC775;margin:3px 0"></div></div>
+      <div style="background:#FAEEDA;border-radius:12px;padding:10px 12px;flex:1;margin-bottom:8px"><div style="font-size:12px;font-weight:500;color:#633806">Challenge missions (ages 10–12)</div><div style="font-size:11px;color:#854F0B">Timed quizzes, decision trees, real data. Kids see consequences of their choices. Still guided but harder.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center"><div style="width:32px;height:32px;border-radius:50%;background:#EEEDFE;border:2px solid #7F77DD;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#26215C;flex-shrink:0">3</div><div style="width:2px;flex:1;background:#CECBF6;margin:3px 0"></div></div>
+      <div style="background:#EEEDFE;border-radius:12px;padding:10px 12px;flex:1;margin-bottom:8px"><div style="font-size:12px;font-weight:500;color:#26215C">🆕 Real-world sandbox (ages 12–14+)</div><div style="font-size:11px;color:#534AB7">Live coding environment, patient simulator, farm sensor dashboard, design canvas. No guardrails — real tools, real output, real stakes.</div></div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <div style="width:32px;height:32px;border-radius:50%;background:#FAECE7;border:2px solid #D85A30;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#712B13;flex-shrink:0">4</div>
+      <div style="background:#FAECE7;border-radius:12px;padding:10px 12px;flex:1"><div style="font-size:12px;font-weight:500;color:#712B13">🆕 Portfolio & certification (any age)</div><div style="font-size:11px;color:#993C1D">Sandbox output saved to portfolio. Real certificates. Shareable proof of skill that means something to schools and future employers.</div></div>
+    </div>
+  </div>
+
+  <div class="sec">6 career canvases</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-title"><span>💻</span><span style="color:#3C3489">Developer Canvas</span></div>
+      <div class="feature-desc">Real code editor, live preview, deploy to URL, manage a database, read server logs</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>🩺</span><span style="color:#712B13">Doctor Canvas</span></div>
+      <div class="feature-desc">Patient simulator with real vitals, diagnosis tree, prescription system, surgery sim</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>👨‍🌾</span><span style="color:#085041">Farmer Canvas</span></div>
+      <div class="feature-desc">IoT sensor dashboard, crop lifecycle sim, weather events, market pricing</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>🎨</span><span style="color:#72243E">Designer Canvas</span></div>
+      <div class="feature-desc">Real vector design tool, brand kit builder, export to PNG/SVG, client feedback loop</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>💼</span><span style="color:#0C447C">Business Canvas</span></div>
+      <div class="feature-desc">Financial modelling, pitch deck builder, market simulation, P&L management</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>🔬</span><span style="color:#04342C">Marine Bio Canvas</span></div>
+      <div class="feature-desc">Water quality lab, species database, conservation impact simulator, research report generator</div>
+    </div>
+  </div>
+</div>
+
+<!-- DEVELOPER CANVAS -->
+<div id="panel-dev" class="panel">
+  <div class="sec">Developer canvas — what kids actually do</div>
+
+  <div class="ide-wrap">
+    <div class="ide-bar">
+      <div class="ide-dot" style="background:#ff5f57"></div>
+      <div class="ide-dot" style="background:#febc2e"></div>
+      <div class="ide-dot" style="background:#28c840"></div>
+      <div class="ide-tab">app.js</div>
+      <div class="ide-tab" style="opacity:.5">database.js</div>
+      <div style="margin-left:auto;font-size:10px;color:#888">CareerWorld IDE · Node.js sandbox</div>
+    </div>
+    <div class="ide-body">
+      <span class="cm">// Mission: Build a weather API for Lagos</span><br>
+      <span class="kw">const</span> <span class="var">express</span> = <span class="fn">require</span>(<span class="str">'express'</span>);<br>
+      <span class="kw">const</span> <span class="var">app</span> = <span class="fn">express</span>();<br><br>
+      <span class="var">app</span>.<span class="fn">get</span>(<span class="str">'/weather'</span>, (<span class="var">req</span>, <span class="var">res</span>) => {<br>
+      &nbsp;&nbsp;<span class="var">res</span>.<span class="fn">json</span>({<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">city</span>: <span class="str">'Lagos'</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">temp</span>: <span class="num">32</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">humidity</span>: <span class="num">78</span><br>
+      &nbsp;&nbsp;});<br>
+      });<br><br>
+      <span class="var">app</span>.<span class="fn">listen</span>(<span class="num">3000</span>);<br>
+      <span class="cm">// ✦ cursor blinking here</span>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install express</span><br>
+    <span class="t-out">added 57 packages in 2.3s</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">node app.js</span><br>
+    <span class="t-ok">✓ Server running on port 3000</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">curl localhost:3000/weather</span><br>
+    <span class="t-ok">{"city":"Lagos","temp":32,"humidity":78}</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">careerworld deploy</span><br>
+    <span class="t-out">Deploying to careerworld.app/amara-weather...</span><br>
+    <span class="t-ok">✓ Live at https://careerworld.app/amara-weather</span>
+  </div>
+
+  <div class="sec">Sandbox levels for developer</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#EEEDFE">🟢</div>
+      <div class="card-title">Level 1 — Block IDE (visual)</div>
+      <span class="card-tag" style="background:#E1F5EE;color:#085041">Ages 8–11</span>
+    </div>
+    <div class="card-body">Scratch-style drag-and-drop coding blocks. Kids assemble logic visually. Output is real — a working mini app runs in a WebView. Introduces functions, loops, conditionals without syntax.</div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#CECBF6">🟡</div>
+      <div class="card-title">Level 2 — Guided text IDE</div>
+      <span class="card-tag" style="background:#FAEEDA;color:#633806">Ages 11–12</span>
+    </div>
+    <div class="card-body">Real JavaScript/Python but with inline hints and autocomplete. Kids write actual code. Output runs in a sandboxed Node.js environment. Tasks: build an API, connect to a JSON database, handle errors.</div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background:#7F77DD">🔴</div>
+      <div class="card-title">Level 3 — Full sandbox (production sim)</div>
+      <span class="card-tag" style="background:#EEEDFE;color:#3C3489">Ages 12–14+</span>
+    </div>
+    <div class="card-body">Deploy a real app. Manage a live SQLite database. Read server logs. Handle simulated traffic spikes. Introduce CI/CD concepts. Kids get a real URL they can share. This is junior developer territory.</div>
+  </div>
+
+  <div class="sec">Real-world tasks kids complete</div>
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <div style="background:#EEEDFE;border-radius:8px;padding:8px 12px;font-size:11px;color:#3C3489">🔨 Build and deploy a Lagos traffic tracker API with live data</div>
+    <div style="background:#EEEDFE;border-radius:8px;padding:8px 12px;font-size:11px;color:#3C3489">🗃️ Design a database schema for a school attendance system</div>
+    <div style="background:#EEEDFE;border-radius:8px;padding:8px 12px;font-size:11px;color:#3C3489">🐛 Debug a broken e-commerce checkout — find 3 bugs under time pressure</div>
+    <div style="background:#EEEDFE;border-radius:8px;padding:8px 12px;font-size:11px;color:#3C3489">📊 Build a dashboard that reads CSV data and displays it visually</div>
+    <div style="background:#EEEDFE;border-radius:8px;padding:8px 12px;font-size:11px;color:#3C3489">🚀 Deploy v2 of your app without breaking v1 — zero-downtime deploy</div>
+  </div>
+</div>
+
+<!-- DOCTOR CANVAS -->
+<div id="panel-doctor" class="panel">
+  <div class="sec">Doctor canvas — patient simulator</div>
+
+  <div class="patient-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div>
+        <div style="font-size:13px;font-weight:500;color:#1a1818">Patient: Chidi Okafor, 8yrs</div>
+        <div style="font-size:11px;color:#888">Presenting: Fever + fatigue for 3 days</div>
+      </div>
+      <div style="background:#FAECE7;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:500;color:#712B13">⚠️ Moderate</div>
+    </div>
+    <div class="vitals-row">
+      <div class="vital" style="background:#FAECE7">
+        <div class="vital-val" style="color:#D85A30">39.2°C</div>
+        <div class="vital-label">Temperature</div>
+        <div class="chart-bar" style="background:#D85A30;width:75%"></div>
+      </div>
+      <div class="vital" style="background:#E6F1FB">
+        <div class="vital-val" style="color:#378ADD">118 bpm</div>
+        <div class="vital-label">Heart rate</div>
+        <div class="chart-bar" style="background:#378ADD;width:65%"></div>
+      </div>
+      <div class="vital" style="background:#E1F5EE">
+        <div class="vital-val" style="color:#1D9E75">96%</div>
+        <div class="vital-label">O₂ saturation</div>
+        <div class="chart-bar" style="background:#1D9E75;width:96%"></div>
+      </div>
+      <div class="vital" style="background:#FAEEDA">
+        <div class="vital-val" style="color:#EF9F27">105/70</div>
+        <div class="vital-label">Blood pressure</div>
+        <div class="chart-bar" style="background:#EF9F27;width:55%"></div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#555;margin-bottom:8px;background:#f5f4f0;border-radius:8px;padding:8px">
+      <strong>Symptoms:</strong> Headache, joint pain, no appetite. Lives in Lagos Island, near stagnant water. No recent travel.
+    </div>
+    <div style="font-size:11px;font-weight:500;color:#1a1818;margin-bottom:6px">Select your diagnosis:</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+      <div class="drug-chip" style="background:#FAEEDA;border-color:#EF9F27;color:#633806" onclick="diagClick(this,'wrong')">🤧 Common cold</div>
+      <div class="drug-chip" style="background:#E1F5EE;border-color:#1D9E75;color:#085041" onclick="diagClick(this,'correct')">🦟 Malaria</div>
+      <div class="drug-chip" style="background:#EEEDFE;border-color:#7F77DD;color:#3C3489" onclick="diagClick(this,'wrong')">🫁 Pneumonia</div>
+      <div class="drug-chip" style="background:#FAECE7;border-color:#D85A30;color:#712B13" onclick="diagClick(this,'wrong')">🤢 Typhoid</div>
+    </div>
+    <div id="diag-feedback" style="display:none;border-radius:8px;padding:8px 10px;font-size:11px;line-height:1.5"></div>
+  </div>
+
+  <div class="sec">What the doctor sandbox includes</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-title"><span>📊</span><span>Live vitals monitor</span></div>
+      <div class="feature-desc">Animated ECG, real-time vitals that change as treatment is applied or withheld</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>🔬</span><span>Lab result interpreter</span></div>
+      <div class="feature-desc">Order blood tests, read CBC results, identify abnormal ranges</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>💊</span><span>Prescription system</span></div>
+      <div class="feature-desc">Select drug, dosage, route — wrong dose shows consequence animations</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>🧠</span><span>Symptom decision tree</span></div>
+      <div class="feature-desc">Real clinical reasoning — elimination diagnosis with branching logic</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>📱</span><span>Patient history system</span></div>
+      <div class="feature-desc">Take a history by asking questions — the AI patient responds realistically</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title"><span>🏥</span><span>Ward management</span></div>
+      <div class="feature-desc">Manage 5 patients simultaneously, prioritise by urgency, discharge when stable</div>
+    </div>
+  </div>
+
+  <div style="border-radius:10px;padding:10px 12px;background:#E1F5EE;border:1px solid #5DCAA5;font-size:12px;color:#085041;line-height:1.6">
+    <strong>AI patient responses:</strong> The "patient" is powered by a lightweight AI model. Kids ask questions like "Where does it hurt?" and the AI responds contextually based on the diagnosis scenario. This makes history-taking feel real.
+  </div>
+</div>
+
+<!-- FARMER CANVAS -->
+<div id="panel-farmer" class="panel">
+  <div class="sec">Farmer canvas — smart farm dashboard</div>
+
+  <div class="card">
+    <div style="font-size:12px;font-weight:500;color:#085041;margin-bottom:8px">🌾 Your farm — Ogun State, 5 hectares</div>
+    <div class="sensor-row">
+      <div class="sensor" style="background:#E1F5EE">
+        <div class="sensor-val" style="color:#1D9E75">68%</div>
+        <div class="sensor-label">Soil moisture</div>
+        <div style="height:4px;background:#9FE1CB;border-radius:2px;margin-top:4px"><div style="width:68%;height:100%;background:#1D9E75;border-radius:2px"></div></div>
+      </div>
+      <div class="sensor" style="background:#FAEEDA">
+        <div class="sensor-val" style="color:#EF9F27">34°C</div>
+        <div class="sensor-label">Air temp</div>
+        <div style="height:4px;background:#FAC775;border-radius:2px;margin-top:4px"><div style="width:80%;height:100%;background:#EF9F27;border-radius:2px"></div></div>
+      </div>
+      <div class="sensor" style="background:#E6F1FB">
+        <div class="sensor-val" style="color:#378ADD">6.8 pH</div>
+        <div class="sensor-label">Soil pH</div>
+        <div style="height:4px;background:#B5D4F4;border-radius:2px;margin-top:4px"><div style="width:55%;height:100%;background:#378ADD;border-radius:2px"></div></div>
+      </div>
+      <div class="sensor" style="background:#FAECE7">
+        <div class="sensor-val" style="color:#D85A30">⚠️ Low</div>
+        <div class="sensor-label">Nitrogen</div>
+        <div style="height:4px;background:#F5C4B3;border-radius:2px;margin-top:4px"><div style="width:20%;height:100%;background:#D85A30;border-radius:2px"></div></div>
+      </div>
+    </div>
+
+    <div style="font-size:11px;font-weight:500;color:#555;margin-bottom:6px">Your crop plots — tap to manage:</div>
+    <div class="farm-grid">
+      <div class="plot" style="background:#C0DD97;border-color:#97C459" title="Cassava - Week 6">🌿</div>
+      <div class="plot" style="background:#C0DD97;border-color:#97C459" title="Cassava - Week 6">🌿</div>
+      <div class="plot" style="background:#FAEEDA;border-color:#EF9F27" title="Maize - Week 2">🌱</div>
+      <div class="plot" style="background:#FAEEDA;border-color:#EF9F27" title="Maize - Week 2">🌱</div>
+      <div class="plot" style="background:#FAECE7;border-color:#D85A30" title="⚠️ Pest detected">🐛</div>
+      <div class="plot" style="background:#EAF3DE;border-color:#97C459" title="Yam - Week 4">🟤</div>
+      <div class="plot" style="background:#EAF3DE;border-color:#97C459">🟤</div>
+      <div class="plot" style="background:#F1EFE8;border-color:#ccc" title="Empty plot">⬜</div>
+      <div class="plot" style="background:#F1EFE8;border-color:#ccc">⬜</div>
+      <div class="plot" style="background:#F1EFE8;border-color:#ccc">⬜</div>
+      <div class="plot" style="background:#E6F1FB;border-color:#85B7EB" title="Irrigation active">💧</div>
+      <div class="plot" style="background:#E6F1FB;border-color:#85B7EB">💧</div>
+    </div>
+
+    <div style="background:#FAECE7;border-radius:8px;padding:8px 10px;font-size:11px;color:#712B13;margin-bottom:8px">
+      ⚠️ <strong>Alert:</strong> Plot 5 has a pest outbreak. Nitrogen levels are critically low across plots 1–4. Rain forecast in 48 hours.
+    </div>
+
+    <div style="font-size:11px;font-weight:500;color:#555;margin-bottom:6px">Take an action:</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <div class="drug-chip" style="background:#E1F5EE;border-color:#1D9E75;color:#085041">💧 Irrigate</div>
+      <div class="drug-chip" style="background:#FAEEDA;border-color:#EF9F27;color:#633806">🧪 Apply fertiliser</div>
+      <div class="drug-chip" style="background:#FAECE7;border-color:#D85A30;color:#712B13">🐛 Treat pests</div>
+      <div class="drug-chip" style="background:#EEEDFE;border-color:#7F77DD;color:#3C3489">📊 View forecast</div>
+    </div>
+  </div>
+
+  <div class="sec">What the farm sandbox includes</div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-title"><span>📡</span><span>IoT sensor dashboard</span></div><div class="feature-desc">Simulated soil moisture, pH, temperature, and nitrogen sensors — updated in real-time</div></div>
+    <div class="feature-card"><div class="feature-title"><span>🌦️</span><span>Weather event system</span></div><div class="feature-desc">Drought, flood, locusts — random events kids must respond to with correct actions</div></div>
+    <div class="feature-card"><div class="feature-title"><span>💰</span><span>Market price simulation</span></div><div class="feature-desc">Prices fluctuate. Sell at the right time. Introduces commodity economics and supply/demand</div></div>
+    <div class="feature-card"><div class="feature-title"><span>🔄</span><span>Crop rotation engine</span></div><div class="feature-desc">Plan 3 seasons ahead. Wrong rotation degrades soil. Right rotation increases yield over time</div></div>
+  </div>
+</div>
+
+<!-- DESIGNER CANVAS -->
+<div id="panel-designer" class="panel">
+  <div class="sec">Designer canvas — real design tool</div>
+
+  <div class="card">
+    <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px">🎨 Project: "Naija Bites" brand identity</div>
+    <div class="design-canvas" id="design-canvas">
+      <div style="width:120px;height:50px;background:#D85A30;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;cursor:pointer" onclick="addElement()">
+        <span style="color:#fff;font-size:14px;font-weight:500">Naija Bites</span>
+      </div>
+      <div style="width:80px;height:80px;background:#EF9F27;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer">🌶️</div>
+      <div id="added-el" style="display:none;margin-top:8px;font-size:12px;color:#888">✦ New layer added!</div>
+    </div>
+    <div style="font-size:11px;font-weight:500;color:#555;margin-bottom:6px">Layers:</div>
+    <div class="layer-row"><div class="layer-eye">👁</div><div class="layer-name">Wordmark — Naija Bites</div><div class="layer-type">Text</div></div>
+    <div class="layer-row"><div class="layer-eye">👁</div><div class="layer-name">Chilli icon</div><div class="layer-type">Vector</div></div>
+    <div class="layer-row" style="opacity:.5"><div class="layer-eye">🙈</div><div class="layer-name">Background shape</div><div class="layer-type">Rectangle</div></div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+      <div class="drug-chip" style="background:#FAEEDA;border-color:#EF9F27;color:#633806" onclick="addElement()">+ Add shape</div>
+      <div class="drug-chip" style="background:#EEEDFE;border-color:#7F77DD;color:#3C3489">🎨 Colour picker</div>
+      <div class="drug-chip" style="background:#E1F5EE;border-color:#1D9E75;color:#085041">📤 Export PNG</div>
+      <div class="drug-chip" style="background:#E6F1FB;border-color:#378ADD;color:#0C447C">🔤 Typography</div>
+    </div>
+  </div>
+
+  <div class="sec">Design canvas features</div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-title"><span>✏️</span><span>Vector drawing tool</span></div><div class="feature-desc">Draw shapes, paths, and icons. Real Bezier curve editing built on react-native-svg</div></div>
+    <div class="feature-card"><div class="feature-title"><span>🎨</span><span>Colour system</span></div><div class="feature-desc">Hex picker, Ankara palette presets, colour harmony checker, contrast ratio display</div></div>
+    <div class="feature-card"><div class="feature-title"><span>🔤</span><span>Typography lab</span></div><div class="feature-desc">Real font pairing, kerning, leading controls. Teaches the actual principles behind good type</div></div>
+    <div class="feature-card"><div class="feature-title"><span>📱</span><span>Multi-format export</span></div><div class="feature-desc">Export to PNG, SVG, or mock a phone screen. Output saved to portfolio with shareable link</div></div>
+    <div class="feature-card"><div class="feature-title"><span>💬</span><span>AI client feedback</span></div><div class="feature-desc">Submit design to an "AI client" that gives realistic feedback: "too busy", "love the colours", "font is hard to read"</div></div>
+    <div class="feature-card"><div class="feature-title"><span>🏪</span><span>Brand identity builder</span></div><div class="feature-desc">Logo + colour palette + font system = a complete brand kit saved to portfolio</div></div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div id="panel-tech" class="panel">
+  <div class="sec">Can React Native do this? — Yes. Here's how.</div>
+
+  <div class="compare-row">
+    <div class="compare-card" style="background:#E1F5EE;border-color:#5DCAA5">
+      <div class="compare-title" style="color:#085041">✅ What RN handles natively</div>
+      <div class="compare-item"><div class="bullet" style="background:#1D9E75"></div>WebView (runs full web IDE, Jupyter notebook, any HTML tool)</div>
+      <div class="compare-item"><div class="bullet" style="background:#1D9E75"></div>react-native-svg (designer canvas shapes & paths)</div>
+      <div class="compare-item"><div class="bullet" style="background:#1D9E75"></div>Animated API (vitals monitor, farm sensor animations)</div>
+      <div class="compare-item"><div class="bullet" style="background:#1D9E75"></div>AsyncStorage / SQLite (local data persistence)</div>
+      <div class="compare-item"><div class="bullet" style="background:#1D9E75"></div>PanResponder / Gesture Handler (drag-and-drop)</div>
+      <div class="compare-item"><div class="bullet" style="background:#1D9E75"></div>Camera / AR (future: scan crops, scan patients)</div>
+    </div>
+    <div class="compare-card" style="background:#FAEEDA;border-color:#EF9F27">
+      <div class="compare-title" style="color:#633806">⚡ What needs a backend service</div>
+      <div class="compare-item"><div class="bullet" style="background:#EF9F27"></div>Code execution (sandboxed Node.js / Python — use Piston API or Judge0)</div>
+      <div class="compare-item"><div class="bullet" style="background:#EF9F27"></div>Real deployment (use a managed sandbox like Render.com or Railway free tier)</div>
+      <div class="compare-item"><div class="bullet" style="background:#EF9F27"></div>AI patient responses (Claude API — lightweight call per question)</div>
+      <div class="compare-item"><div class="bullet" style="background:#EF9F27"></div>Database sandbox (Supabase or PocketBase — free tier per user)</div>
+      <div class="compare-item"><div class="bullet" style="background:#EF9F27"></div>Real-time farm sensors (simulated via WebSocket server)</div>
+    </div>
+  </div>
+
+  <div class="sec">Architecture for each canvas</div>
+
+  <div class="arch-box" style="background:#EEEDFE;border-color:#7F77DD">
+    <div class="arch-title" style="color:#26215C">💻 Developer canvas</div>
+    <div style="font-size:12px;color:#534AB7;line-height:1.6">RN WebView → Monaco Editor (VS Code's editor, runs in WebView) → Code sent to <strong>Piston API</strong> (open source, free, runs Node/Python/Go in sandboxed containers) → Output streamed back → Deploy button calls <strong>Railway.app API</strong> → Kid gets a real URL like <code style="background:#CECBF6;padding:1px 5px;border-radius:4px">careerworld.app/amara-123</code></div>
+  </div>
+
+  <div class="arch-box" style="background:#E1F5EE;border-color:#1D9E75">
+    <div class="arch-title" style="color:#04342C">🩺 Doctor canvas</div>
+    <div style="font-size:12px;color:#085041;line-height:1.6">Patient data is a JSON scenario file (age, symptoms, vitals, correct diagnosis). Vitals are animated with Reanimated 3. Diagnosis logic is a decision tree stored locally — no API needed for basic scenarios. <strong>Claude API</strong> powers the "ask the patient a question" feature — lightweight, 1 call per question, cached responses for common questions.</div>
+  </div>
+
+  <div class="arch-box" style="background:#FAEEDA;border-color:#EF9F27">
+    <div class="arch-title" style="color:#412402">🌾 Farmer canvas</div>
+    <div style="font-size:12px;color:#633806;line-height:1.6">IoT sensors are simulated — a background timer updates soil/weather values with realistic variation algorithms. Weather events are seeded from a scenario JSON. Market prices use a simple supply/demand model running locally. No external API needed — works fully offline.</div>
+  </div>
+
+  <div class="arch-box" style="background:#FBEAF0;border-color:#D4537E">
+    <div class="arch-title" style="color:#72243E">🎨 Designer canvas</div>
+    <div style="font-size:12px;color:#993556;line-height:1.6"><strong>react-native-svg</strong> for drawing. <strong>react-native-view-shot</strong> to export canvas as PNG. Colour picker via <strong>react-native-color-picker</strong>. Font loading via <strong>expo-font</strong>. AI client feedback via Claude API — "here is my design [image], give feedback as a Nigerian brand client." Export saves to device + CareerWorld portfolio.</div>
+  </div>
+
+  <div class="sec" style="margin-top:14px">Key libraries to install</div>
+  <div class="terminal">
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install @monaco-editor/react</span><span class="t-out"> # code editor</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install react-native-webview</span><span class="t-out"> # run IDE in app</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install react-native-svg</span><span class="t-out"> # designer canvas</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install react-native-view-shot</span><span class="t-out"> # export designs</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install expo-sqlite</span><span class="t-out"> # local database</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install react-native-reanimated</span><span class="t-out"> # vitals animations</span><br>
+    <span class="t-prompt">$ </span><span class="t-cmd">npm install @anthropic-ai/sdk</span><span class="t-out"> # AI patient + AI client feedback</span>
+  </div>
+
+  <div style="border-radius:10px;padding:10px 12px;background:#EEEDFE;border:1px solid #AFA9EC;font-size:12px;color:#3C3489;line-height:1.6;margin-top:4px">
+    <strong>Cost estimate for sandbox backend:</strong> Piston API is open source (self-host on $10/mo VPS). Railway.app free tier gives 500 deployment hours/mo. Claude API at ~$0.003 per question = less than $0.01 per sandbox session. Total infrastructure cost per active sandbox user: ~$0.05–$0.10/month.
+  </div>
+</div>
+
+<!-- BUSINESS IMPACT -->
+<div id="panel-impact" class="panel">
+  <div class="sec">How the sandbox changes the business model</div>
+
+  <div class="card" style="background:#EEEDFE;border-color:#AFA9EC">
+    <div class="card-header">
+      <div class="card-icon" style="background:#CECBF6">🏆</div>
+      <div class="card-title" style="color:#26215C">Sandbox = premium tier justification</div>
+    </div>
+    <div class="card-body" style="color:#534AB7">The real-world sandbox is the reason parents pay ₦20,000/year instead of ₦5,000. It's the feature that separates CareerWorld from every other kids' learning app on the market. "My child is learning to actually code and deploy apps" is a sentence that unlocks Nigerian parents' wallets instantly.</div>
+  </div>
+
+  <div class="card" style="background:#E1F5EE;border-color:#5DCAA5">
+    <div class="card-header">
+      <div class="card-icon" style="background:#9FE1CB">🏫</div>
+      <div class="card-title" style="color:#085041">School licensing multiplier</div>
+    </div>
+    <div class="card-body" style="color:#0F6E56">Schools will pay 3–5x more for a platform that has a real sandbox vs just gamified quizzes. Computer science teachers want kids to actually write code. Biology teachers want a real patient simulator. The sandbox makes CareerWorld a curriculum tool, not just a game.</div>
+  </div>
+
+  <div class="card" style="background:#FAEEDA;border-color:#EF9F27">
+    <div class="card-header">
+      <div class="card-icon" style="background:#FAC775">🎓</div>
+      <div class="card-title" style="color:#412402">New revenue: Certification</div>
+    </div>
+    <div class="card-body" style="color:#633806">When kids complete the sandbox at a high level, they earn a real industry-adjacent certificate: "CareerWorld Junior Developer Certificate" or "CareerWorld Medical Simulation Level 2." Parents pay ₦5,000–₦15,000 for a printed/embossed certificate. Universities and employers will start recognising these.</div>
+  </div>
+
+  <div class="card" style="background:#FAECE7;border-color:#F0997B">
+    <div class="card-header">
+      <div class="card-icon" style="background:#F5C4B3">🌍</div>
+      <div class="card-title" style="color:#4A1B0C">Global expansion unlock</div>
+    </div>
+    <div class="card-body" style="color:#712B13">A gamified quiz app is a local product. A real-world career sandbox with verifiable output is a global product. The developer sandbox speaks to coding bootcamps in the UK. The doctor simulator speaks to medical schools in the US. The farmer canvas speaks to agricultural development organisations worldwide.</div>
+  </div>
+
+  <div class="sec" style="margin-top:4px">New pricing enabled by sandbox</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px">
+    <div style="border-radius:10px;padding:10px;background:#f5f4f0;text-align:center;border:1px solid #e8e6e0"><div style="font-size:16px;font-weight:500;color:#534AB7">₦35k/yr</div><div style="font-size:10px;color:#888">Sandbox tier (was ₦20k)</div></div>
+    <div style="border-radius:10px;padding:10px;background:#f5f4f0;text-align:center;border:1px solid #e8e6e0"><div style="font-size:16px;font-weight:500;color:#085041">₦750k/yr</div><div style="font-size:10px;color:#888">School Pro + Sandbox</div></div>
+    <div style="border-radius:10px;padding:10px;background:#f5f4f0;text-align:center;border:1px solid #e8e6e0"><div style="font-size:16px;font-weight:500;color:#712B13">₦15k</div><div style="font-size:10px;color:#888">Sandbox certificate</div></div>
+    <div style="border-radius:10px;padding:10px;background:#f5f4f0;text-align:center;border:1px solid #e8e6e0"><div style="font-size:16px;font-weight:500;color:#633806">₦50k</div><div style="font-size:10px;color:#888">Corporate sandbox licence</div></div>
+  </div>
+</div>
+
+<script>
+function sw(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+function diagClick(el, result){
+  document.querySelectorAll('.drug-chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const fb = document.getElementById('diag-feedback');
+  fb.style.display = 'block';
+  if(result === 'correct'){
+    fb.style.background = '#E1F5EE'; fb.style.color = '#085041'; fb.style.border = '1px solid #1D9E75';
+    fb.innerHTML = '✅ <strong>Correct!</strong> High fever, joint pain, near stagnant water in Lagos — classic malaria presentation. Prescribe artemisinin-based combination therapy + oral rehydration. +150 XP';
+  } else {
+    fb.style.background = '#FAECE7'; fb.style.color = '#712B13'; fb.style.border = '1px solid #D85A30';
+    fb.innerHTML = '❌ Not quite. Look at the location (Lagos Island, stagnant water nearby) and the symptom pattern. Hint: what\'s very common in Nigeria that causes fever + joint pain?';
+  }
+}
+function addElement(){
+  const el = document.getElementById('added-el');
+  el.style.display = 'block';
+  setTimeout(()=>el.style.display='none', 2000);
+}
+</script>

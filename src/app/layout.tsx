@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
-import FloatingParticles from "@/components/ui/FloatingParticles";
+import FloatingParticles from "@/components/old/FloatingParticles";
 import { Playfair_Display, Outfit } from "next/font/google";
 import Script from "next/script";
 
@@ -74,11 +74,8 @@ export default function RootLayout({
         </Script>
         <ThemeProvider>
           <FloatingParticles />
-        <Navigation/>
           {children}
-        <Footer/>
-          
-          </ThemeProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

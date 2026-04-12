@@ -127,6 +127,14 @@ h1, h2, h3, h4, h5, h6, .font-serif {
       animation: none;
     }
   }
+
+  .section-padding {
+    @apply py-12 sm:py-20 lg:py-32;
+  }
+
+  .grid-responsive-2 {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24;
+  }
 }
 
 @keyframes hero-aurora-drift {
