@@ -1,330 +1,669 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
-import { Sparkles, TrendingUp, Heart, Eye, Quote, ArrowRight } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { TrendingUp, Heart, Eye, Quote, ArrowRight } from "lucide-react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
+// ---------- types ----------
+interface WorldviewItem {
+  title: string;
+  shortTitle: string;
+  content: string;
+  icon: React.ElementType;
+  colorA: string;
+  colorB: string;
+  pos: "top" | "right" | "bottom";
+}
+
+// ---------- data ----------
+const worldviewItems: WorldviewItem[] = [
+  {
+    title: "Outcomes are not random",
+    shortTitle: "Outcomes",
+    content:
+      "At work, results are shaped by systems—how decisions are made, how signals move, how teams align, and how things connect beneath the surface.",
+    icon: TrendingUp,
+    colorA: "#3b8bd4",
+    colorB: "#185fa5",
+    pos: "top",
+  },
+  {
+    title: "The same is true in life",
+    shortTitle: "Inner Life",
+    content:
+      "Behaviour, clarity, direction—even how we respond under pressure—are shaped by systems within us: beliefs, patterns, memory, identity, and what we carry quietly.",
+    icon: Heart,
+    colorA: "#c2622a",
+    colorB: "#e8943a",
+    pos: "right",
+  },
+  {
+    title: "More than what's visible",
+    shortTitle: "Depth",
+    content:
+      "Underneath both, there is often more going on than what is immediately visible. That is the lens I keep returning to.",
+    icon: Eye,
+    colorA: "#ba7517",
+    colorB: "#854f0b",
+    pos: "bottom",
+  },
+];
+
+// Card positions (percent of container)
+const cardPositions: Record<"top" | "right" | "bottom", { top: string; left: string }> = {
+  top:    { top: "8%", left: "50%" },
+  right:  { top: "50%", left: "88%" },
+  bottom: { top: "92%", left: "50%" },
+};
+
+// ---------- Interactive 3-D Earth Globe ----------
+function GlobeCanvas() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const controlsRef = useRef<OrbitControls | null>(null);
+  const frameRef = useRef<number>(0);
+  const globeGroupRef = useRef<THREE.Group | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Size setup - responsive
+    const getSize = () => Math.min(container.clientWidth, container.clientHeight, 400);
+    let size = getSize();
+
+    // Scene setup
+    const scene = new THREE.Scene();
+    
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.z = 3.5;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(size, size);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    // Globe group for rotation
+    const globeGroup = new THREE.Group();
+    scene.add(globeGroup);
+    globeGroupRef.current = globeGroup;
+
+    // Texture loader
+    const textureLoader = new THREE.TextureLoader();
+    
+    // Load Earth texture (using reliable CDN)
+    const earthTexture = textureLoader.load(
+      'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg'
+    );
+    const earthSpecular = textureLoader.load(
+      'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_specular_2048.jpg'
+    );
+    const earthNormal = textureLoader.load(
+      'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg'
+    );
+
+    // Earth sphere with realistic materials
+    const earthGeometry = new THREE.SphereGeometry(1, 64, 64);
+    const earthMaterial = new THREE.MeshPhongMaterial({
+      map: earthTexture,
+      specularMap: earthSpecular,
+      normalMap: earthNormal,
+      specular: new THREE.Color(0x333333),
+      shininess: 15,
+    });
+    const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+    // Tilt earth like real axis (23.5 degrees)
+    earth.rotation.z = 23.5 * (Math.PI / 180);
+    globeGroup.add(earth);
+
+    // Atmosphere glow
+    const atmosphereGeometry = new THREE.SphereGeometry(1.08, 64, 64);
+    const atmosphereMaterial = new THREE.MeshPhongMaterial({
+      color: 0x4da6ff,
+      transparent: true,
+      opacity: 0.15,
+      side: THREE.BackSide,
+    });
+    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+    globeGroup.add(atmosphere);
+
+    // Cloud layer
+    const cloudGeometry = new THREE.SphereGeometry(1.02, 64, 64);
+    const cloudMaterial = new THREE.MeshPhongMaterial({
+      transparent: true,
+      opacity: 0.4,
+      blending: THREE.AdditiveBlending,
+    });
+    
+    // Load cloud texture
+    textureLoader.load(
+      'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_clouds_1024.png',
+      (cloudTexture) => {
+        cloudMaterial.map = cloudTexture;
+        cloudMaterial.needsUpdate = true;
+      }
+    );
+    
+    const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    clouds.rotation.z = 23.5 * (Math.PI / 180);
+    globeGroup.add(clouds);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    sunLight.position.set(5, 3, 5);
+    scene.add(sunLight);
+
+    const fillLight = new THREE.DirectionalLight(0x4da6ff, 0.3);
+    fillLight.position.set(-5, -2, -5);
+    scene.add(fillLight);
+
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.enablePan = false;
+    controls.minDistance = 2;
+    controls.maxDistance = 6;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.8;
+    controlsRef.current = controls;
+
+    // Animation loop
+    let frame = 0;
+    const animate = () => {
+      frame = requestAnimationFrame(animate);
+      
+      // Rotate clouds slightly faster than earth
+      clouds.rotation.y += 0.0005;
+      
+      controls.update();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    // Handle resize
+    const handleResize = () => {
+      const newSize = getSize();
+      renderer.setSize(newSize, newSize);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Pause auto-rotation when user interacts
+    const handleInteractionStart = () => {
+      controls.autoRotate = false;
+    };
+    
+    const handleInteractionEnd = () => {
+      // Resume auto-rotation after 3 seconds of no interaction
+      setTimeout(() => {
+        if (controlsRef.current) {
+          controlsRef.current.autoRotate = true;
+        }
+      }, 3000);
+    };
+
+    container.addEventListener('mousedown', handleInteractionStart);
+    container.addEventListener('touchstart', handleInteractionStart);
+    container.addEventListener('mouseup', handleInteractionEnd);
+    container.addEventListener('touchend', handleInteractionEnd);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', handleResize);
+      container.removeEventListener('mousedown', handleInteractionStart);
+      container.removeEventListener('touchstart', handleInteractionStart);
+      container.removeEventListener('mouseup', handleInteractionEnd);
+      container.removeEventListener('touchend', handleInteractionEnd);
+      controls.dispose();
+      renderer.dispose();
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="relative w-full h-full min-h-[300px] lg:min-h-[400px] cursor-grab active:cursor-grabbing"
+      style={{ touchAction: "none" }}
+    />
+  );
+}
+
+// ---------- Orbit Card with Fixed Tooltip ----------
+interface OrbitCardProps {
+  item: WorldviewItem;
+  index: number;
+  onHover: (item: WorldviewItem | null, rect?: DOMRect) => void;
+  isHovered: boolean;
+}
+
+function OrbitCard({ item, index, onHover, isHovered }: OrbitCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const Icon = item.icon;
+  const pos = cardPositions[item.pos];
+
+  const handleMouseEnter = useCallback(() => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      onHover(item, rect);
+    }
+  }, [item, onHover]);
+
+  const handleMouseLeave = useCallback(() => {
+    onHover(null);
+  }, [onHover]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, scale: 0, x: "-50%", y: "-50%" }}
+      whileInView={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.3 + index * 0.2, type: "spring", stiffness: 200, damping: 20 }}
+      style={{ position: "absolute", ...pos, zIndex: 20 }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="group"
+    >
+      {/* Pulsing attention ring */}
+      <span
+        className="pointer-events-none absolute rounded-2xl border-2"
+        style={{
+          inset: -10,
+          borderColor: item.colorA,
+          animation: `worldview-pulse 2.5s ${index * 0.8}s ease-in-out infinite`,
+        }}
+      />
+
+      {/* Card */}
+      <div
+        className="relative w-[140px] sm:w-[152px] rounded-2xl border bg-white/90 backdrop-blur-sm transition-all duration-300 dark:bg-stone-900/90"
+        style={{
+          borderColor: isHovered ? item.colorA : "rgba(0,0,0,0.1)",
+          transform: isHovered ? "translateY(-4px) scale(1.03)" : "translateY(0) scale(1)",
+          boxShadow: isHovered ? `0 12px 40px ${item.colorA}33` : "0 2px 8px rgba(0,0,0,0.06)",
+        }}
+      >
+        {/* Top accent bar */}
+        <div
+          className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl transition-opacity duration-300"
+          style={{
+            background: `linear-gradient(90deg, ${item.colorA}, ${item.colorB})`,
+            opacity: isHovered ? 1 : 0,
+          }}
+        />
+
+        <div className="p-4">
+          <div
+            className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl"
+            style={{ background: `${item.colorA}1a` }}
+          >
+            <Icon className="h-4 w-4" style={{ color: item.colorA }} />
+          </div>
+
+          <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-widest" style={{ color: item.colorA }}>
+            {item.shortTitle}
+          </p>
+          <p className="mb-3 font-serif text-[13px] leading-snug text-stone-800 dark:text-stone-200">
+            {item.shortTitle === "Outcomes"
+              ? "Results are shaped by systems"
+              : item.shortTitle === "Inner Life"
+              ? "The same is true in life"
+              : "More than what's visible"}
+          </p>
+
+          {/* Interaction hint */}
+          <div className="flex items-center gap-1.5 text-[10px] text-stone-400 transition-colors duration-200 group-hover:text-stone-600 dark:group-hover:text-stone-300">
+            <ArrowRight className="h-2.5 w-2.5" />
+            <span>Hover to read more</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ---------- Tooltip Portal ----------
+function TooltipPortal({ 
+  item, 
+  anchorRect, 
+  onClose 
+}: { 
+  item: WorldviewItem; 
+  anchorRect: DOMRect; 
+  onClose: () => void; 
+}) {
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!tooltipRef.current || !anchorRect) return;
+
+    const tooltip = tooltipRef.current;
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const padding = 16;
+
+    // Calculate position based on card position
+    let top = 0;
+    let left = 0;
+
+    if (item.pos === "top") {
+      // Show below the card
+      top = anchorRect.bottom + padding;
+      left = anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2;
+    } else if (item.pos === "bottom") {
+      // Show above the card
+      top = anchorRect.top - tooltipRect.height - padding;
+      left = anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2;
+    } else if (item.pos === "right") {
+      // Show to the left of the card (since card is on the right side)
+      top = anchorRect.top + anchorRect.height / 2 - tooltipRect.height / 2;
+      left = anchorRect.left - tooltipRect.width - padding;
+    }
+
+    // Boundary checks
+    const maxLeft = window.innerWidth - tooltipRect.width - padding;
+    const maxTop = window.innerHeight - tooltipRect.height - padding;
+    
+    left = Math.max(padding, Math.min(left, maxLeft));
+    top = Math.max(padding, Math.min(top, maxTop));
+
+    setPosition({ top, left });
+  }, [anchorRect, item.pos]);
+
+  return (
+    <motion.div
+      ref={tooltipRef}
+      initial={{ opacity: 0, scale: 0.9, y: 10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9, y: 10 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="fixed z-[100] w-72 rounded-2xl border bg-white/95 p-5 shadow-2xl backdrop-blur-md dark:bg-stone-900/95"
+      style={{
+        top: position.top,
+        left: position.left,
+        borderColor: `${item.colorA}55`,
+        boxShadow: `0 8px 32px ${item.colorA}26, 0 0 0 1px ${item.colorA}20`,
+      }}
+      onMouseLeave={onClose}
+    >
+      <div
+        className="mb-3 h-0.5 rounded-full"
+        style={{ background: `linear-gradient(90deg, ${item.colorA}, ${item.colorB})` }}
+      />
+      <h4 className="mb-2 font-serif text-base font-medium text-stone-900 dark:text-white">
+        {item.title}
+      </h4>
+      <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+        {item.content}
+      </p>
+    </motion.div>
+  );
+}
+
+// ---------- Main Component ----------
 export default function AboutWorldview() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  
+  const [hoveredItem, setHoveredItem] = useState<WorldviewItem | null>(null);
+  const [hoveredRect, setHoveredRect] = useState<DOMRect | undefined>();
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "center center"]
+    offset: ["start end", "center center"],
   });
 
   const lineWidth = useTransform(scrollYProgress, [0, 0.5], ["0%", "100%"]);
 
-  const worldviewItems = [
-    {
-      title: "Outcomes are not random",
-      content: "At work, results are shaped by systems—how decisions are made, how signals move, how teams align, and how things connect beneath the surface.",
-      shortTitle: "Outcomes",
-      icon: TrendingUp,
-      gradient: "from-blue-500 to-primary",
-      bgGradient: "from-blue-500/10 to-primary/10",
-      color: "blue",
-    },
-    {
-      title: "The same is true in life",
-      content: "Behaviour, clarity, direction, and even the way we respond under pressure are shaped by systems within us—beliefs, patterns, memory, identity, and what we carry quietly.",
-      shortTitle: "Inner Life",
-      icon: Heart,
-      gradient: "from-rose-500 to-amber-500",
-      bgGradient: "from-rose-500/10 to-amber-500/10",
-      color: "rose",
-    },
-    {
-      title: "More than visible",
-      content: "Underneath both, there is often more going on than what is immediately visible. That is the lens I keep returning to.",
-      shortTitle: "Depth",
-      icon: Eye,
-      gradient: "from-amber-500 to-primary",
-      bgGradient: "from-amber-500/10 to-primary/10",
-      color: "amber",
-    },
-  ];
-
-  // Calculate positions for the circular layout
-  const cardPositions = [
-    { angle: 0, offsetX: 0, offsetY: 0 },        // Center
-    { angle: 0, offsetX: 120, offsetY: -80 },    // Top right
-    { angle: 120, offsetX: -100, offsetY: 100 }, // Bottom left
-  ];
+  const handleHover = useCallback((item: WorldviewItem | null, rect?: DOMRect) => {
+    setHoveredItem(item);
+    setHoveredRect(rect);
+  }, []);
 
   return (
-    <section 
-      ref={containerRef}
-      className="relative min-h-screen overflow-hidden bg-white py-20 transition-colors duration-500 dark:bg-stone-950 md:py-24 lg:py-0"
-    >
-      {/* Ambient background elements */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-40 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-primary/5 via-amber-500/3 to-transparent blur-7xl" />
-        <div className="absolute -right-40 bottom-0 h-[600px] w-[600px] rounded-full bg-gradient-to-tl from-blue-500/5 via-primary/3 to-transparent blur-7xl" />
-      </div>
+    <>
+      {/* Keyframe injection */}
+      <style>{`
+        @keyframes worldview-pulse {
+          0%   { opacity: 0.7; transform: scale(1); }
+          70%  { opacity: 0;   transform: scale(1.18); }
+          100% { opacity: 0;   transform: scale(1.18); }
+        }
+        @keyframes worldview-orbit-spin {
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+      `}</style>
 
-      {/* Subtle radial gradient */}
-      <div 
-        className="pointer-events-none absolute inset-0 opacity-30 dark:opacity-20"
-        style={{
-          background: "radial-gradient(circle at 70% 50%, var(--primary) 0%, transparent 50%)",
-        }}
-      />
+      <section
+        ref={containerRef}
+        className="relative min-h-screen overflow-hidden bg-white py-20 transition-colors duration-500 dark:bg-stone-950 lg:py-0"
+      >
+        {/* Background grid */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-35"
+          style={{
+            backgroundImage:
+              "linear-gradient(var(--tw-border-opacity, rgba(0,0,0,0.05)) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
 
-      {/* Top divider */}
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-stone-300/50 to-transparent dark:via-stone-700/50" />
+        {/* Ambient blobs */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-40 top-0 h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(194,98,42,0.06),transparent_60%)] blur-3xl" />
+          <div className="absolute -right-40 bottom-0 h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(59,139,212,0.05),transparent_60%)] blur-3xl" />
+        </div>
 
-      <div className="container-responsive relative z-10 flex min-h-screen items-center">
-        <div className="grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-20">
-          
-          {/* Left Side - Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="py-12 lg:py-20"
-          >
-            {/* Badge */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 backdrop-blur-sm">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              <span className="text-xs font-medium uppercase tracking-wider text-primary">
-                Philosophy
-              </span>
-            </div>
+        {/* Top divider */}
+        <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-stone-300/50 to-transparent dark:via-stone-700/50" />
 
-            {/* Title */}
-            <h2 className="mb-6 font-serif text-4xl font-medium leading-tight tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl lg:text-6xl xl:text-7xl">
-              How I see the{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text italic text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
+        <div className="container mx-auto flex min-h-screen items-center px-6 lg:px-12">
+          <div className="grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-20">
+
+            {/* ── LEFT ── */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col gap-6 py-12 lg:py-20"
+            >
+              {/* Badge */}
+              <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[#c2622a]/30 bg-[#c2622a]/8 px-4 py-1.5">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#c2622a]" />
+                <span className="text-[11px] font-semibold uppercase tracking-widest text-[#c2622a]">
+                  Philosophy
+                </span>
+              </div>
+
+              {/* Heading */}
+              <h2 className="font-serif text-4xl font-normal leading-tight tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl lg:text-6xl xl:text-7xl">
+                How I see the{" "}
+                <span className="relative inline-block italic text-[#c2622a]">
                   world
+                  <span className="absolute -inset-x-1 bottom-0.5 h-0.5 rounded-full bg-gradient-to-r from-[#c2622a] to-transparent" />
                 </span>
-                <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
-              </span>
-            </h2>
+              </h2>
 
-            {/* Subtitle */}
-            <p className="mb-8 max-w-lg text-base leading-relaxed text-stone-500 dark:text-stone-400 sm:text-lg">
-              A lens that helps me make sense of what's really happening—beneath the surface, 
-              beyond the obvious, behind the noise.
-            </p>
-            
-            {/* Animated Progress Line */}
-            <div className="relative mb-10 h-0.5 w-full max-w-md overflow-hidden rounded-full bg-stone-200 dark:bg-stone-800">
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-primary via-amber-500 to-orange-600"
-                style={{ width: lineWidth }}
-              />
-            </div>
-
-            {/* Quote Block */}
-            <motion.blockquote
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="group relative max-w-md overflow-hidden rounded-2xl border border-stone-200/60 bg-gradient-to-br from-stone-50 to-white p-6 dark:border-stone-700/60 dark:from-stone-900/80 dark:to-stone-900/60"
-            >
-              <Quote className="mb-3 h-6 w-6 rotate-180 text-primary/40" />
-              <p className="font-serif text-lg italic leading-relaxed text-stone-700 dark:text-stone-200">
-                Most visible problems are being shaped by something deeper.
+              {/* Sub */}
+              <p className="max-w-md text-base leading-relaxed text-stone-500 dark:text-stone-400 sm:text-lg">
+                A lens that helps me make sense of what's really happening—beneath the surface, beyond the obvious, behind the noise.
               </p>
-              <div className="mt-4 flex items-center gap-3">
-                <div className="h-px w-8 bg-gradient-to-r from-primary/40 to-transparent" />
-                <span className="text-xs font-medium uppercase tracking-wider text-primary/70">
-                  The Core Lens
-                </span>
-              </div>
-            </motion.blockquote>
 
-            {/* Interactive hint */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="mt-8 hidden items-center gap-2 text-sm text-stone-400 lg:flex"
-            >
-              <span>Hover over the cards</span>
-              <ArrowRight className="h-4 w-4 animate-pulse" />
-            </motion.div>
-          </motion.div>
-
-          {/* Right Side - Circular Card Layout */}
-          <div className="relative flex h-[500px] items-center justify-center lg:h-[600px] xl:h-[700px]">
-            {/* Outer decorative ring */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute h-[300px] w-[300px] rounded-full border border-dashed border-primary/20 sm:h-[350px] sm:w-[350px] lg:h-[400px] lg:w-[400px] xl:h-[450px] xl:w-[450px]"
-            />
-            
-            {/* Inner decorative ring */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 0.5, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="absolute h-[200px] w-[200px] rounded-full bg-gradient-to-br from-primary/5 to-amber-500/5 blur-2xl sm:h-[250px] sm:w-[250px] lg:h-[300px] lg:w-[300px]"
-            />
-
-            {/* Center orb */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="absolute flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-amber-500/20 backdrop-blur-sm sm:h-24 sm:w-24 lg:h-28 lg:w-28"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-amber-500 shadow-lg sm:h-14 sm:w-14 lg:h-16 lg:w-16">
-                <Sparkles className="h-6 w-6 text-white sm:h-7 sm:w-7 lg:h-8 lg:w-8" />
-              </div>
-            </motion.div>
-
-            {/* Cards arranged in a circle */}
-            {worldviewItems.map((item, index) => {
-              const Icon = item.icon;
-              const isActive = activeIndex === index;
-              
-              // Calculate position based on index
-              const positions = [
-                { x: "55%", y: "25%" },  // Top right
-                { x: "65%", y: "65%" },  // Bottom right
-                { x: "35%", y: "70%" },  // Bottom left
-              ];
-              
-              return (
+              {/* Animated line */}
+              <div className="relative h-0.5 max-w-sm overflow-hidden rounded-full bg-stone-200 dark:bg-stone-800">
                 <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.5 + index * 0.15,
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 20
-                  }}
-                  className="absolute"
-                  style={{
-                    left: positions[index].x,
-                    top: positions[index].y,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onMouseLeave={() => setActiveIndex(null)}
-                >
-                  {/* Connecting line from center */}
-                  <svg 
-                    className="absolute left-1/2 top-1/2 -z-10 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2"
-                    style={{ pointerEvents: 'none' }}
-                  >
-                    <motion.line
-                      initial={{ pathLength: 0 }}
-                      whileInView={{ pathLength: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 1 + index * 0.1 }}
-                      x1="50%"
-                      y1="50%"
-                      x2={index === 0 ? "30%" : index === 1 ? "20%" : "40%"}
-                      y2={index === 0 ? "60%" : index === 1 ? "30%" : "20%"}
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      className="text-primary/20"
-                      strokeDasharray="4 4"
-                    />
-                  </svg>
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-[#c2622a] via-[#e8943a] to-[#ba7517]"
+                  style={{ width: lineWidth }}
+                />
+              </div>
 
-                  {/* Card */}
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="group/card relative"
-                  >
-                    {/* Glow effect */}
-                    <div className={`absolute -inset-4 rounded-2xl bg-gradient-to-br ${item.bgGradient} opacity-0 blur-xl transition-all duration-500 group-hover/card:opacity-100`} />
-                    
-                    {/* Main card circle */}
-                    <div className={`relative flex h-16 w-16 cursor-pointer flex-col items-center justify-center rounded-2xl border border-stone-200/60 bg-white/90 shadow-lg backdrop-blur-sm transition-all duration-500 group-hover/card:border-primary/40 group-hover/card:shadow-2xl dark:border-stone-700/60 dark:bg-stone-900/90 sm:h-20 sm:w-20 lg:h-24 lg:w-24 ${
-                      isActive ? 'scale-110 border-primary/50 shadow-xl' : ''
-                    }`}>
-                      <Icon className={`h-6 w-6 transition-all duration-300 sm:h-7 sm:w-7 lg:h-8 lg:w-8 ${
-                        isActive ? 'text-primary' : 'text-stone-600 dark:text-stone-300'
-                      }`} />
-                    </div>
-
-                    {/* Expandable content card */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                      animate={isActive ? { 
-                        opacity: 1, 
-                        scale: 1, 
-                        y: 0,
-                        transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
-                      } : { 
-                        opacity: 0, 
-                        scale: 0.8, 
-                        y: 10,
-                        transition: { duration: 0.2 }
-                      }}
-                      className="absolute left-1/2 top-full mt-4 w-64 -translate-x-1/2 sm:w-72 lg:w-80"
-                      style={{ pointerEvents: isActive ? 'auto' : 'none' }}
-                    >
-                      <div className="relative overflow-hidden rounded-2xl border border-stone-200/60 bg-white/95 p-5 shadow-2xl backdrop-blur-md dark:border-stone-700/60 dark:bg-stone-900/95">
-                        {/* Accent line */}
-                        <div className={`absolute left-0 top-0 h-1 w-full bg-gradient-to-r ${item.gradient}`} />
-                        
-                        <h4 className="mb-2 font-serif text-lg font-semibold text-stone-900 dark:text-white">
-                          {item.title}
-                        </h4>
-                        <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-                          {item.content}
-                        </p>
-                        
-                        {/* Arrow pointer */}
-                        <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-stone-200/60 bg-white/95 dark:border-stone-700/60 dark:bg-stone-900/95" />
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              );
-            })}
-
-            {/* Floating particles */}
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.3 }}
+              {/* Quote */}
+              <motion.blockquote
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 1 + i * 0.1 }}
-                animate={{
-                  y: [0, -10, 0],
-                  x: [0, i % 2 === 0 ? 10 : -10, 0],
-                }}
-                transition={{
-                  duration: 3 + i,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-primary/30"
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="relative max-w-sm overflow-hidden rounded-2xl border border-stone-200/60 bg-gradient-to-br from-stone-50 to-white p-6 dark:border-stone-700/60 dark:from-stone-900/80 dark:to-stone-900/60"
+              >
+                {/* Left accent */}
+                <span className="absolute left-0 top-0 h-full w-0.5 rounded-l-2xl bg-gradient-to-b from-[#c2622a] to-[#e8943a]" />
+                <Quote className="mb-2 h-5 w-5 rotate-180 text-[#c2622a]/40" />
+                <p className="font-serif text-lg italic leading-relaxed text-stone-700 dark:text-stone-200">
+                  Most visible problems are being shaped by something deeper.
+                </p>
+                <div className="mt-4 flex items-center gap-3">
+                  <div className="h-px w-6 bg-gradient-to-r from-[#c2622a]/40 to-transparent" />
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#c2622a]/70">
+                    The Core Lens
+                  </span>
+                </div>
+              </motion.blockquote>
+
+              {/* Hint */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.9 }}
+                className="hidden items-center gap-2 text-xs text-stone-400 lg:flex"
+              >
+                <span>Hover over the cards to explore</span>
+                <ArrowRight className="h-3.5 w-3.5 animate-pulse" />
+              </motion.div>
+            </motion.div>
+
+            {/* ── RIGHT: Globe + Cards ── */}
+            <div className="relative flex h-[500px] items-center justify-center lg:h-[620px]">
+              
+              {/* Orbit ring decoration */}
+              <div
+                className="absolute rounded-full border border-dashed border-[#c2622a]/25"
                 style={{
-                  left: `${20 + i * 15}%`,
-                  top: `${30 + (i * 10) % 40}%`,
+                  width: 360,
+                  height: 360,
+                  top: "50%",
+                  left: "50%",
+                  animation: "worldview-orbit-spin 40s linear infinite",
+                  transform: "translate(-50%, -50%)",
                 }}
               />
-            ))}
+
+              {/* Inner glow */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 0.5, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="absolute h-[240px] w-[240px] rounded-full bg-gradient-to-br from-[#c2622a]/10 to-[#e8943a]/10 blur-2xl"
+              />
+
+              {/* 3-D Globe Container */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                className="relative z-10 h-[280px] w-[280px] sm:h-[320px] sm:w-[320px] lg:h-[360px] lg:w-[360px]"
+              >
+                <GlobeCanvas />
+                
+                {/* Drag hint overlay */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-stone-400 opacity-60 pointer-events-none">
+                  Drag to rotate
+                </div>
+              </motion.div>
+
+              {/* SVG connector lines - positioned behind cards but visible */}
+              <svg
+                className="pointer-events-none absolute inset-0 z-[5] h-full w-full"
+                viewBox="0 0 560 560"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <defs>
+                  <marker id="c-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                    <path d="M1 1L6 4L1 7" fill="none" stroke="#c2622a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </marker>
+                </defs>
+                {/* top */}
+                <motion.line
+                  initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  x1="280" y1="210" x2="280" y2="118"
+                  stroke="#c2622a" strokeWidth="0.8" strokeDasharray="4 4" opacity="0.4"
+                  markerEnd="url(#c-arrow)"
+                />
+                {/* right */}
+                <motion.line
+                  initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 1.0 }}
+                  x1="310" y1="280" x2="436" y2="280"
+                  stroke="#c2622a" strokeWidth="0.8" strokeDasharray="4 4" opacity="0.4"
+                  markerEnd="url(#c-arrow)"
+                />
+                {/* bottom */}
+                <motion.line
+                  initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 1.2 }}
+                  x1="280" y1="350" x2="280" y2="442"
+                  stroke="#c2622a" strokeWidth="0.8" strokeDasharray="4 4" opacity="0.4"
+                  markerEnd="url(#c-arrow)"
+                />
+              </svg>
+
+              {/* Orbit Cards */}
+              {worldviewItems.map((item, i) => (
+                <OrbitCard 
+                  key={item.title} 
+                  item={item} 
+                  index={i} 
+                  onHover={handleHover}
+                  isHovered={hoveredItem?.title === item.title}
+                />
+              ))}
+
+              {/* Floating particles */}
+              {Array.from({ length: 6 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 0.3 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 1.2 + i * 0.1 }}
+                  animate={{ y: [0, -10, 0], x: [0, i % 2 === 0 ? 8 : -8, 0] }}
+                  // @ts-ignore framer-motion allows two `transition` props when `animate` is present
+                  transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute h-1.5 w-1.5 rounded-full bg-[#c2622a]/30"
+                  style={{ left: `${20 + i * 13}%`, top: `${28 + (i * 11) % 44}%` }}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom decorative element */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 lg:hidden">
-        <p className="text-xs text-stone-400">Tap cards to explore</p>
-        <div className="mx-auto mt-2 h-8 w-px bg-gradient-to-b from-primary/40 to-transparent" />
-      </div>
-    </section>
+        {/* Mobile hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center lg:hidden">
+          <p className="text-xs text-stone-400">Tap cards to explore</p>
+          <div className="mx-auto mt-2 h-8 w-px bg-gradient-to-b from-[#c2622a]/40 to-transparent" />
+        </div>
+
+        {/* Tooltip Portal - renders outside normal flow to avoid overlap issues */}
+        {hoveredItem && hoveredRect && (
+          <TooltipPortal 
+            item={hoveredItem} 
+            anchorRect={hoveredRect} 
+            onClose={() => handleHover(null)} 
+          />
+        )}
+      </section>
+    </>
   );
 }
