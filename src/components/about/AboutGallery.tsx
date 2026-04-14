@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useCallback } from "react";
 import { ArrowUpRight, X, Expand, Eye } from "lucide-react";
@@ -66,7 +66,7 @@ const images: GalleryImage[] = [
 ];
 
 // Elegant reveal animation variants
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -77,7 +77,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 40, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -90,7 +90,7 @@ const itemVariants = {
   },
 };
 
-const textRevealVariants = {
+const textRevealVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
