@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaGithub, FaInstagram, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
 
 interface FooterProps {
   transitionLine?: string;
@@ -57,32 +57,32 @@ export default function Footer({ transitionLine }: FooterProps) {
               {
                 [
                   {
-                    name: "Twitter",
-                    href: "https://twitter.com/paul_ankinola",
-                    icon: <FaXTwitter size={25}  />
-                  },
-                  {
                     name: "LinkedIn",
-                    href: "https://www.linkedin.com/in/paul-ankinola/",
+                    href: "https://www.linkedin.com/in/paulakinola/",
                     icon: <FaLinkedin size={25} />
                   },
                   {
                     name: "Instagram",
-                    href: "https://www.instagram.com/paul_ankinola/",
+                    href: "https://www.instagram.com/paulakinolatm/",
                     icon: <FaInstagram size={25} />
                   },
                   {
-                    name: "GitHub",
-                    href: "https://github.com/paul_ankinola",
-                    icon: <FaGithub size={25} />
+                    name: "Facebook",
+                    href: "https://www.facebook.com/PaulAkinolaTM/",
+                    icon: <FaFacebook size={25} />
+                  },
+                  {
+                    name: "YouTube",
+                    href: "https://www.youtube.com/@PaulAkinolaTM",
+                    icon: <FaYoutube size={25} />
                   }
                 ].map((social,index)=>{
                   return (
-
-                    <div> 
+                    <div key={index}> 
                       <Link
-                        key={index}
                         href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-stone-300 hover:text-white transition-colors text-sm font-medium"
                       >
                         {social.icon}

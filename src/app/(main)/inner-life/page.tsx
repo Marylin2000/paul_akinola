@@ -1,4 +1,10 @@
 import InnerLifeHero from "@/components/inner-life/InnerLifeHero";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Systems in Life",
+  description: "Explore how inner systems shape behaviour, resilience, identity, faith, and meaning.",
+};
 import InnerLifeSetup from "@/components/inner-life/InnerLifeSetup";
 import InnerLifeReframes from "@/components/inner-life/InnerLifeReframes";
 import InnerLifeShift from "@/components/inner-life/InnerLifeShift";

@@ -1,11 +1,15 @@
 export interface Thought {
   slug: string;
   title: string;
-  tag: "Work" | "Life" | "Core";
+  tag: "Work" | "Inner Life" | "Core";
   excerpt: string;
   date?: string;
   content: string;
   question?: string;
+  image?: {
+    url: string;
+    alt: string;
+  };
 }
 
 export const thoughts: Thought[] = [
@@ -15,6 +19,10 @@ export const thoughts: Thought[] = [
     tag: "Work",
     excerpt: "A growth model can look right on paper and still fail in practice when it does not match the product, the buyer, or the stage.",
     question: "Why is our growth strategy not working even though the team is executing well?",
+    image: {
+      url: "/images/27.png",
+      alt: "System growth visualization"
+    },
     content: `There is a particular kind of exhaustion that comes from doing the right things in the wrong context.
 
 The team is capable. The strategy makes sense on paper. The motion being run, whether product-led, sales-led, or marketing-led, has worked somewhere before. Everyone is executing. And still, the results do not follow.
@@ -85,6 +93,10 @@ That question, answered honestly, is usually where real progress begins.`
     tag: "Work",
     excerpt: "A full pipeline can still be a weak pipeline when the signals underneath it do not support good decisions.",
     question: "Why does my pipeline look full but still not convert into revenue?",
+    image: {
+      url: "/images/2.png",
+      alt: "Data pipeline signals"
+    },
     content: `A full pipeline feels like evidence that the system is working.
 
 It is one of the most expensive illusions in revenue operations.
@@ -318,7 +330,7 @@ That is what becomes possible when the system finally tells the truth. It is not
   {
     slug: "inconsistency-rarely-real-problem",
     title: "Why inconsistency is rarely the real problem",
-    tag: "Life",
+    tag: "Inner Life",
     excerpt: "What looks like inconsistency is often a pattern that sits deeper than the plan you keep trying to follow.",
     question: "Is inconsistency a discipline problem or something deeper?",
     content: `If you have ever looked at your own life and felt genuinely confused by the gap between who you intend to be and how you show up, you are not alone. And you are probably not the problem.
@@ -364,7 +376,7 @@ Inconsistency is not a verdict on your character. It is a signal from a system t
   {
     slug: "hope-underneath-confusion",
     title: "What hope is doing underneath confusion",
-    tag: "Life",
+    tag: "Inner Life",
     excerpt: "Hope is not denial. Sometimes it is the quiet force that keeps a person moving before clarity fully arrives.",
     question: "How do I keep moving when I do not have clarity yet?",
     content: `There are seasons that do not announce themselves properly.
@@ -411,7 +423,7 @@ Hope in a confusing season does not produce the feeling that everything is fine.
   {
     slug: "clarity-blocked-by-system",
     title: "When clarity is blocked by the system beneath it",
-    tag: "Life",
+    tag: "Inner Life",
     excerpt: "You can want clarity badly and still not reach it when the inner system is shaping what you can see.",
     question: "Can fear, identity, or old patterns block personal clarity?",
     content: `There is a particular frustration that comes from thinking something through completely and still not being clear.
@@ -457,7 +469,7 @@ Look at what you have been turning away from. That is usually where the clarity 
   {
     slug: "fighting-the-nameable",
     title: "You are not always fighting the thing you can name",
-    tag: "Life",
+    tag: "Inner Life",
     excerpt: "Sometimes the struggle you can describe is only the surface of something deeper that has not yet been understood.",
     question: "How do I know if there is a deeper issue underneath the struggle, I keep naming?",
     content: `The struggle you can describe is not always the struggle you are in.
@@ -501,7 +513,7 @@ Seeing it clearly is not the end of the work. But it is the beginning of working
   {
     slug: "understanding-yourself-change",
     title: "What changes when you stop fighting yourself and start understanding yourself",
-    tag: "Life",
+    tag: "Inner Life",
     excerpt: "The shift is not only intellectual. It changes how you read outcomes, relationships, and your own decisions.",
     question: "What happens when I stop trying to force change and start understanding myself?",
     content: `For a long time, I approached my own inner life the way I approach a system that is not performing: Diagnose the problem. Design the intervention. Apply the pressure. 

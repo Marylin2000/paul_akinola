@@ -1,4 +1,10 @@
 import ThoughtsHero from "@/components/thoughts/ThoughtsHero";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Thoughts",
+  description: "Reflections on systems, clarity, and the patterns that shape our outcomes.",
+};
 import ThoughtsStartHere from "@/components/thoughts/ThoughtsStartHere";
 import ThoughtsFeatured from "@/components/thoughts/ThoughtsFeatured";
 import ThoughtsJournal from "@/components/thoughts/ThoughtsJournal";

@@ -1,4 +1,10 @@
 import WorkTogetherHero from "@/components/work-together/WorkTogetherHero";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Work Together",
+  description: "Start a conversation with Paul Akinola about systems, growth, and transformation.",
+};
 import WorkTogetherRelevance from "@/components/work-together/WorkTogetherRelevance";
 import WorkTogetherMethod from "@/components/work-together/WorkTogetherMethod";
 import WorkTogetherContact from "@/components/work-together/WorkTogetherContact";

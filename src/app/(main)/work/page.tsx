@@ -1,6 +1,10 @@
-"use client";
-
 import WorkHero from "@/components/work/WorkHero";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Systems at Work",
+  description: "Explore how systems shape performance, decisions, revenue, and growth in organisations.",
+};
 import WorkSurfaceRoot from "@/components/work/WorkSurfaceRoot";
 import WorkReframes from "@/components/work/WorkReframes";
 import WorkTheShift from "@/components/work/WorkTheShift";

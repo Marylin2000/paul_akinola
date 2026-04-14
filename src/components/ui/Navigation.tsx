@@ -18,7 +18,7 @@ export default function Navigation() {
     { name: "Thoughts", href: "/thoughts" },
     { name: "About", href: "/about" },
     { name: "Together", href: "/together" },
-    {name:"Old contents",href:"/old"}
+    {name:"Build",href:"/build"}
   ];
 
   const isActive = (href: string) => {

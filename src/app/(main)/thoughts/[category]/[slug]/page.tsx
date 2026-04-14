@@ -1,18 +1,13 @@
-"use client";
-
-import { use } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowLeft, ChevronRight, Clock, Tag } from "lucide-react";
-import { thoughts } from "@/data/thoughts";
+import { ArrowLeft, ChevronRight, Clock } from "lucide-react";
+import { getThoughts } from "@/lib/cms-fetcher";
 import Navigation from "@/components/ui/Navigation";
-import Footer from "@/components/ui/Footer";
-import { useTheme } from "@/context/ThemeContext";
+import Image from "next/image";
+import { Thought } from "@/lib/types-cms";
 
-export default function ThoughtPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
-  const { theme } = useTheme();
-  
+export default async function ThoughtPage({ params }: { params: Promise<{ category: string, slug: string }> }) {
+  const { category, slug } = await params;
+  const thoughts: Thought[] = await getThoughts();
   const thought = thoughts.find((t) => t.slug === slug);
 
   if (!thought) {
@@ -37,30 +32,46 @@ export default function ThoughtPage({ params }: { params: Promise<{ slug: string
     .filter((t) => t.tag === thought.tag && t.slug !== thought.slug)
     .slice(0, 2);
 
+  const getCategoryPath = (tag: string) => {
+    return tag.toLowerCase().replace(' ', '-');
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": thought.title,
+    "description": thought.excerpt,
+    "image": thought.image?.url,
+    "datePublished": thought.date,
+    "author": {
+      "@type": "Person",
+      "name": "Paul Akinola",
+      "url": "https://paulakinola.com/about"
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white dark:bg-stone-950 transition-colors duration-500">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navigation />
       
       <article className="pt-32 pb-24 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Breadcrumbs */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-sm text-stone-500 dark:text-stone-400 mb-12"
-          >
+          <div className="flex items-center gap-2 text-sm text-stone-500 dark:text-stone-400 mb-12">
             <Link href="/thoughts" className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors">Thoughts</Link>
             <ChevronRight className="w-3 h-3" />
+            <Link href={`/thoughts/${getCategoryPath(thought.tag)}`} className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors capitalize">{thought.tag}</Link>
+            <ChevronRight className="w-3 h-3" />
             <span className="text-stone-400 dark:text-stone-600 truncate">{thought.title}</span>
-          </motion.div>
+          </div>
 
           {/* Header */}
           <header className="mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            <div>
               <div className="flex items-center gap-4 mb-6">
                 <span className="px-3 py-1 rounded-full bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 text-xs font-medium tracking-wide uppercase">
                   {thought.tag}
@@ -77,23 +88,30 @@ export default function ThoughtPage({ params }: { params: Promise<{ slug: string
                 {thought.title}
               </h1>
 
+              {thought.image && (
+                <div className="relative aspect-[16/9] w-full mb-12 rounded-[1.5rem] overflow-hidden border border-rule/10">
+                  <Image 
+                    src={thought.image.url} 
+                    alt={thought.image.alt} 
+                    fill 
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 800px"
+                  />
+                </div>
+              )}
+
               {thought.question && (
                 <p className="text-xl md:text-2xl text-stone-500 dark:text-stone-400 font-serif italic leading-relaxed border-l-2 border-stone-200 dark:border-stone-800 pl-6 my-10">
                   {thought.question}
                 </p>
               )}
-            </motion.div>
+            </div>
           </header>
 
           {/* Body */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="prose prose-stone dark:prose-invert prose-lg max-w-none"
-          >
+          <div className="prose prose-stone dark:prose-invert prose-lg max-w-none">
             <div className="space-y-8 text-stone-800 dark:text-stone-200 leading-relaxed font-sans subpixel-antialiased">
-              {thought.content.split('\n\n').map((paragraph, idx) => {
+              {thought.content.split('\n\n').map((paragraph: string, idx: number) => {
                 if (paragraph.startsWith('###')) {
                   return (
                     <h3 key={idx} className="text-2xl font-serif text-stone-900 dark:text-stone-100 mt-12 mb-6">
@@ -105,7 +123,7 @@ export default function ThoughtPage({ params }: { params: Promise<{ slug: string
                   // Handle numbered lists if any
                   return (
                     <div key={idx} className="pl-4 space-y-4 my-6">
-                      {paragraph.split('\n').map((line, lIdx) => (
+                      {paragraph.split('\n').map((line: string, lIdx: number) => (
                         <p key={lIdx} className="relative pl-6">
                           <span className="absolute left-0 text-stone-400 dark:text-stone-600 font-serif">{line.split('.')[0]}.</span>
                           {line.split('.').slice(1).join('.').trim()}
@@ -121,7 +139,7 @@ export default function ThoughtPage({ params }: { params: Promise<{ slug: string
                 );
               })}
             </div>
-          </motion.div>
+          </div>
 
           {/* Footer Navigation */}
           <footer className="mt-24 pt-16 border-t border-stone-100 dark:border-stone-900">
@@ -130,10 +148,10 @@ export default function ThoughtPage({ params }: { params: Promise<{ slug: string
             </h2>
             
             <div className="grid md:grid-cols-2 gap-8">
-              {related.map((rel) => (
+              {related.map((rel: Thought) => (
                 <Link 
                   key={rel.slug}
-                  href={`/thoughts/${rel.slug}`}
+                  href={`/thoughts/${getCategoryPath(rel.tag)}/${rel.slug}`}
                   className="group block"
                 >
                   <span className="text-xs text-stone-400 dark:text-stone-500 mb-2 block uppercase tracking-wide">Next in {rel.tag}</span>
@@ -155,8 +173,6 @@ export default function ThoughtPage({ params }: { params: Promise<{ slug: string
           </footer>
         </div>
       </article>
-
-      {/* <Footer transitionLine="Clarity on the systems that shape how we live, lead, and grow." /> */}
     </main>
   );
 }

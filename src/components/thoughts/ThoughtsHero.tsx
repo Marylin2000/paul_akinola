@@ -1,32 +1,71 @@
+// ThoughtsHero.tsx
 "use client";
 
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 export default function ThoughtsHero() {
   return (
-    <section className="pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-background">
-      <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto text-center">
+    <section className="relative overflow-hidden bg-stone-50 pt-32 pb-20 transition-colors duration-500 dark:bg-stone-950 md:pt-48 md:pb-32">
+      {/* Ambient gradient orbs */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-40 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-primary/8 via-amber-500/5 to-transparent blur-7xl" />
+        <div className="absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-gradient-to-tl from-amber-500/8 via-primary/5 to-transparent blur-7xl" />
+      </div>
+
+      {/* Subtle grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.08] dark:opacity-[0.04]"
+        style={{
+          backgroundImage: `
+            linear-gradient(var(--rule) 1px, transparent 1px),
+            linear-gradient(90deg, var(--rule) 1px, transparent 1px)
+          `,
+          backgroundSize: "48px 48px",
+        }}
+        aria-hidden
+      />
+
+      <div className="container-responsive relative">
+        <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-primary/60 mb-6 block">
-              Thoughts
-            </span>
-            <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] text-foreground mb-8">
-              This is where I think <span className="italic text-primary">out loud</span>.
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-2 backdrop-blur-sm">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium uppercase tracking-wider text-primary">
+                Thoughts & Reflections
+              </span>
+            </div>
+
+            <h1 className="mb-6 font-serif text-4xl font-light leading-[1.1] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
+              This is where I think{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text italic text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
+                  out loud
+                </span>
+                <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
+              </span>
+              .
             </h1>
-            <p className="font-sans text-[clamp(1.1rem,1.3vw,1.25rem)] text-foreground/60 leading-relaxed max-w-lg mx-auto">
-              Most of these ideas do not start as frameworks. They start as observations. Things I notice in work, in people, and in myself. Over time, they begin to connect.
+
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl">
+              Most of these ideas do not start as frameworks. They start as observations. 
+              Things I notice in work, in people, and in myself. Over time, they begin to connect.
             </p>
           </motion.div>
         </div>
+
+        {/* Decorative accent */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="mx-auto mt-16 h-20 w-px bg-gradient-to-b from-primary/40 to-transparent"
+        />
       </div>
-      
-      {/* Structural Accent */}
-      <div className="mt-16 w-px h-24 bg-gradient-to-b from-primary/40 to-transparent mx-auto opacity-40" />
     </section>
   );
 }

@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin-growth-systems/', '/api/'],
+      disallow: ['/admin/', '/api/'],
     },
     sitemap: 'https://paulakinola.com/sitemap.xml',
   }

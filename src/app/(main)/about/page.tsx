@@ -2,17 +2,43 @@ import AboutHero from "@/components/about/AboutHero";
 import AboutWorldview from "@/components/about/AboutWorldview";
 import AboutJourney from "@/components/about/AboutJourney";
 import AboutValues from "@/components/about/AboutValues";
+import AboutGallery from "@/components/about/AboutGallery";
 import AboutMechanics from "@/components/about/AboutMechanics";
 import AboutSiteMeaning from "@/components/about/AboutSiteMeaning";
 import AboutNextPaths from "@/components/about/AboutNextPaths";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "About Paul Akinola",
+  description: "Learn more about Paul Akinola, his worldview, and his work at the intersection of systems, clarity, and growth.",
+};
 
 export default function AboutPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Paul Akinola",
+    "url": "https://paulakinola.com/about",
+    "jobTitle": "Systems Architect & Growth Strategist",
+    "sameAs": [
+      "https://www.linkedin.com/in/paulakinola/",
+      "https://www.instagram.com/paulakinolatm/",
+      "https://www.facebook.com/PaulAkinolaTM/",
+      "https://www.youtube.com/@PaulAkinolaTM"
+    ]
+  };
+
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AboutHero />
       <AboutWorldview />
       <AboutJourney />
       <AboutValues />
+      <AboutGallery />
       <AboutMechanics />
       <AboutSiteMeaning />
       <AboutNextPaths />

@@ -80,12 +80,12 @@ export default function WorkTogetherContact() {
                 <select 
                   id="context" 
                   required 
-                  className="w-full bg-transparent border-b border-rule py-3 focus:outline-none focus:border-primary transition-colors font-light text-foreground"
+                  className="w-full bg-stone-50/50 dark:bg-stone-800/50 border-b border-rule px-2 py-3 focus:outline-none focus:border-primary transition-colors font-light text-foreground"
                 >
-                  <option value="" disabled selected>Select Context</option>
-                  <option value="work">Work</option>
-                  <option value="life">Life</option>
-                  <option value="both">Both</option>
+                  <option value="" disabled selected className="dark:bg-stone-900">Select Context</option>
+                  <option value="work" className="dark:bg-stone-900">Work</option>
+                  <option value="life" className="dark:bg-stone-900">Life</option>
+                  <option value="both" className="dark:bg-stone-900">Both</option>
                 </select>
               </div>
               <div className="space-y-3">
@@ -94,15 +94,15 @@ export default function WorkTogetherContact() {
                 </label>
                 <select 
                   id="fit" 
-                  className="w-full bg-transparent border-b border-rule py-3 focus:outline-none focus:border-primary transition-colors font-light text-foreground"
+                  className="w-full bg-stone-50/50 dark:bg-stone-800/50 border-b border-rule px-2 py-3 focus:outline-none focus:border-primary transition-colors font-light text-foreground"
                 >
-                  <option value="" disabled selected>Optional Selection</option>
-                  <option value="clarity">Clarity</option>
-                  <option value="growth">Growth</option>
-                  <option value="revenue">Revenue / systems</option>
-                  <option value="patterns">Patterns / behaviour</option>
-                  <option value="direction">Direction</option>
-                  <option value="other">Something else</option>
+                  <option value="" disabled selected className="dark:bg-stone-900">Optional Selection</option>
+                  <option value="clarity" className="dark:bg-stone-900">Clarity</option>
+                  <option value="growth" className="dark:bg-stone-900">Growth</option>
+                  <option value="revenue" className="dark:bg-stone-900">Revenue / systems</option>
+                  <option value="patterns" className="dark:bg-stone-900">Patterns / behaviour</option>
+                  <option value="direction" className="dark:bg-stone-900">Direction</option>
+                  <option value="other" className="dark:bg-stone-900">Something else</option>
                 </select>
               </div>
             </div>

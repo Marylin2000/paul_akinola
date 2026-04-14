@@ -1,81 +1,114 @@
+// ThoughtsStartHere.tsx
 "use client";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Compass, Eye, Lightbulb } from "lucide-react";
 
 const startItems = [
   {
     num: "01",
     title: "When you start seeing systems",
-    slug: "start-seeing-systems"
+    description: "The moment you realize that outcomes aren't random—they're shaped by patterns, structures, and forces beneath the surface.",
+    slug: "start-seeing-systems",
+    icon: Eye,
+    gradient: "from-primary/15 to-amber-500/5",
   },
   {
     num: "02",
-    title: "It's the same lack of clarity- showing up at work and in life",
-    slug: "clarity-showing-up-work-life"
+    title: "It's the same lack of clarity—showing up at work and in life",
+    description: "The fog you experience in meetings is connected to the fog you feel internally. Different domains, same root.",
+    slug: "clarity-showing-up-work-life",
+    icon: Compass,
+    gradient: "from-amber-500/15 to-primary/5",
   },
   {
     num: "03",
     title: "Clarity is never the end goal. It is the beginning",
-    slug: "clarity-not-end-goal"
+    description: "Seeing clearly doesn't finish the work—it starts it. Clarity gives you a place to stand and a direction to move.",
+    slug: "clarity-not-end-goal",
+    icon: Lightbulb,
+    gradient: "from-orange-500/15 to-amber-500/5",
   }
 ];
 
 export default function ThoughtsStartHere() {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 },
-  };
-
   return (
-    <section className="py-24 px-6 bg-white dark:bg-stone-950 transition-colors">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-3xl mb-16">
-          <h2 className="text-sm font-medium text-stone-400 dark:text-stone-600 uppercase tracking-widest mb-6">
-            Orientation
-          </h2>
-          <p className="text-2xl md:text-3xl font-serif text-stone-900 dark:text-stone-100 leading-snug">
-            If you are new to the systems lens, these three reflections offer a helpful foundation for how to read everything else on this site.
-          </p>
-        </div>
+    <section className="relative overflow-hidden border-y border-stone-200/60 bg-stone-50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-950 md:py-32">
+      {/* Background accent */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -right-60 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-gradient-to-br from-primary/5 via-amber-500/5 to-transparent blur-7xl" />
+      </div>
 
-        <motion.div 
-          variants={container}
-          initial="hidden"
-          whileInView="show"
+      <div className="container-responsive relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-12"
+          transition={{ duration: 0.6 }}
+          className="mb-16"
         >
-          {startItems.map((itemObj) => (
-            <motion.div key={itemObj.num} variants={item}>
-              <Link 
-                href={`/thoughts/${itemObj.slug}`}
-                className="group block"
-              >
-                <div className="text-xs font-bold text-stone-300 dark:text-stone-800 mb-4 transition-colors group-hover:text-stone-400 dark:group-hover:text-stone-700">
-                  {itemObj.num}
-                </div>
-                <h3 className="text-2xl font-serif text-stone-900 dark:text-stone-100 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors leading-tight mb-4">
-                  {itemObj.title}
-                </h3>
-                <span className="flex items-center text-xs font-medium text-stone-400 dark:text-stone-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                  Read reflection <ArrowRight className="ml-2 w-3 h-3" />
-                </span>
-              </Link>
-            </motion.div>
-          ))}
+          <div className="mb-6 flex items-center gap-4">
+            <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
+            <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
+              Orientation
+            </span>
+          </div>
+          
+          <h2 className="mb-4 font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl">
+            New to the systems lens?
+          </h2>
+          
+          <p className="max-w-2xl text-lg text-stone-500 dark:text-stone-400">
+            These three reflections offer a helpful foundation for how to read everything else on this site.
+          </p>
         </motion.div>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {startItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={item.num}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="group relative"
+              >
+                <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${item.gradient} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100`} />
+                
+                <Link 
+                  href={`/thoughts/${item.slug}`}
+                  className="relative flex h-full flex-col rounded-3xl border border-stone-200/60 bg-white/80 p-8 backdrop-blur-sm transition-all duration-300 group-hover:border-primary/20 group-hover:shadow-xl dark:border-stone-700/60 dark:bg-stone-900/80"
+                >
+                  <div className="mb-6 flex items-start justify-between">
+                    <div className="rounded-xl bg-gradient-to-br from-primary/15 to-amber-500/10 p-3">
+                      <Icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <span className="font-mono text-4xl font-light text-stone-200 dark:text-stone-700">
+                      {item.num}
+                    </span>
+                  </div>
+                  
+                  <h3 className="mb-3 font-serif text-xl font-semibold leading-snug text-stone-900 transition-colors group-hover:text-primary dark:text-white">
+                    {item.title}
+                  </h3>
+                  
+                  <p className="mb-6 flex-1 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                    {item.description}
+                  </p>
+                  
+                  <div className="flex items-center text-sm font-medium text-primary opacity-0 transition-all duration-300 group-hover:gap-2 group-hover:opacity-100">
+                    <span>Read reflection</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
