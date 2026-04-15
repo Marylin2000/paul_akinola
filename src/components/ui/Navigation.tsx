@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 import { usePathname } from "next/navigation";
 import { Moon, Sun, Mail, Menu, X } from "lucide-react";
@@ -54,8 +55,15 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-16">
             {/* Logo / Brand */}
             <div className="flex-shrink-0">
-              <Link href="/" className="text-2xl font-bold text-gradient">
-                PA
+              <Link href="/" className="inline-flex items-center">
+                <Image 
+                  src="/images/logo/05%20PA_Logo_Master_1.svg" 
+                  alt="Paul Akinola" 
+                  width={150} 
+                  height={40} 
+                  className="h-8 w-auto dark:invert" 
+                  priority
+                />
               </Link>
             </div>
 

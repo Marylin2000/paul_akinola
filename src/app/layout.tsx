@@ -5,10 +5,53 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
 import FloatingParticles from "@/components/old/FloatingParticles";
-import { Playfair_Display, Outfit } from "next/font/google";
+import localFont from "next/font/local";
+import { Outfit } from "next/font/google";
 import Script from "next/script";
 
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const allura = localFont({
+  src: "../../public/fonts/01_Fonts/Allura-Regular.ttf",
+  variable: "--font-allura",
+  display: "swap",
+});
+
+const playfair = localFont({
+  src: [
+    {
+      path: "../../public/fonts/01_Fonts/PlayfairDisplay-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/01_Fonts/PlayfairDisplay-Italic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../../public/fonts/01_Fonts/PlayfairDisplay-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/01_Fonts/PlayfairDisplay-BoldItalic.ttf",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "../../public/fonts/01_Fonts/PlayfairDisplay-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/01_Fonts/PlayfairDisplay-BlackItalic.ttf",
+      weight: "900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
@@ -59,6 +102,9 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
+  icons: {
+    icon: '/images/logo/05%20PA_Logo_Master_1.svg',
+  },
 };
 
 export default function RootLayout({
@@ -68,7 +114,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground transition-colors duration-500`}>
+      <body className={`${playfair.variable} ${outfit.variable} ${allura.variable} font-sans antialiased bg-background text-foreground transition-colors duration-500`}>
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();`}
         </Script>

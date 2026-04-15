@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
 
@@ -30,9 +31,15 @@ export default function Footer({ transitionLine }: FooterProps) {
         >
           <div>
 
-          <h3 className="text-3xl font-medium text-stone-100 mb-2 max-w-2xl">
-            Paul Akinola
-            </h3>
+          <Link href="/" className="inline-block mb-4">
+            <Image 
+              src="/images/logo/05%20PA_Logo_Master_1.svg" 
+              alt="Paul Akinola" 
+              width={180} 
+              height={48} 
+              className="h-10 w-auto invert" 
+            />
+          </Link>
           <p className="text-xl font-medium text-stone-100 mb-8 max-w-2xl">
             {transitionLine || "Clarity on the systems that shape how we live, lead, and grow."}
           </p>

@@ -5,8 +5,6 @@ import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Mail,
-  Linkedin,
-  Github,
   Calendar,
   MapPin,
   Phone,
@@ -15,6 +13,7 @@ import {
   AlertCircle,
   Send,
 } from "lucide-react";
+import { FiGithub as Github, FiLinkedin as Linkedin } from "react-icons/fi";
 
 export default function ContactPage() {
   const ref = useRef(null);

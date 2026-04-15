@@ -7,6 +7,7 @@
   --color-foreground: var(--foreground);
   --font-serif: var(--font-playfair), Georgia, serif;
   --font-sans: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  --font-allura: var(--font-allura), cursive;
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);

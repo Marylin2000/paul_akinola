@@ -1,93 +1,230 @@
+// ProofPoints.tsx
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { Briefcase, ChevronRight, Trophy, Building2, TrendingUp } from "lucide-react";
 
-const stats = [
-  { label: "Years in Revenue Systems", value: "9+" },
-  { label: "Systems Built", value: "20+" },
-  { label: "Companies", value: "7+" },
-  { label: "Industries", value: "7" }
+interface Stat {
+  label: string;
+  value: string;
+  suffix: string;
+  icon: any;
+  gradient: string;
+}
+
+interface Industry {
+  name: string;
+  company: string;
+  color: string;
+  icon: any;
+}
+
+const stats: Stat[] = [
+  { label: "Years Experience", value: "9", suffix: "+", icon: Trophy, gradient: "from-amber-500 to-orange-600" },
+  { label: "Systems Built", value: "20", suffix: "+", icon: TrendingUp, gradient: "from-emerald-500 to-teal-600" },
+  { label: "Companies", value: "7", suffix: "+", icon: Building2, gradient: "from-blue-500 to-indigo-600" },
+  { label: "Industries", value: "7", suffix: "", icon: Briefcase, gradient: "from-purple-500 to-pink-600" }
 ];
 
-const industries = [
-  { name: "FinTech", company: "OZÉ Inc" },
-  { name: "HealthTech", company: "Reliance Health" },
-  { name: "HR Tech", company: "OnHand" },
-  { name: "Analytics", company: "KX Systems" },
-  { name: "E-commerce", company: "Possible & Affordable Solutions" },
-  { name: "PaaS", company: "Veefunnels" },
-  { name: "Fractional RevOps", company: "MartandMall" }
+const industries: Industry[] = [
+  { name: "FinTech", company: "OZÉ Inc", color: "from-emerald-500 to-cyan-500", icon: Briefcase },
+  { name: "HealthTech", company: "Reliance Health", color: "from-blue-500 to-indigo-500", icon: Briefcase },
+  { name: "HR Tech", company: "OnHand", color: "from-purple-500 to-pink-500", icon: Briefcase },
+  { name: "Analytics", company: "KX Systems", color: "from-orange-500 to-red-500", icon: Briefcase },
+  { name: "E-commerce", company: "Possible & Affordable", color: "from-rose-500 to-pink-500", icon: Briefcase },
+  { name: "PaaS", company: "Veefunnels", color: "from-cyan-500 to-blue-500", icon: Briefcase },
+  { name: "RevOps", company: "MartandMall", color: "from-amber-500 to-orange-500", icon: Briefcase }
 ];
 
-export default function ProofPoints() {
+function AnimatedCounter({ value, suffix, gradient }: { value: string; suffix: string; gradient: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      if (latest > 0.3) {
+        const targetValue = parseInt(value);
+        const currentCount = Math.min(Math.floor(targetValue * (latest - 0.3) * 2), targetValue);
+        setCount(currentCount);
+      }
+    });
+    return () => unsubscribe();
+  }, [scrollYProgress, value]);
+
   return (
-    <section className="py-24 bg-stone-950 text-stone-100 transition-colors duration-500 overflow-hidden relative">
-      <div className="container mx-auto px-6 relative z-10">
+    <span ref={ref} className={`font-serif text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+      {count}{suffix}
+    </span>
+  );
+}
+
+const ProofPoints = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
+  return (
+    <section ref={containerRef} className="relative py-32 bg-stone-950 text-white overflow-hidden">
+      {/* Animated Background */}
+      <motion.div style={{ y: backgroundY }} className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950" />
+        
+        {/* Animated grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,black,transparent)]" />
+        
+        {/* Glowing orbs */}
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-7xl"
+        />
+        <motion.div
+          animate={{ scale: [1.2, 1, 1.2], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 12, repeat: Infinity }}
+          className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/15 rounded-full blur-7xl"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.3, 1], opacity: [0.05, 0.15, 0.05] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-7xl"
+        />
+      </motion.div>
+
+      <div className="container-responsive relative z-10">
+        {/* Section Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20"
+          transition={{ duration: 0.8 }}
+          className="mb-20 lg:mb-28"
         >
-          <span className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-stone-500 mb-4 block">
-            03 — Proof Points
-          </span>
-          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] leading-[1.2]">
-            Evidence of the work.
-          </h2>
+          <div className="flex items-center gap-4 mb-6">
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="h-px w-16 bg-gradient-to-r from-primary to-transparent origin-left"
+            />
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+              03 — Proof Points
+            </span>
+          </div>
+          
+          <div className="overflow-hidden">
+            <motion.h2 
+              initial={{ y: "100%" }}
+              whileInView={{ y: "0%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.1]"
+            >
+              Evidence of the
+              <span className="block relative">
+                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-400 to-orange-500 bg-clip-text text-transparent">
+                  work
+                </span>
+                <motion.span
+                  className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/30 via-amber-500/30 to-orange-500/30 blur-xl"
+                  animate={{ opacity: [0.3, 0.6, 0.3] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+              </span>
+            </motion.h2>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24">
-          {stats.map((stat, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="text-center md:text-left"
-            >
-              <div className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-none text-primary mb-4">
-                {stat.value}
-              </div>
-              <div className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-stone-500">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-24 lg:mb-32">
+          {stats.map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="group relative"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-white/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity blur" />
+                <div className="relative p-6 lg:p-8 text-center bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10">
+                  <motion.div 
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${stat.gradient} mb-6`}
+                  >
+                    <Icon className="w-6 h-6 text-white" />
+                  </motion.div>
+                  
+                  <div className="mb-3">
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} gradient={stat.gradient} />
+                  </div>
+                  
+                  <div className="text-stone-400 text-xs uppercase tracking-widest font-medium">
+                    {stat.label}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <div className="border-t border-stone-800 pt-16">
-          <h3 className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-stone-500 mb-12">
+        {/* Industries */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-stone-500 mb-10 text-center lg:text-left">
             Companies by Industry
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {industries.map((item, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="flex items-center gap-6 group"
+                whileHover={{ x: 6 }}
+                className="group relative"
               >
-                <div className="font-sans text-sm font-light text-stone-400 min-w-[140px]">
-                  {item.name}
-                </div>
-                <div className="h-px bg-stone-800 flex-grow" />
-                <div className="font-sans text-sm font-medium text-stone-100 group-hover:text-primary transition-colors">
-                  {item.company}
+                <div className={`absolute -inset-0.5 bg-gradient-to-r ${item.color} rounded-2xl opacity-0 group-hover:opacity-30 transition-opacity blur`} />
+                <div className="relative flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
+                  <motion.div 
+                    whileHover={{ scale: 1.1 }}
+                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg`}
+                  >
+                    <Briefcase className="w-5 h-5 text-white" />
+                  </motion.div>
+                  <div className="flex-1">
+                    <div className="text-stone-400 text-xs mb-1">{item.name}</div>
+                    <div className="text-white font-medium text-sm group-hover:text-primary transition-colors">
+                      {item.company}
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-stone-600 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* Background Accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.15),transparent_70%)]" />
+        </motion.div>
       </div>
     </section>
   );
-}
+};
+
+export default ProofPoints;

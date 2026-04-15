@@ -5,8 +5,6 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   Mail,
-  Linkedin,
-  Github,
   Calendar,
   MapPin,
   Briefcase,
@@ -20,6 +18,7 @@ import {
   Phone,
   ArrowRight,
 } from "lucide-react";
+import { FiGithub as Github, FiLinkedin as Linkedin } from "react-icons/fi";
 
 export default function AboutContact() {
   const ref = useRef(null);
