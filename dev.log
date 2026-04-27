@@ -13,145 +13,398 @@ $ next dev --turbopack
    - Environments: .env.local, .env
 
  ✓ Starting...
- ✓ Ready in 1674ms
+ ✓ Compiled middleware in 411ms
+ ✓ Ready in 2.6s
  ⚠ Webpack is configured while Turbopack is not, which may cause problems.
  ⚠ See instructions if you need to configure Turbopack:
   https://nextjs.org/docs/app/api-reference/next-config-js/turbopack
 
- ○ Compiling /api/seed ...
- ✓ Compiled /api/seed in 6s
-[17:24:39] [33mWARN[39m: [36mNo email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.[39m
- GET /api/seed 200 in 9289ms
- ○ Compiling /admin/[[...segments]] ...
- ✓ Compiled /admin/[[...segments]] in 32.4s
- GET /admin/collections/articles 200 in 42993ms
+ ○ Compiling / ...
+ ✓ Compiled / in 14.4s
+[18:55:04] [33mWARN[39m: [36mNo email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.[39m
+ GET / 200 in 20657ms
+ ○ Compiling /admin/dashboard ...
+ ✓ Compiled /admin/dashboard in 1063ms
  ○ Compiling /api/[...slug] ...
- ✓ Compiled /api/[...slug] in 1980ms
- GET /api/users/me 200 in 5774ms
- GET /api/payload-preferences/nav 200 in 5363ms
- GET /api/users/me 200 in 347ms
- ✓ Compiled in 955ms
- ✓ Compiled /admin/[[...segments]] in 249ms
+ ✓ Compiled /api/[...slug] in 1834ms
+ GET /api/media?limit=1 200 in 7234ms
+ GET /api/users?limit=100 200 in 7246ms
+ GET /api/articles?limit=100 200 in 7275ms
+ GET /admin/dashboard 200 in 9456ms
+ ○ Compiling /admin/globals/[slug] ...
+ ✓ Compiled /admin/globals/[slug] in 1590ms
+ GET /admin/globals/hero 200 in 3190ms
+ GET /api/globals/hero 200 in 538ms
+ GET /api/globals/hero 200 in 409ms
+ GET /admin/globals/inner-life 200 in 181ms
+ GET /api/globals/inner-life 200 in 409ms
+ GET /api/globals/inner-life 200 in 463ms
+ GET /admin/globals/recognition 200 in 229ms
+ GET /api/globals/recognition 200 in 557ms
+ GET /api/globals/recognition 200 in 1187ms
+ GET /admin/globals/personal-anchor 200 in 414ms
+ GET /api/globals/personal-anchor 200 in 511ms
+ GET /api/globals/personal-anchor 200 in 522ms
+ GET /admin/globals/build 200 in 258ms
+ GET /api/globals/build 200 in 519ms
+ GET /api/globals/build 200 in 434ms
+ GET /admin/globals/together 200 in 436ms
+ GET /api/globals/together 200 in 522ms
+ GET /api/globals/together 200 in 545ms
+ GET /admin/globals/inner-life 200 in 171ms
+ GET /api/globals/inner-life 200 in 392ms
+ GET /api/globals/inner-life 200 in 389ms
+ GET /admin/globals/offerings 200 in 175ms
+ GET /api/globals/offerings 200 in 414ms
+ GET /api/globals/offerings 200 in 337ms
+ ○ Compiling /admin/users ...
+ ✓ Compiled /admin/users in 1218ms
+ GET /api/users?limit=100 200 in 610ms
+ GET /admin/users 200 in 2438ms
+ GET /api/users?limit=100 200 in 497ms
+ GET /admin/users 200 in 1398ms
+ ○ Compiling /admin/media ...
+ ✓ Compiled /admin/media in 2.1s
+ GET /api/media?limit=100 200 in 726ms
+ GET /admin/media 200 in 3309ms
+ GET /api/media?limit=100 200 in 429ms
+ GET /admin/media 200 in 842ms
+ ○ Compiling /admin/articles ...
+ ✓ Compiled /admin/articles in 2.2s
+ GET /api/articles?limit=100 200 in 520ms
+ GET /admin/articles 200 in 3460ms
+ GET /api/articles?limit=100 200 in 827ms
+ GET /api/users?limit=100 200 in 827ms
+ GET /api/media?limit=1 200 in 852ms
+ GET /admin/dashboard 200 in 1404ms
+ ✓ Compiled middleware in 2ms
+ ✓ Compiled in 404ms
+ ✓ Compiled in 281ms
+ ✓ Compiled in 137ms
+ GET /api/users/me 200 in 307ms
+ GET /admin/globals/offerings 200 in 632ms
+ GET /api/globals/offerings 200 in 522ms
+ GET /api/users/me 200 in 448ms
+ GET /api/articles?limit=100 200 in 479ms
+ GET /api/users?limit=100 200 in 476ms
+ GET /api/media?limit=1 200 in 482ms
+ GET /admin/dashboard 200 in 725ms
+ GET /api/users/me 200 in 356ms
+ GET /api/media?limit=100 200 in 311ms
+ GET /admin/media 200 in 471ms
+ GET /api/users/me 200 in 304ms
+ GET /api/users?limit=100 200 in 282ms
+ GET /admin/users 200 in 410ms
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 745ms
+ GET /admin/login 200 in 949ms
+ ✓ Compiled /api/admin/login in 361ms
+ POST /api/users/login 200 in 656ms
+ POST /api/admin/login 200 in 1402ms
+ GET /api/users/me 200 in 293ms
+ GET /api/articles?limit=100 200 in 464ms
+ GET /api/users?limit=100 200 in 469ms
+ GET /api/media?limit=1 200 in 479ms
+ GET /admin/dashboard 200 in 811ms
+ GET /api/users/me 200 in 309ms
+ GET /api/articles?limit=100 200 in 364ms
+ GET /admin/articles 200 in 634ms
+ GET /api/users/me 200 in 398ms
+ ○ Compiling /admin/articles/[id] ...
+ ✓ Compiled /admin/articles/[id] in 1489ms
+ GET /api/articles/69ef8dc7dd5629faa6f08857 200 in 477ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 4392ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 219ms
+ GET /api/users/me 200 in 429ms
+ GET /api/articles/69ef8dc7dd5629faa6f08857 200 in 392ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 1253ms
+ GET /api/users/me 200 in 429ms
+ GET /api/articles?limit=100 200 in 340ms
+ GET /admin/articles 200 in 636ms
+ GET /api/users/me 200 in 451ms
+ GET /api/articles/69ef8d4cc248e96d40883317 200 in 387ms
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 731ms
+ GET /api/users/me 200 in 741ms
+ GET /api/articles/69ef8d4cc248e96d40883317 200 in 489ms
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 802ms
+ GET /api/users/me 200 in 350ms
+ GET /admin/globals/work 200 in 186ms
+ GET /api/globals/work 200 in 401ms
+ GET /api/globals/work 200 in 308ms
+ ✓ Compiled in 365ms
+ GET /api/users/me 200 in 348ms
+ GET /api/articles?limit=100 200 in 437ms
+ GET /api/media?limit=1 200 in 437ms
+ GET /api/users?limit=100 200 in 466ms
+ GET /admin/dashboard 200 in 701ms
+ GET /api/users/me 200 in 323ms
+ GET /api/articles?limit=100 200 in 333ms
+ GET /admin/articles 200 in 567ms
+ GET /api/users/me 200 in 349ms
+ GET /api/articles/69ef8dc7dd5629faa6f08857 200 in 327ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 554ms
+ ✓ Compiled in 804ms
 Generating import map
 No new imports found, skipping writing import map
- GET /admin/collections/articles 200 in 1669ms
- GET /admin/collections/articles/69ef8dc7dd5629faa6f08857 200 in 485ms
- GET /api/payload-preferences/collection-articles 200 in 702ms
- POST /api/payload-preferences/collection-articles 200 in 416ms
- ✓ Compiled in 288ms
- ✓ Compiled /admin/[[...segments]] in 119ms
+ GET /api/users/me 200 in 575ms
+ GET /api/users/me 200 in 409ms
+ GET /api/users/me 200 in 289ms
+ GET /api/users/me 200 in 299ms
+ GET /api/users/me 200 in 617ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 1160ms
+ GET /admin/dashboard 200 in 1212ms
+ GET /api/articles?limit=100 200 in 836ms
+ GET /api/media?limit=1 200 in 853ms
+ GET /api/users?limit=100 200 in 876ms
+ GET /api/articles/69ef8dc7dd5629faa6f08857 200 in 626ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 1860ms
+ GET /admin/dashboard 200 in 1905ms
+ ✓ Compiled in 658ms
 Generating import map
 No new imports found, skipping writing import map
- GET /admin/collections/articles/69ef8dc7dd5629faa6f08857 200 in 2525ms
- GET /admin/collections/articles?depth=1&limit=10 200 in 617ms
- GET /admin/collections/articles/69ef8d4cc248e96d40883323 200 in 464ms
- ✓ Compiled in 228ms
- ○ Compiling /admin/[[...segments]] ...
- ✓ Compiled in 5.9s
- ✓ Compiled /admin/[[...segments]] in 900ms
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
-}
+ GET /api/users/me 200 in 694ms
+ GET /api/users/me 200 in 499ms
+ GET /api/users/me 200 in 477ms
+ GET /api/users/me 200 in 726ms
+ ✓ Compiled /admin/dashboard in 124ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 1188ms
+ GET /admin/dashboard 200 in 1237ms
+ GET /api/articles?limit=100 200 in 853ms
+ GET /api/users?limit=100 200 in 862ms
+ GET /api/media?limit=1 200 in 900ms
+ GET /api/users/me 200 in 516ms
+ GET /api/articles/69ef8dc7dd5629faa6f08857 200 in 613ms
+ GET /api/users/me 200 in 523ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 2038ms
+ GET /admin/dashboard 200 in 2103ms
+ GET /api/users/me 200 in 682ms
+ ✓ Compiled in 248ms
+ ✓ Compiled in 331ms
+Generating import map
+No new imports found, skipping writing import map
+ GET /api/users/me 200 in 560ms
+ GET /api/users/me 200 in 585ms
+ ✓ Compiled /admin/dashboard in 51ms
+ GET /admin/dashboard 200 in 415ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 390ms
+ GET /api/articles?limit=100 200 in 610ms
+ GET /api/media?limit=100 200 in 605ms
+ GET /api/users?limit=100 200 in 616ms
+ GET /api/articles?limit=100 200 in 418ms
+ GET /api/users?limit=100 200 in 433ms
+ GET /api/media?limit=100 200 in 438ms
+ GET /api/users/me 200 in 368ms
+ GET /api/articles/69ef8dc7dd5629faa6f08857 200 in 291ms
+ GET /admin/articles/69ef8dc7dd5629faa6f08857 200 in 601ms
+ GET /api/users/me 200 in 318ms
+ GET /admin/dashboard 200 in 454ms
+ GET /api/articles?limit=100 200 in 401ms
+ GET /api/users?limit=100 200 in 410ms
+ GET /api/media?limit=100 200 in 416ms
+ GET /api/articles?limit=100 200 in 414ms
+ GET /api/users?limit=100 200 in 418ms
+ GET /api/media?limit=100 200 in 435ms
+ GET /api/articles?limit=100 200 in 467ms
+ GET /api/media?limit=100 200 in 462ms
+ GET /api/users?limit=100 200 in 475ms
+ GET / 200 in 396ms
+ GET /api/users/me 200 in 489ms
+ GET /admin/dashboard 200 in 212ms
+ GET /api/articles?limit=100 200 in 443ms
+ GET /api/media?limit=100 200 in 443ms
+ GET /api/users?limit=100 200 in 445ms
+ GET /api/articles?limit=100 200 in 365ms
+ GET /api/media?limit=100 200 in 365ms
+ GET /api/users?limit=100 200 in 378ms
+ GET /api/articles?limit=100 200 in 408ms
+ GET /api/media?limit=100 200 in 411ms
+ GET /api/users?limit=100 200 in 417ms
+ GET /api/users/me 200 in 337ms
+ ✓ Compiled /admin/globals/[slug] in 62ms
+ GET /admin/globals/hero 200 in 319ms
+ GET /api/globals/hero 200 in 290ms
+ GET /api/globals/hero 200 in 282ms
+ GET /api/users/me 200 in 313ms
+ ✓ Compiled /admin/articles in 36ms
+ GET /api/articles?limit=100 200 in 333ms
+ GET /admin/articles 200 in 657ms
+ GET /api/users/me 200 in 330ms
+ GET /api/articles/69ef8d4cc248e96d40883317 200 in 276ms
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 446ms
+ ✓ Compiled in 366ms
+ GET /api/users/me 200 in 351ms
+ GET /api/articles/69ef8d4cc248e96d40883317 200 in 372ms
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 1694ms
+ ✓ Compiled in 207ms
+ ✓ Compiled in 313ms
+ ✓ Compiled in 230ms
+ ✓ Compiled in 345ms
+ ✓ Compiled in 314ms
+ ✓ Compiled in 272ms
+Generating import map
+No new imports found, skipping writing import map
+ GET /api/users/me 200 in 723ms
+ GET /api/users/me 200 in 711ms
+ ✓ Compiled /admin/dashboard in 214ms
+ GET /admin/dashboard 200 in 1175ms
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 1169ms
+ GET /api/users/me 200 in 718ms
+ GET /api/users/me 200 in 713ms
+ GET /admin/dashboard 200 in 2597ms
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 2604ms
+ ✓ Compiled in 0ms
  ○ Compiling /_error ...
- ✓ Compiled /_error in 5.8s
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.n9itgm7isx8'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.n9itgm7isx8'
+Generating import map
+No new imports found, skipping writing import map
+ GET /api/users/me 200 in 1127ms
+ GET /api/users/me 200 in 1148ms
+ ⨯ ReferenceError: i is not defined
+    at __TURBOPACK__module__evaluation__ (src/components/admin/Sidebar.tsx:19:1)
+    at __TURBOPACK__module__evaluation__ (src/app/admin/(admin)/layout.tsx:4:1)
+  17 | } from 'lucide-react';
+  18 | import { cn } from '@/lib/utils';
+> 19 | i
+     | ^
+  20 | import { useTheme } from './ThemeProvider';
+  21 |
+  22 | const collections = [ {
+  digest: '4195463146'
 }
-[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.a3dt1qz9rf'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.a3dt1qz9rf'
-}
-[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.tzqpr5b0i18'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.tzqpr5b0i18'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.2wfyzr0v2c'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.2wfyzr0v2c'
-}
-[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.156e39dkcgy'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.156e39dkcgy'
-}
-[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.fg1uqh50xr5'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.fg1uqh50xr5'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.bxegm9v9n3g'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.bxegm9v9n3g'
-}
-[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
-}
- ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.c9d5ve5dt3g'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.c9d5ve5dt3g'
-}
-[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.t1azn975vb9'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.t1azn975vb9'
-}
- ✓ Compiled in 8.6s
- ✓ Compiled in 2.5s
- ✓ Compiled in 875ms
- ✓ Compiled in 501ms
- ✓ Compiled in 8.2s
- ✓ Compiled in 319ms
- ✓ Compiled in 403ms
- ✓ Compiled in 4.6s
- ○ Compiling middleware ...
- ✓ Compiled middleware in 997ms
- ✓ Compiled middleware in 5ms
- ✓ Compiled middleware in 3ms
- ✓ Compiled middleware in 4ms
- ✓ Compiled middleware in 3ms
+ ✓ Compiled in 7.6s
+ GET /admin/dashboard 500 in 4820ms
+ GET /api/articles/69ef8d4cc248e96d40883317 200 in 2120ms
+ ✓ Compiled in 4.9s
+ GET /admin/articles/69ef8d4cc248e96d40883317 200 in 10796ms
+ ✓ Compiled /_error in 15.6s
+ GET /api/users/me 500 in 17032ms
+ GET /api/users/me 500 in 17046ms
+ GET /api/articles?limit=100 200 in 3525ms
+ GET /api/users?limit=100 200 in 3334ms
+ GET /api/media?limit=100 200 in 3526ms
+ GET /api/articles?limit=100 200 in 1117ms
+ GET /api/media?limit=100 200 in 1183ms
+ GET /api/users?limit=100 200 in 1229ms
+ GET /api/articles?limit=100 200 in 975ms
+ GET /api/media?limit=100 200 in 1011ms
+ GET /api/users?limit=100 200 in 1001ms
+ ✓ Compiled in 708ms
+ ✓ Compiled in 252ms
+ ✓ Compiled in 279ms
+ ✓ Compiled in 231ms
+ ✓ Compiled in 579ms
+ GET /api/users/me 500 in 136ms
+ ✓ Compiled /admin/login in 61ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 117ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 63ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 58ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 77ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 113ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 131ms
+ ⨯ ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+Processing image failed
+Input image is not valid utf-8
+
+Caused by:
+- invalid utf-8 sequence of 1 bytes from index 0
+
+Import trace:
+  Client Component SSR:
+    ./paul_ankinola/public/images/logo/05 PA_Logo_Master_1.svg
+    ./paul_ankinola/src/components/admin/Sidebar.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Client Component SSR]
+    ./paul_ankinola/src/app/admin/(admin)/layout.tsx [Server Component]
+
+
+ GET /admin/login 500 in 147ms
+[?25h

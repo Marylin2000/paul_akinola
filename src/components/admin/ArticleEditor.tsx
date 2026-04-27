@@ -1,36 +1,40 @@
-
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { 
-  ChevronLeft, 
-  Save, 
-  Image as ImageIcon, 
-  Upload, 
-  X, 
-  Loader2, 
+import { motion } from 'framer-motion';
+import {
+  ChevronLeft,
+  Save,
+  Image as ImageIcon,
+  Upload,
+  Loader2,
   AlertCircle,
   Eye,
-  Trash2
+  Trash2,
+  Calendar,
+  Tag,
 } from 'lucide-react';
 import Link from 'next/link';
-import { payload } from '@/lib/payload/api';
+import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
+import { LexicalEditor } from './LexicalEditor';
+
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
 
 export function ArticleEditor({ articleId, initialData }: { articleId: string; initialData?: any }) {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [formData, setFormData] = useState({
     title: initialData?.title || '',
     slug: initialData?.slug || '',
     tag: initialData?.tag || 'Work',
     excerpt: initialData?.excerpt || '',
     date: initialData?.date || '',
-    content: initialData?.content ? JSON.stringify(initialData.content, null, 2) : '', // Lexical JSON as string for now
+    content: initialData?.content ? JSON.stringify(initialData.content, null, 2) : '',
     image: initialData?.image || { url: '', alt: '' },
     _status: initialData?._status || 'draft',
   });
@@ -44,26 +48,18 @@ export function ArticleEditor({ articleId, initialData }: { articleId: string; i
     setIsUploading(true);
     setError(null);
 
-    const token = document.cookie.split('; ').find(row => row.startsWith('payload-token='))?.split('=')[1];
-
-    if (!token) {
-      setError('Not authenticated');
-      setIsUploading(false);
-      return;
-    }
-
     try {
       const data = new FormData();
       data.append('file', file);
-      data.append('alt', formData.title || 'Article image');
+      data.append('_payload', JSON.stringify({ alt: formData.title || 'Article image' }));
 
-      const res = await payload.uploadMedia(data, token);
-      setFormData(prev => ({
+      const res = await api.media.upload(data);
+      setFormData((prev) => ({
         ...prev,
         image: {
           url: res.doc.url,
-          alt: res.doc.alt
-        }
+          alt: res.doc.alt,
+        },
       }));
     } catch (err: any) {
       setError(err.message || 'Upload failed');
@@ -77,24 +73,16 @@ export function ArticleEditor({ articleId, initialData }: { articleId: string; i
     setIsSaving(true);
     setError(null);
 
-    const token = document.cookie.split('; ').find(row => row.startsWith('payload-token='))?.split('=')[1];
-
-    if (!token) {
-      setError('Not authenticated');
-      setIsSaving(false);
-      return;
-    }
-
     try {
       const submissionData = {
         ...formData,
-        content: formData.content ? JSON.parse(formData.content) : {}, // Try to parse back to JSON
+        content: formData.content ? JSON.parse(formData.content) : {},
       };
 
       if (articleId === 'new') {
-        await payload.createArticle(submissionData, token);
+        await api.articles.create(submissionData);
       } else {
-        await payload.updateArticle(articleId, submissionData, token);
+        await api.articles.update(articleId, submissionData);
       }
 
       router.push('/admin/articles');
@@ -109,224 +97,275 @@ export function ArticleEditor({ articleId, initialData }: { articleId: string; i
   return (
     <form onSubmit={handleSubmit} className="space-y-8 pb-20">
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-8">
+      <div className="flex items-center justify-between gap-4 border-b border-foreground/10 pb-8">
         <div className="flex items-center gap-4">
-          <Link 
-            href="/admin/articles"
-            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={springConfig}
           >
-            <ChevronLeft className="w-5 h-5 text-neutral-400" />
-          </Link>
+            <Link
+              href="/admin/articles"
+              className="w-10 h-10 flex items-center justify-center border border-foreground/10 hover:bg-foreground/5 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5 text-foreground/60" />
+            </Link>
+          </motion.div>
           <div>
-            <h1 className="text-3xl font-bold text-white">
+            <h1 className="font-serif text-3xl font-bold text-foreground">
               {articleId === 'new' ? 'New Article' : 'Edit Article'}
             </h1>
-            <p className="text-neutral-500 text-sm mt-1">
+            <p className="text-foreground/60 text-sm mt-1">
               {articleId === 'new' ? 'Drafting a new thought...' : `Editing: ${formData.title}`}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <button
+          <motion.button
             type="button"
-            className="px-4 py-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/5 transition-colors font-medium flex items-center gap-2"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={springConfig}
+            className="px-4 py-2 border border-foreground/20 hover:bg-foreground/5 transition-colors font-semibold flex items-center gap-2 text-foreground/60 hover:text-foreground"
           >
             <Eye className="w-4 h-4" />
             Preview
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             type="submit"
             disabled={isSaving}
-            className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2.5 rounded-xl font-semibold flex items-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-purple-500/20 disabled:opacity-50"
+            whileTap={{ scale: 0.98 }}
+            transition={springConfig}
+            className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 font-semibold flex items-center gap-2 transition-all disabled:opacity-50"
           >
             {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             {isSaving ? 'Saving...' : 'Save Article'}
-          </button>
+          </motion.button>
         </div>
       </div>
 
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-start gap-3 text-red-400">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={springConfig}
+          className="bg-red-500/10 border border-red-500/20 p-4 flex items-start gap-3 text-red-500"
+        >
           <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
           <p className="text-sm font-medium">{error}</p>
-        </div>
+        </motion.div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, ...springConfig }}
+            className="glass p-8 space-y-6"
+          >
             <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-400 ml-1">Article Title</label>
+              <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                Article Title
+              </label>
               <input
                 type="text"
                 required
                 value={formData.title}
-                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full bg-neutral-800/40 border border-white/5 focus:border-purple-500/50 rounded-xl py-4 px-5 outline-none transition-all text-white text-xl font-semibold placeholder:text-neutral-700"
+                onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                className="w-full bg-foreground/5 border border-foreground/10 focus:border-primary/50 py-4 px-5 outline-none transition-all text-foreground text-xl font-serif font-semibold placeholder:text-foreground/30"
                 placeholder="Enter a compelling title..."
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-400 ml-1">Slug</label>
+                <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                  Slug
+                </label>
                 <input
                   type="text"
                   required
                   value={formData.slug}
-                  onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                  className="w-full bg-neutral-800/40 border border-white/5 focus:border-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all text-white font-mono text-sm"
+                  onChange={(e) => setFormData((prev) => ({ ...prev, slug: e.target.value }))}
+                  className="w-full bg-foreground/5 border border-foreground/10 focus:border-primary/50 py-3 px-4 outline-none transition-all text-foreground font-mono text-sm"
                   placeholder="my-article-slug"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-400 ml-1">Tag / Category</label>
-                <select
-                  value={formData.tag}
-                  onChange={(e) => setFormData(prev => ({ ...prev, tag: e.target.value }))}
-                  className="w-full bg-neutral-800/40 border border-white/5 focus:border-purple-500/50 rounded-xl py-3 px-4 outline-none transition-all text-white appearance-none"
-                >
-                  <option value="Work">Work</option>
-                  <option value="Inner Life">Inner Life</option>
-                  <option value="Core">Core</option>
-                </select>
+                <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                  Tag / Category
+                </label>
+                <div className="relative">
+                  <Tag className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
+                  <select
+                    value={formData.tag}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, tag: e.target.value }))}
+                    className="w-full bg-foreground/5 border border-foreground/10 focus:border-primary/50 py-3 pl-11 pr-4 outline-none transition-all text-foreground appearance-none"
+                  >
+                    <option value="Work">Work</option>
+                    <option value="Inner Life">Inner Life</option>
+                    <option value="Core">Core</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-400 ml-1">Excerpt</label>
+              <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                Excerpt
+              </label>
               <textarea
                 required
                 value={formData.excerpt}
-                onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, excerpt: e.target.value }))}
                 rows={3}
-                className="w-full bg-neutral-800/40 border border-white/5 focus:border-purple-500/50 rounded-xl py-4 px-5 outline-none transition-all text-white resize-none"
+                className="w-full bg-foreground/5 border border-foreground/10 focus:border-primary/50 py-4 px-5 outline-none transition-all text-foreground resize-none"
                 placeholder="Brief summary for list views..."
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-neutral-400 ml-1">Content (Lexical JSON)</label>
-              <textarea
-                value={formData.content}
-                onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                rows={12}
-                className="w-full bg-neutral-800/50 border border-white/5 focus:border-purple-500/50 rounded-xl py-4 px-5 outline-none transition-all text-white font-mono text-sm leading-relaxed"
-                placeholder='{"root": {"children": [], ...}}'
+              <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                Content (Rich Text)
+              </label>
+              <LexicalEditor 
+                initialJson={formData.content} 
+                onChange={(json) => setFormData((prev) => ({ ...prev, content: json }))} 
               />
-              <p className="text-xs text-neutral-600 ml-1 italic">Payload Lexical content is stored as JSON. For this bespoke editor, it must be valid JSON strings.</p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Sidebar / Metadata */}
         <div className="space-y-6">
           {/* Featured Image */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4">
-            <h3 className="font-semibold text-lg flex items-center gap-2">
-              <ImageIcon className="w-5 h-5 text-purple-400" />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, ...springConfig }}
+            className="glass p-6 space-y-4"
+          >
+            <h3 className="font-serif font-semibold text-lg flex items-center gap-2">
+              <ImageIcon className="w-5 h-5 text-primary" />
               Featured Image
             </h3>
-            
-            <div 
+
+            <div
               className={cn(
-                "relative aspect-video rounded-2xl overflow-hidden border border-dashed flex flex-col items-center justify-center transition-all group cursor-pointer",
-                formData.image.url ? "border-transparent" : "border-white/10 hover:border-purple-500/50 bg-white/2"
+                'relative aspect-video border flex flex-col items-center justify-center transition-all group cursor-pointer',
+                formData.image.url
+                  ? 'border-transparent'
+                  : 'border-dashed border-foreground/20 hover:border-primary/50 bg-foreground/5'
               )}
               onClick={() => !formData.image.url && fileInputRef.current?.click()}
             >
               {formData.image.url ? (
                 <>
-                  <img 
-                    src={formData.image.url} 
-                    alt="Preview" 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button 
+                  <img src={formData.image.url} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-foreground/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <motion.button
                       type="button"
-                      onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
-                      className="p-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fileInputRef.current?.click();
+                      }}
+                      className="p-2 bg-foreground/20 hover:bg-foreground/30 transition-colors"
                     >
-                      <Upload className="w-5 h-5" />
-                    </button>
-                    <button 
+                      <Upload className="w-5 h-5 text-foreground" />
+                    </motion.button>
+                    <motion.button
                       type="button"
-                      onClick={(e) => { e.stopPropagation(); setFormData(prev => ({ ...prev, image: { url: '', alt: '' } })); }}
-                      className="p-2 rounded-lg bg-red-500/40 hover:bg-red-500/60 text-white transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setFormData((prev) => ({ ...prev, image: { url: '', alt: '' } }));
+                      }}
+                      className="p-2 bg-red-500/40 hover:bg-red-500/60 transition-colors"
                     >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
+                      <Trash2 className="w-5 h-5 text-red-400" />
+                    </motion.button>
                   </div>
                 </>
               ) : (
                 <>
                   {isUploading ? (
-                    <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
                   ) : (
                     <>
-                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <Upload className="w-6 h-6 text-neutral-500" />
-                      </div>
-                      <p className="text-sm font-medium text-neutral-500">Click to upload</p>
-                      <p className="text-xs text-neutral-700 mt-1">PNG, JPG, WebP</p>
+                      <motion.div
+                        className="w-12 h-12 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform border border-foreground/20"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <Upload className="w-6 h-6 text-foreground/40" />
+                      </motion.div>
+                      <p className="text-sm font-medium text-foreground/60">Click to upload</p>
+                      <p className="text-xs text-foreground/40 mt-1">PNG, JPG, WebP</p>
                     </>
                   )}
                 </>
               )}
             </div>
-            <input 
-              type="file" 
-              ref={fileInputRef}
-              onChange={handleImageUpload}
-              className="hidden" 
-              accept="image/*"
-            />
-          </div>
+            <input type="file" ref={fileInputRef} onChange={handleImageUpload} className="hidden" accept="image/*" />
+          </motion.div>
 
           {/* Publishing */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4">
-            <h3 className="font-semibold text-lg flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-blue-400" />
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, ...springConfig }}
+            className="glass p-6 space-y-4"
+          >
+            <h3 className="font-serif font-semibold text-lg flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-secondary" />
               Settings
             </h3>
-            
+
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-xs font-medium text-neutral-500 ml-1">Publish Date</label>
+                <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                  Publish Date
+                </label>
                 <input
                   type="text"
                   value={formData.date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                  className="w-full bg-neutral-800/40 border border-white/5 rounded-xl py-2.5 px-4 outline-none text-white text-sm"
+                  onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
+                  className="w-full bg-foreground/5 border border-foreground/10 py-2.5 px-4 outline-none text-foreground text-sm"
                   placeholder="e.g. October 2023"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-medium text-neutral-500 ml-1">Status</label>
-                <div className="flex p-1 bg-neutral-900 rounded-xl border border-white/5">
+                <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
+                  Status
+                </label>
+                <div className="flex p-1 bg-foreground/5 border border-foreground/10">
                   {['draft', 'published'].map((status) => (
-                    <button
+                    <motion.button
                       key={status}
                       type="button"
-                      onClick={() => setFormData(prev => ({ ...prev, _status: status }))}
+                      whileTap={{ scale: 0.98 }}
+                      transition={springConfig}
+                      onClick={() => setFormData((prev) => ({ ...prev, _status: status }))}
                       className={cn(
-                        "flex-1 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all",
-                        formData._status === status 
-                          ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20" 
-                          : "text-neutral-500 hover:text-white"
+                        'flex-1 py-2 text-xs font-bold uppercase tracking-wider transition-all',
+                        formData._status === status
+                          ? 'bg-primary text-white'
+                          : 'text-foreground/40 hover:text-foreground'
                       )}
                     >
                       {status}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </form>

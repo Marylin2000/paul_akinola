@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { validateSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
-    const token = request.cookies.get('admin-session')?.value;
+    const token = request.cookies.get('payload-token')?.value;
     
     if (!token) {
       return NextResponse.json(
@@ -12,17 +11,24 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const user = validateSession(token);
-    
-    if (!user) {
+    // Validate token with Payload API
+    const response = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_API_URL || 'http://localhost:3000/api'}/users/me`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    });
+
+    if (!response.ok) {
       return NextResponse.json(
         { error: 'Invalid session' },
         { status: 401 }
       );
     }
 
+    const user = await response.json();
+
     return NextResponse.json(
-      { success: true, user },
+      { success: true, user, token },
       { status: 200 }
     );
   } catch (error) {

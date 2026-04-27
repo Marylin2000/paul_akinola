@@ -1,34 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { deleteSession } from '@/lib/auth';
+import { NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
-  try {
-    const token = request.cookies.get('admin-session')?.value;
-    
-    if (token) {
-      deleteSession(token);
-    }
+export async function POST() {
+  const response = NextResponse.json(
+    { success: true, message: 'Logged out successfully' },
+    { status: 200 }
+  );
 
-    const response = NextResponse.json(
-      { success: true, message: 'Logged out successfully' },
-      { status: 200 }
-    );
+  response.cookies.delete('payload-token');
 
-    // Remove the cookie
-    response.cookies.set('admin-session', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 0,
-      path: '/',
-    });
-
-    return response;
-  } catch (error) {
-    console.error('Logout error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+  return response;
 }

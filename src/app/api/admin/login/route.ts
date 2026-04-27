@@ -1,43 +1,49 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { validateCredentials, createSession, setAuthCookie } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    const { username, password } = await request.json();
+    const { email, password } = await request.json();
 
-    if (!username || !password) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: 'Username and password are required' },
+        { error: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    const isValid = await validateCredentials(username, password);
-    
-    if (!isValid) {
+    // Login to Payload API
+    const response = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_API_URL || 'http://localhost:3000/api'}/users/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.token) {
       return NextResponse.json(
-        { error: 'Invalid credentials' },
+        { error: data.message || 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    const token = createSession(username);
-    
-    const response = NextResponse.json(
-      { success: true, message: 'Login successful' },
+    const res = NextResponse.json(
+      { success: true, user: data.user },
       { status: 200 }
     );
 
-    // Set HTTP-only cookie
-    response.cookies.set('admin-session', token, {
+    // Set HTTP-only cookie with JWT token
+    res.cookies.set('payload-token', data.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60, // 24 hours
       path: '/',
     });
 
-    return response;
+    return res;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(

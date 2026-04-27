@@ -55,6 +55,43 @@ export const payload = {
     });
   },
 
+  // Globals
+  getGlobal: async (slug: string, token?: string) => {
+    return payloadFetch(`/globals/${slug}`, {
+      headers: token ? { Authorization: `JWT ${token}` } : {},
+    });
+  },
+
+  updateGlobal: async (slug: string, data: any, token: string) => {
+    return payloadFetch(`/globals/${slug}`, {
+      method: 'POST', // Payload uses POST to update globals
+      body: JSON.stringify(data),
+      headers: { Authorization: `JWT ${token}` },
+    });
+  },
+
+  // Users
+  getUsers: async (token?: string) => {
+    return payloadFetch('/users?limit=100', {
+      headers: token ? { Authorization: `JWT ${token}` } : {},
+    });
+  },
+
+  getUser: async (id: string, token?: string) => {
+    return payloadFetch(`/users/${id}`, {
+      headers: token ? { Authorization: `JWT ${token}` } : {},
+    });
+  },
+
+  updateUser: async (id: string, data: any, token: string) => {
+    return payloadFetch(`/users/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      headers: { Authorization: `JWT ${token}` },
+    });
+  },
+
+  // Media
   uploadMedia: async (formData: FormData, token: string) => {
     const res = await fetch(`${PAYLOAD_API_URL}/media`, {
       method: 'POST',
@@ -69,5 +106,20 @@ export const payload = {
       throw new Error(data.errors?.[0]?.message || data.message || 'Upload failed');
     }
     return data;
+  },
+
+  updateMedia: async (id: string, data: any, token: string) => {
+    return payloadFetch(`/media/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      headers: { Authorization: `JWT ${token}` },
+    });
+  },
+
+  deleteMedia: async (id: string, token: string) => {
+    return payloadFetch(`/media/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `JWT ${token}` },
+    });
   },
 };
