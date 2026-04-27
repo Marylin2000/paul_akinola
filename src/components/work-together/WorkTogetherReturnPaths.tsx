@@ -25,17 +25,21 @@ const returns = [
   }
 ];
 
-export default function WorkTogetherReturnPaths() {
+export default function WorkTogetherReturnPaths({ data }: { data?: any }) {
+  const tb = data?.tabs?.[5] || {};
+  const returnTitle = tb.returnTitle || "Or keep exploring first.";
+  const dynamicReturns = tb.returns?.length ? tb.returns.map((r: any, i: number) => ({ ...returns[i], ...r })) : returns;
+
   return (
     <section className="py-24 border-t border-rule bg-background">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <header className="mb-16">
-            <h2 className="font-serif text-3xl mb-4 text-foreground/80">Or keep exploring first.</h2>
+            <h2 className="font-serif text-3xl mb-4 text-foreground/80">{returnTitle}</h2>
           </header>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-rule/20 border border-rule/20">
-            {returns.map((item, index) => (
+            {dynamicReturns.map((item: any, index: number) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 10 }}

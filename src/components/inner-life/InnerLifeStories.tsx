@@ -50,31 +50,48 @@ const stories = [
   }
 ];
 
-export default function InnerLifeStories() {
+export default function InnerLifeStories({ data }: { data?: any }) {
+  const tb = data?.tabs?.[4] || {};
+  const storiesLabel = tb.storiesLabel || "Life Stories";
+  const storiesTitle = tb.storiesTitle || "Recurring patterns that help make sense of what may be happening underneath.";
+  const storiesDesc = tb.storiesDesc || "These are patterns observed in people working through complex professional and personal transitions.";
+  const dynamicStories = tb.storiesList?.length ? tb.storiesList.map((s: any, i: number) => ({ ...stories[i], ...s })) : stories;
+
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-white py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-900 md:py-32">
       <div className="container-responsive">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 max-w-2xl"
-        >
-          <div className="mb-6 flex items-center gap-4">
-            <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
-            <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
-              Life Stories
-            </span>
-          </div>
+        <div className="mb-16 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="mb-6 flex items-center gap-4">
+              <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
+              <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
+                {storiesLabel}
+              </span>
+            </div>
+            
+            <h2 className="font-serif text-3xl font-medium leading-[1.2] text-stone-900 dark:text-white sm:text-4xl md:text-5xl">
+              {storiesTitle}
+            </h2>
+          </motion.div>
           
-          <h2 className="font-serif text-3xl font-medium leading-[1.2] text-stone-900 dark:text-white sm:text-4xl">
-            Recurring patterns that help make sense of what may be happening underneath.
-          </h2>
-        </motion.div>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-base leading-relaxed text-stone-500 dark:text-stone-400 lg:pt-14"
+          >
+            {storiesDesc}
+          </motion.p>
+        </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          {stories.map((story, index) => {
+          {dynamicStories.map((story: any, index: number) => {
             const Icon = story.icon;
             return (
               <motion.div

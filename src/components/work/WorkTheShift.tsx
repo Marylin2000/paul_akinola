@@ -4,7 +4,14 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
-export default function WorkTheShift() {
+export default function WorkTheShift({ data }: { data?: any }) {
+  const tb = data?.tabs?.[3] || {};
+  const shiftLabel = tb.shiftLabel || "The Shift";
+  const shiftTitle1 = tb.shiftTitle1 || "Most of what you're trying to fix ";
+  const shiftHighlight = tb.shiftHighlight || "is not the real problem.";
+  const shiftP1 = tb.shiftP1 || "It is the system underneath it.";
+  const shiftP2 = tb.shiftP2 || "When you see that clearly, the problem — and your response — both change.";
+
   return (
     <section className="relative overflow-hidden border-y border-stone-200/60 bg-stone-100/50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-900/50 md:py-40">
       {/* Background texture */}
@@ -29,14 +36,14 @@ export default function WorkTheShift() {
         >
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-2 backdrop-blur-sm">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">The Shift</span>
+            <span className="text-sm font-medium text-primary">{shiftLabel}</span>
           </div>
           
           <h2 className="mb-8 font-serif text-3xl font-light leading-[1.15] text-stone-900 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            Most of what you're trying to fix{" "}
+            {shiftTitle1}
             <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                is not the real problem.
+                {shiftHighlight}
               </span>
               <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
             </span>
@@ -45,11 +52,11 @@ export default function WorkTheShift() {
           <div className="mx-auto max-w-xl space-y-6 text-lg leading-relaxed text-stone-600 dark:text-stone-300">
             <p>
               <strong className="font-medium text-stone-900 dark:text-white">
-                It is the system underneath it.
+                {shiftP1}
               </strong>
             </p>
             <p className="text-stone-500 dark:text-stone-400">
-              When you see that clearly, the problem — and your response — both change.
+              {shiftP2}
             </p>
           </div>
         </motion.div>

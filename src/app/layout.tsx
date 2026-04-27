@@ -1,9 +1,6 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
-import Navigation from "@/components/ui/Navigation";
-import Footer from "@/components/ui/Footer";
 import FloatingParticles from "@/components/old/FloatingParticles";
 import localFont from "next/font/local";
 import { Outfit } from "next/font/google";

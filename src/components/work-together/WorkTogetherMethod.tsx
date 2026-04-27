@@ -36,7 +36,15 @@ const steps = [
   }
 ];
 
-export default function WorkTogetherMethod() {
+export default function WorkTogetherMethod({ data }: { data?: any }) {
+  const tb = data?.tabs?.[2] || {};
+  const principlesTitle = tb.principlesTitle || "We start by understanding what is actually going on.";
+  const principlesP = tb.principlesP || "I do not start by forcing a framework over your situation. I start by listening carefully... helping you see the structure more clearly.";
+  const stepsTitle = tb.stepsTitle || "How it starts";
+  const stepsP = tb.stepsP || "Simple. Start with a short note about what is not adding up.";
+  const dynamicPrinciples = tb.principles?.length ? tb.principles.map((p: any, i: number) => ({ ...principles[i], ...p })) : principles;
+  const dynamicSteps = tb.steps?.length ? tb.steps.map((s: any, i: number) => ({ ...steps[i], ...s })) : steps;
+
   return (
     <section className="border-t border-rule bg-background py-24 transition-colors duration-500">
       <div className="container mx-auto px-6">
@@ -44,14 +52,14 @@ export default function WorkTogetherMethod() {
           {/* Principles */}
           <div className="mb-32">
             <header className="mb-16">
-              <h2 className="font-serif text-3xl mb-4">We start by understanding what is actually going on.</h2>
+              <h2 className="font-serif text-3xl mb-4">{principlesTitle}</h2>
               <p className="text-foreground/50 italic font-light max-w-xl">
-                I do not start by forcing a framework over your situation. I start by listening carefully... helping you see the structure more clearly.
+                {principlesP}
               </p>
             </header>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-              {principles.map((principle, index) => (
+              {dynamicPrinciples.map((principle: any, index: number) => (
                 <motion.div
                   key={principle.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -77,14 +85,14 @@ export default function WorkTogetherMethod() {
           {/* How it starts */}
           <div className="pt-24 border-t border-rule">
             <header className="mb-16 text-center">
-              <h2 className="font-serif text-3xl mb-4">How it starts</h2>
+              <h2 className="font-serif text-3xl mb-4">{stepsTitle}</h2>
               <p className="text-foreground/50 italic font-light">
-                Simple. Start with a short note about what is not adding up.
+                {stepsP}
               </p>
             </header>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {steps.map((step, index) => (
+              {dynamicSteps.map((step: any, index: number) => (
                 <motion.div
                   key={step.title}
                   initial={{ opacity: 0, scale: 0.98 }}

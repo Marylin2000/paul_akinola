@@ -3,7 +3,12 @@
 
 import { motion } from "framer-motion";
 
-export default function WorkSurfaceRoot() {
+export default function WorkSurfaceRoot({ data }: { data?: any }) {
+  const tb = data?.tabs?.[1] || {};
+  const surfaceLabel = tb.surfaceLabel || "Surface vs Root Cause";
+  const surfaceTitle = tb.surfaceTitle || "What you're seeing is only part of the picture.";
+  const surfaceDesc = tb.surfaceDesc || "Most of what shapes performance, growth, and decision-making sits underneath — in how things are structured, how signals move, and how work actually connects.";
+
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-white py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-900 md:py-32">
       {/* Background accent */}
@@ -21,16 +26,15 @@ export default function WorkSurfaceRoot() {
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Surface vs Root Cause
+            {surfaceLabel}
           </div>
           
           <h2 className="mb-6 font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            What you're seeing is only part of the picture.
+            {surfaceTitle}
           </h2>
           
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-stone-500 dark:text-stone-400 sm:text-xl">
-            Most of what shapes performance, growth, and decision-making sits underneath — 
-            in how things are structured, how signals move, and how work actually connects.
+            {surfaceDesc}
           </p>
         </motion.div>
       </div>

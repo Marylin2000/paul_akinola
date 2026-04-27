@@ -112,8 +112,14 @@ const stories = [
   },
 ];
 
-export default function WorkSystemStories() {
+export default function WorkSystemStories({ data }: { data?: any }) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  
+  const tb = data?.tabs?.[4] || {};
+  const storiesLabel = tb.storiesLabel || "System Stories";
+  const storiesTitle = tb.storiesTitle || "Real examples of how structure changes outcomes.";
+  const storiesDesc = tb.storiesDesc || "These stories are where systems thinking becomes practical. They show how motion, architecture, signal, and workflow design change what teams can see, trust, and act on.";
+  const dynamicStories = tb.storiesList?.length ? tb.storiesList.map((s: any, i: number) => ({ ...stories[i], ...s })) : stories;
 
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-white py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-900 md:py-32">
@@ -128,12 +134,12 @@ export default function WorkSystemStories() {
             <div className="mb-6 flex items-center gap-4">
               <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
               <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
-                System Stories
+                {storiesLabel}
               </span>
             </div>
             
             <h2 className="font-serif text-3xl font-medium leading-[1.2] text-stone-900 dark:text-white sm:text-4xl md:text-5xl">
-              Real examples of how structure changes outcomes.
+              {storiesTitle}
             </h2>
           </motion.div>
           
@@ -144,13 +150,12 @@ export default function WorkSystemStories() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-base leading-relaxed text-stone-500 dark:text-stone-400 lg:pt-14"
           >
-            These stories are where systems thinking becomes practical. They show how motion, 
-            architecture, signal, and workflow design change what teams can see, trust, and act on.
+            {storiesDesc}
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-          {stories.map((story, index) => {
+          {dynamicStories.map((story: any, index: number) => {
             const Icon = story.icon;
             const isExpanded = expandedIndex === index;
             

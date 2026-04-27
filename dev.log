@@ -1,0 +1,157 @@
+yarn run v1.22.22
+$ next dev --turbopack
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/lord/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/lord/paul_ankinola/package-lock.json
+
+   ▲ Next.js 15.5.9 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.219.240:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 1674ms
+ ⚠ Webpack is configured while Turbopack is not, which may cause problems.
+ ⚠ See instructions if you need to configure Turbopack:
+  https://nextjs.org/docs/app/api-reference/next-config-js/turbopack
+
+ ○ Compiling /api/seed ...
+ ✓ Compiled /api/seed in 6s
+[17:24:39] [33mWARN[39m: [36mNo email adapter provided. Email will be written to console. More info at https://payloadcms.com/docs/email/overview.[39m
+ GET /api/seed 200 in 9289ms
+ ○ Compiling /admin/[[...segments]] ...
+ ✓ Compiled /admin/[[...segments]] in 32.4s
+ GET /admin/collections/articles 200 in 42993ms
+ ○ Compiling /api/[...slug] ...
+ ✓ Compiled /api/[...slug] in 1980ms
+ GET /api/users/me 200 in 5774ms
+ GET /api/payload-preferences/nav 200 in 5363ms
+ GET /api/users/me 200 in 347ms
+ ✓ Compiled in 955ms
+ ✓ Compiled /admin/[[...segments]] in 249ms
+Generating import map
+No new imports found, skipping writing import map
+ GET /admin/collections/articles 200 in 1669ms
+ GET /admin/collections/articles/69ef8dc7dd5629faa6f08857 200 in 485ms
+ GET /api/payload-preferences/collection-articles 200 in 702ms
+ POST /api/payload-preferences/collection-articles 200 in 416ms
+ ✓ Compiled in 288ms
+ ✓ Compiled /admin/[[...segments]] in 119ms
+Generating import map
+No new imports found, skipping writing import map
+ GET /admin/collections/articles/69ef8dc7dd5629faa6f08857 200 in 2525ms
+ GET /admin/collections/articles?depth=1&limit=10 200 in 617ms
+ GET /admin/collections/articles/69ef8d4cc248e96d40883323 200 in 464ms
+ ✓ Compiled in 228ms
+ ○ Compiling /admin/[[...segments]] ...
+ ✓ Compiled in 5.9s
+ ✓ Compiled /admin/[[...segments]] in 900ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 5.8s
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.n9itgm7isx8'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.n9itgm7isx8'
+}
+[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.a3dt1qz9rf'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.a3dt1qz9rf'
+}
+[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.tzqpr5b0i18'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.tzqpr5b0i18'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.2wfyzr0v2c'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.2wfyzr0v2c'
+}
+[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.156e39dkcgy'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.156e39dkcgy'
+}
+[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.fg1uqh50xr5'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.fg1uqh50xr5'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.bxegm9v9n3g'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.bxegm9v9n3g'
+}
+[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/server/app/(payload)/admin/[[...segments]]/page/server-reference-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.c9d5ve5dt3g'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.c9d5ve5dt3g'
+}
+[Error: ENOENT: no such file or directory, open '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.t1azn975vb9'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/lord/paul_ankinola/.next/static/development/_buildManifest.js.tmp.t1azn975vb9'
+}
+ ✓ Compiled in 8.6s
+ ✓ Compiled in 2.5s
+ ✓ Compiled in 875ms
+ ✓ Compiled in 501ms
+ ✓ Compiled in 8.2s
+ ✓ Compiled in 319ms
+ ✓ Compiled in 403ms
+ ✓ Compiled in 4.6s
+ ○ Compiling middleware ...
+ ✓ Compiled middleware in 997ms
+ ✓ Compiled middleware in 5ms
+ ✓ Compiled middleware in 3ms
+ ✓ Compiled middleware in 4ms
+ ✓ Compiled middleware in 3ms

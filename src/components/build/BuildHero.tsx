@@ -77,7 +77,14 @@ function AnimatedGrid() {
   );
 }
 
-const BuildHero = () => {
+const BuildHero = ({ data }: { data?: any }) => {
+  const tb = data?.tabs?.[0] || {};
+  const badge = tb.heroBadge || "Systems at Work";
+  const title1 = tb.heroTitle1 || "Builds";
+  const title2 = tb.heroTitle2 || "That Scale";
+  const p1 = tb.heroP1 || "A closer look at the systems I design across growth, revenue, CRM, and GTM.";
+  const p2 = tb.heroP2 || "I work in the space between Marketing, Sales, Product, and Engineering—building the architecture that makes visibility from lead to profit possible. Some call this Revenue Operations. Others call it Marketing Operations. I think of it as revenue systems design.";
+
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -186,7 +193,7 @@ const BuildHero = () => {
             />
             <span className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 dark:bg-stone-900/80 backdrop-blur-sm border border-primary/20 text-primary text-xs font-medium uppercase tracking-wider mb-8">
               <Sparkles className="w-4 h-4" />
-              Systems at Work
+              {badge}
             </span>
           </motion.div>
 
@@ -205,7 +212,7 @@ const BuildHero = () => {
                   transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className="block"
                 >
-                  Builds
+                  {title1}
                 </motion.span>
               </span>
               <span className="block overflow-hidden">
@@ -216,7 +223,7 @@ const BuildHero = () => {
                   className="block relative"
                 >
                   <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                    That Scale
+                    {title2}
                   </span>
                   <motion.span
                     className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
@@ -242,7 +249,7 @@ const BuildHero = () => {
             className="grid md:grid-cols-2 gap-8 md:gap-16 mt-12"
           >
             <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-300 leading-relaxed font-light">
-              A closer look at the systems I design across growth, revenue, CRM, and GTM.
+              {p1}
             </p>
             <div className="relative">
               <motion.div 
@@ -252,11 +259,7 @@ const BuildHero = () => {
                 transition={{ duration: 1, delay: 1 }}
               />
               <p className="pl-8 text-stone-500 dark:text-stone-400 leading-relaxed">
-                I work in the space between Marketing, Sales, Product, and Engineering—building the architecture that makes visibility from lead to profit possible. Some call this Revenue Operations. Others call it Marketing Operations. I think of it as{" "}
-                <span className="text-stone-900 dark:text-white font-medium">
-                  revenue systems design
-                </span>
-                .
+                {p2}
               </p>
             </div>
           </motion.div>

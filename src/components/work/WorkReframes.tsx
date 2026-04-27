@@ -31,7 +31,11 @@ const reframes = [
   },
 ];
 
-export default function WorkReframes() {
+export default function WorkReframes({ data }: { data?: any }) {
+  const tb = data?.tabs?.[2] || {};
+  const reframesTitle = tb.reframesTitle || "The visible problem is rarely the real one.";
+  const dynamicReframes = tb.reframesList?.length ? tb.reframesList.map((r: any, i: number) => ({ ...reframes[i], ...r })) : reframes;
+
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-stone-50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-950 md:py-32">
       <div className="container-responsive">
@@ -50,12 +54,12 @@ export default function WorkReframes() {
           </div>
           
           <h2 className="font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl">
-            The visible problem is rarely the real one.
+            {reframesTitle}
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-          {reframes.map((reframe, index) => (
+          {dynamicReframes.map((reframe: any, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 24 }}

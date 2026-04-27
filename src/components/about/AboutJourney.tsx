@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-export default function AboutJourney() {
+export default function AboutJourney({ data }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -11,6 +11,18 @@ export default function AboutJourney() {
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+
+  const tb = data?.tabs?.[2] || {};
+  const mainTitle = tb.journeyTitle || "My Journey";
+  const rCard = tb.realizationCard || {
+    title: "The Visible vs. The Real",
+    p1: "I did not start with this language. I started by trying to make things work—growth, teams, decisions, outcomes, momentum.",
+    quote: '"The visible problem is rarely the real one."',
+    p2: "That changed how I worked. I began paying closer attention to structure, signal, behaviour, and what was happening underneath the surface."
+  };
+  const sCard = tb.shiftCard || { title: "The Shift", content: "From surface metrics to underlying systems. From quick fixes to structural clarity." };
+  const bwCard = tb.beyondWorkCard || { title: "Beyond Work", content: "That shift moved beyond work—into faith, formation, and the inner life." };
+  const expCard = tb.expressionCard || { quote: '"This site is an expression of that journey. Not a finished answer. A clearer way of seeing."' };
 
   return (
     <section 
@@ -54,7 +66,7 @@ export default function AboutJourney() {
           </div>
           
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-center text-stone-900 dark:text-stone-100 mb-4">
-            My Journey
+            {mainTitle}
           </h2>
         </motion.div>
 
@@ -80,20 +92,16 @@ export default function AboutJourney() {
                   </svg>
                 </span>
                 <h3 className="font-serif text-2xl lg:text-3xl text-stone-900 dark:text-stone-100 mb-4">
-                  The Visible vs. The Real
+                  {rCard.title}
                 </h3>
               </div>
               
               <div className="space-y-4 text-lg leading-relaxed text-stone-600 dark:text-stone-400">
-                <p>
-                  I did not start with this language. I started by trying to make things work—growth, teams, decisions, outcomes, momentum.
-                </p>
+                <p>{rCard.p1}</p>
                 <p className="font-medium text-stone-900 dark:text-stone-100 text-xl italic border-l-2 border-primary pl-6 py-2">
-                  "The visible problem is rarely the real one."
+                  {rCard.quote}
                 </p>
-                <p>
-                  That changed how I worked. I began paying closer attention to structure, signal, behaviour, and what was happening underneath the surface.
-                </p>
+                <p>{rCard.p2}</p>
               </div>
             </div>
           </motion.div>
@@ -109,10 +117,8 @@ export default function AboutJourney() {
             <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
             <div className="relative z-10">
               <span className="text-primary text-4xl font-serif mb-4 block">01</span>
-              <h4 className="font-serif text-xl text-white mb-3">The Shift</h4>
-              <p className="text-sm leading-relaxed text-stone-400">
-                From surface metrics to underlying systems. From quick fixes to structural clarity.
-              </p>
+              <h4 className="font-serif text-xl text-white mb-3">{sCard.title}</h4>
+              <p className="text-sm leading-relaxed text-stone-400">{sCard.content}</p>
             </div>
             <motion.div 
               className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl"
@@ -130,10 +136,8 @@ export default function AboutJourney() {
             className="group relative overflow-hidden rounded-3xl bg-primary/5 dark:bg-primary/10 p-8 border border-primary/10"
           >
             <span className="text-primary text-4xl font-serif mb-4 block">02</span>
-            <h4 className="font-serif text-xl text-stone-900 dark:text-stone-100 mb-3">Beyond Work</h4>
-            <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">
-              That shift moved beyond work—into faith, formation, and the inner life.
-            </p>
+            <h4 className="font-serif text-xl text-stone-900 dark:text-stone-100 mb-3">{bwCard.title}</h4>
+            <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-400">{bwCard.content}</p>
           </motion.div>
 
           {/* Wide Card - Expression */}
@@ -147,7 +151,7 @@ export default function AboutJourney() {
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1">
                 <p className="font-serif italic text-2xl lg:text-3xl text-white leading-relaxed">
-                  "This site is an expression of that journey. Not a finished answer. A clearer way of seeing."
+                  {expCard.quote}
                 </p>
               </div>
               <motion.div 

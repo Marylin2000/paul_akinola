@@ -20,7 +20,20 @@ type Offering = {
   gradient: string;
 };
 
-const offerings: Offering[] = [
+export type OfferingInput = {
+  title: string;
+  lede: string;
+  details?: Array<{ headline: string; body: string }> | null;
+  image?: { url?: string | null; alt?: string | null } | null;
+};
+
+const gradients = [
+  "from-primary/20 via-primary/10 to-transparent",
+  "from-amber-500/20 via-orange-500/10 to-transparent",
+  "from-orange-600/20 via-primary/10 to-transparent",
+];
+
+const hardcodedOfferings: Offering[] = [
   {
     title: "Individuals",
     lede: "Work often begins beneath performance—where habits, fear, and identity meet pressure. That layer is data, not noise.",
@@ -33,7 +46,7 @@ const offerings: Offering[] = [
     ],
     imageSrc: "/images/32.png",
     imageAlt: "Calm mountain vista suggesting space for reflection",
-    gradient: "from-primary/20 via-primary/10 to-transparent",
+    gradient: gradients[0],
   },
   {
     title: "Teams",
@@ -46,7 +59,7 @@ const offerings: Offering[] = [
     ],
     imageSrc: "/images/9a.png",
     imageAlt: "Team collaborating around a table",
-    gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
+    gradient: gradients[1],
   },
   {
     title: "Organisations",
@@ -59,13 +72,33 @@ const offerings: Offering[] = [
     ],
     imageSrc: "/images/2.png",
     imageAlt: "City buildings representing organisational structure",
-    gradient: "from-orange-600/20 via-primary/10 to-transparent",
+    gradient: gradients[2],
   },
 ];
 
-export default function WhatIDo() {
+function toOffering(o: OfferingInput, idx: number): Offering {
+  return {
+    title: o.title,
+    lede: o.lede,
+    details: (o.details ?? []).map((d) => ({ headline: d.headline, body: d.body })),
+    imageSrc: o.image?.url ?? hardcodedOfferings[idx % hardcodedOfferings.length]?.imageSrc ?? "",
+    imageAlt: o.image?.alt ?? "",
+    gradient: gradients[idx % gradients.length],
+  };
+}
+
+interface WhatIDoProps {
+  offerings?: OfferingInput[] | null;
+}
+
+export default function WhatIDo({ offerings: offeringsInput }: WhatIDoProps) {
+  const offerings: Offering[] =
+    offeringsInput && offeringsInput.length > 0
+      ? offeringsInput.map(toOffering)
+      : hardcodedOfferings;
+
   const [active, setActive] = useState(0);
-  const activeItem = offerings[active];
+  const activeItem = offerings[active] ?? offerings[0];
 
   return (
     <section id="what-i-do" className="relative overflow-hidden bg-stone-50 py-24 dark:bg-stone-950 md:py-32">
@@ -84,7 +117,7 @@ export default function WhatIDo() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="mb-4 font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl md:text-5xl">
-            I help people understand what's shaping their outcomes.
+            I help people understand what&apos;s shaping their outcomes.
           </h2>
           <p className="text-lg text-stone-500 dark:text-stone-400">
             At work and in life, clarity changes everything.

@@ -7,8 +7,32 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Hero() {
+interface HeroData {
+  titlePrefix: string;
+  titleItalic: string;
+  titleSuffix: string;
+  description: string;
+  quote: string;
+  image?: { url?: string | null; alt?: string | null } | null;
+}
+
+interface HeroProps {
+  data?: HeroData | null;
+}
+
+const defaults: HeroData = {
+  titlePrefix: "When",
+  titleItalic: "something",
+  titleSuffix: "isn't adding up.",
+  description:
+    "Most outcomes are shaped by something beneath the surface. I help you see it clearly—so you can move with better judgment, stronger direction, and real change.",
+  quote: "Most problems do not start where they show up.",
+  image: { url: "/images/bg-clean.png", alt: "Paul Akinola portrait" },
+};
+
+export default function Hero({ data }: HeroProps) {
   const parallaxOffset = useParallax(0.12);
+  const d = data ?? defaults;
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-stone-50 dark:bg-stone-950">
@@ -33,24 +57,22 @@ export default function Hero() {
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur-sm dark:border-primary/30 dark:bg-primary/10">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Systems at Work & in Life</span>
+              <span>Systems at Work &amp; in Life</span>
             </div>
 
             <h1 className="mb-6 font-serif text-4xl font-medium leading-[1.12] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
-              When{" "}
+              {d.titlePrefix}{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  something
+                  {d.titleItalic}
                 </span>
                 <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/20 via-amber-300/20 to-orange-400/20 blur-sm dark:from-primary/30 dark:to-amber-500/30" />
               </span>{" "}
-              isn&apos;t adding up.
+              {d.titleSuffix}
             </h1>
 
             <p className="mx-auto mb-10 max-w-xl text-lg font-light leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl lg:mx-0">
-              Most outcomes are shaped by something beneath the surface. 
-              I help you see it clearly—so you can move with better judgment, 
-              stronger direction, and real change.
+              {d.description}
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
@@ -95,8 +117,8 @@ export default function Hero() {
               <div className="relative h-full w-full overflow-hidden rounded-full border border-white/20 bg-gradient-to-br from-stone-100/50 via-white/30 to-stone-50/50 p-1 shadow-2xl backdrop-blur-sm dark:border-stone-700/30 dark:from-stone-800/50 dark:via-stone-900/30 dark:to-stone-950/50">
                 <div className="relative h-full w-full overflow-hidden rounded-full">
                   <Image
-                    src="/images/bg-clean.png"
-                    alt="Paul Akinola portrait"
+                    src={d.image?.url ?? "/images/bg-clean.png"}
+                    alt={d.image?.alt ?? "Paul Akinola portrait"}
                     fill
                     sizes="(max-width: 640px) 320px, (max-width: 1024px) 380px, 420px"
                     priority
@@ -112,7 +134,7 @@ export default function Hero() {
               >
                 <div className="mb-1 font-serif text-2xl text-primary sm:text-3xl">&ldquo;</div>
                 <p className="max-w-[200px] text-sm font-medium italic text-stone-700 dark:text-stone-200 sm:text-base">
-                  Most problems do not start where they show up.
+                  {d.quote}
                 </p>
               </motion.div>
             </div>

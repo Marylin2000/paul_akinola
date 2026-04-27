@@ -44,7 +44,11 @@ const tools: Tool[] = [
   }
 ];
 
-const ToolsBuilt = () => {
+const ToolsBuilt = ({ data }: { data?: any }) => {
+  const tb = data?.tabs?.[4] || {};
+  const tTitle = tb.toolsTitle || "The Stack";
+  const dynamicTools = tb.toolsList?.length ? tb.toolsList.map((t: any, i: number) => ({ ...tools[i], ...t })) : tools;
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: scrollRef,
@@ -88,17 +92,7 @@ const ToolsBuilt = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.1] text-stone-900 dark:text-white"
             >
-              Frameworks and
-              <span className="block relative">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  templates
-                </span>
-                <motion.span
-                  className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </span>
+              {tTitle}
             </motion.h2>
           </div>
         </motion.div>
@@ -106,7 +100,7 @@ const ToolsBuilt = () => {
 
       {/* Horizontal Scrolling Cards */}
       <motion.div style={{ x }} className="flex gap-5 lg:gap-6 px-4 sm:px-6 lg:px-8">
-        {tools.map((tool, i) => {
+        {dynamicTools.map((tool: any, i: number) => {
           const Icon = tool.icon;
           return (
             <motion.div
@@ -142,7 +136,7 @@ const ToolsBuilt = () => {
 
                 {/* Tags */}
                 <div className="flex gap-2 mb-4">
-                  {tool.tags.map((tag, ti) => (
+                  {tool.tags?.map((tag: string, ti: number) => (
                     <motion.span 
                       key={ti}
                       initial={{ opacity: 0, scale: 0.8 }}

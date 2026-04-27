@@ -1,0 +1,133 @@
+// // Paul Akinola Admin Styles
+// @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+// :root {
+//     --theme-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+//     --theme-font-serif: 'Playfair Display', serif;
+
+//     // Refined Color Palette
+//     --theme-elevation-0: #0a0a0a;
+//     --theme-elevation-50: #121212;
+//     --theme-elevation-100: #1a1a1a;
+//     --theme-elevation-150: #262626;
+//     --theme-elevation-200: #333333;
+//     --theme-elevation-300: #4a4a4a;
+//     --theme-elevation-400: #737373;
+//     --theme-elevation-500: #a3a3a3;
+//     --theme-elevation-600: #d4d4d4;
+//     --theme-elevation-700: #e5e5e5;
+//     --theme-elevation-800: #f5f5f5;
+//     --theme-elevation-900: #ffffff;
+
+//     --theme-primary-400: #fbbf24;
+//     --theme-primary-500: #f59e0b;
+//     --theme-primary-600: #d97706;
+// }
+
+// body {
+//     font-family: var(--theme-font-sans);
+//     background-color: var(--theme-elevation-0);
+//     color: var(--theme-elevation-800);
+// }
+
+// // Sidebar refinement
+// .nav {
+//     background-color: var(--theme-elevation-50) !important;
+//     border-right: 1px solid var(--theme-elevation-150) !important;
+
+//     &__label {
+//         font-size: 0.65rem !important;
+//         text-transform: uppercase !important;
+//         letter-spacing: 0.2em !important;
+//         color: var(--theme-elevation-400) !important;
+//         font-weight: 700 !important;
+//         margin-bottom: 1rem !important;
+//     }
+// }
+
+// // Item styling
+// .nav-group__items li a {
+//     font-size: 0.9rem !important;
+//     font-weight: 400 !important;
+//     border-radius: 8px !important;
+//     margin: 2px 8px !important;
+//     padding: 8px 12px !important;
+//     transition: all 0.2s ease !important;
+
+//     &:hover {
+//         background-color: var(--theme-elevation-100) !important;
+//         color: var(--theme-primary-500) !important;
+//     }
+
+//     &.active {
+//         background-color: var(--theme-elevation-150) !important;
+//         color: var(--theme-primary-500) !important;
+//         font-weight: 500 !important;
+//     }
+// }
+
+// // Header styling
+// .template-default__header {
+//     background-color: rgba(10, 10, 10, 0.8) !important;
+//     backdrop-filter: blur(12px) !important;
+//     border-bottom: 1px solid var(--theme-elevation-150) !important;
+// }
+
+// // Login Page customization
+// .login {
+//     background: radial-gradient(circle at center, var(--theme-elevation-50) 0%, var(--theme-elevation-0) 100%) !important;
+
+//     &__wrap {
+//         max-width: 400px !important;
+//         background: var(--theme-elevation-50) !important;
+//         padding: 3rem !important;
+//         border-radius: 24px !important;
+//         border: 1px solid var(--theme-elevation-150) !important;
+//         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+//     }
+
+//     h1 {
+//         font-family: var(--theme-font-serif) !important;
+//         font-weight: 400 !important;
+//         font-size: 2rem !important;
+//         text-align: center !important;
+//         margin-bottom: 2rem !important;
+//     }
+// }
+
+// // Button Refinement
+// .btn {
+//     border-radius: 100px !important;
+//     font-weight: 500 !important;
+//     letter-spacing: 0.02em !important;
+//     transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+
+//     &--style-primary {
+//         background-color: var(--theme-primary-500) !important;
+
+//         &:hover {
+//             background-color: var(--theme-primary-600) !important;
+//             transform: translateY(-1px) !important;
+//             box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.3) !important;
+//         }
+//     }
+// }
+
+// // Generic premium touches
+// h1,
+// h2,
+// h3,
+// h4 {
+//     font-family: var(--theme-font-serif);
+// }
+
+// .card {
+//     border-radius: 16px !important;
+//     border: 1px solid var(--theme-elevation-150) !important;
+//     overflow: hidden !important;
+//     transition: border-color 0.3s ease !important;
+
+//     &:hover {
+//         border-color: var(--theme-primary-500) !important;
+//     }
+// }

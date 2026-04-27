@@ -59,7 +59,11 @@ const stories: Story[] = [
   }
 ];
 
-const SystemStories = () => {
+const SystemStories = ({ data }: { data?: any }) => {
+  const tb = data?.tabs?.[3] || {};
+  const tTitle = tb.storiesTitle || "Real systems. Real impact.";
+  const dynamicStories = tb.storiesList?.length ? tb.storiesList.map((s: any, i: number) => ({ ...stories[i], ...s })) : stories;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -126,24 +130,14 @@ const SystemStories = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.1] text-stone-900 dark:text-white"
             >
-              Architecture that
-              <span className="block relative">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  changes outcomes
-                </span>
-                <motion.span
-                  className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </span>
+              {tTitle}
             </motion.h2>
           </div>
         </motion.div>
 
         {/* Stories Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {stories.map((story, i) => {
+          {dynamicStories.map((story: any, i: number) => {
             const Icon = story.icon;
             const isLarge = i === 0 || i === 3;
             
@@ -217,7 +211,7 @@ const SystemStories = () => {
 
                     {/* Metrics */}
                     <div className="flex flex-wrap gap-2 pt-6 border-t border-stone-200 dark:border-stone-800">
-                      {story.metrics.map((metric, mi) => (
+                      {story.metrics?.map((metric: string, mi: number) => (
                         <motion.span 
                           key={mi}
                           initial={{ opacity: 0, scale: 0.8 }}

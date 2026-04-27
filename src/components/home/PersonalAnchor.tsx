@@ -9,7 +9,25 @@ import { ArrowRight } from "lucide-react";
 const leftImage = "/images/img3.png";
 const rightImage = "/images/img4.png";
 
-export default function PersonalAnchor() {
+export interface PersonalAnchorData {
+  headline?: string | null;
+  body?: string | null;
+  image?: { url?: string | null; alt?: string | null } | null;
+}
+
+interface PersonalAnchorProps {
+  data?: PersonalAnchorData | null;
+}
+
+const defaultData = {
+  headline: "This is where I think, write, and build.",
+  body: "I work at the intersection of systems, clarity, growth, and inner life. This site brings those worlds together, from revenue systems and organisational design to identity, faith, and the deeper patterns that shape how we live.",
+};
+
+export default function PersonalAnchor({ data }: PersonalAnchorProps) {
+  const headline = data?.headline || defaultData.headline;
+  const body = data?.body || defaultData.body;
+
   return (
     <section
       id="personal-anchor"
@@ -54,13 +72,11 @@ export default function PersonalAnchor() {
             </div>
             
             <h2 className="mb-6 font-serif text-2xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-3xl md:text-4xl">
-              This is where I think, write, and build.
+              {headline}
             </h2>
             
             <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-stone-600 dark:text-stone-300 sm:text-lg">
-              I work at the intersection of systems, clarity, growth, and inner life. 
-              This site brings those worlds together, from revenue systems and organisational 
-              design to identity, faith, and the deeper patterns that shape how we live.
+              {body}
             </p>
             
             <Link

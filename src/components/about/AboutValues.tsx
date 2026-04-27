@@ -1,7 +1,7 @@
-// =============================================================================
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const values = [
   {
@@ -27,7 +27,7 @@ const values = [
   {
     title: "Honesty about what I do not yet understand",
     description: "Part of paying attention is staying teachable.",
-    icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+    icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
   },
   {
     title: "The deeper layer matters",
@@ -36,7 +36,19 @@ const values = [
   }
 ];
 
-export default function AboutValues() {
+export default function AboutValues({ data }: { data?: any }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]);
+
+  const tb = data?.tabs?.[3] || {};
+  const vTitle = tb.valuesTitle || "What I care about";
+  const dynamicValues = tb.valuesList?.length ? tb.valuesList.map((v: any, i: number) => ({...values[i], ...v})) : values;
+
   return (
     <section className="relative py-32 lg:py-40 bg-white dark:bg-stone-950 overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -53,7 +65,7 @@ export default function AboutValues() {
               Principles
             </span>
             <h2 className="font-serif text-4xl md:text-5xl text-stone-900 dark:text-stone-100 mb-6">
-              What I care about
+              {vTitle}
             </h2>
             <p className="text-stone-600 dark:text-stone-400 italic text-lg">
               A few things keep returning in how I think, write, and work.
@@ -62,7 +74,7 @@ export default function AboutValues() {
 
           {/* Values Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((value, index) => (
+            {dynamicValues.map((value: any, index: number) => (
               <motion.div
                 key={value.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -75,7 +87,7 @@ export default function AboutValues() {
                 {/* Icon */}
                 <div className="mb-6 w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
                   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={value.icon} />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={value.icon || values[0].icon} />
                   </svg>
                 </div>
 

@@ -63,7 +63,12 @@ function AnimatedCounter({ value, suffix, gradient }: { value: string; suffix: s
   );
 }
 
-const ProofPoints = () => {
+const ProofPoints = ({ data }: { data?: any }) => {
+  const tb = data?.tabs?.[2] || {};
+  const proofTitle = tb.proofTitle || "Impact & Scale";
+  const dynamicStats = tb.statsList?.length ? tb.statsList.map((s: any, i: number) => ({ ...stats[i], ...s })) : stats;
+  const dynamicInd = tb.industriesList?.length ? tb.industriesList.map((ind: any, i: number) => ({ ...industries[i], ...ind })) : industries;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -129,24 +134,14 @@ const ProofPoints = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.1]"
             >
-              Evidence of the
-              <span className="block relative">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-400 to-orange-500 bg-clip-text text-transparent">
-                  work
-                </span>
-                <motion.span
-                  className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/30 via-amber-500/30 to-orange-500/30 blur-xl"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </span>
+              {proofTitle}
             </motion.h2>
           </div>
         </motion.div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-24 lg:mb-32">
-          {stats.map((stat, i) => {
+          {dynamicStats.map((stat: any, i: number) => {
             const Icon = stat.icon;
             return (
               <motion.div
@@ -192,7 +187,7 @@ const ProofPoints = () => {
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {industries.map((item, i) => (
+            {dynamicInd.map((item: any, i: number) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}

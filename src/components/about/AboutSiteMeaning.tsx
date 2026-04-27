@@ -1,14 +1,24 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-export default function AboutSiteMeaning() {
+export default function AboutSiteMeaning({ data }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
+
+  // Dynamic payload values
+  const tb = data?.tabs?.[5] || {};
+  const mTitle = tb.siteMeaningTitle || "Why this site is built this way";
+  const contentRaw = tb.siteMeaningContent || [
+    "This site brings together ideas that are often kept apart. Work and life are not separate here.",
+    "They are two ways of looking at the same deeper reality: \"systems shape outcomes\" whether those outcomes are visible in performance, leadership, or the inner life.",
+    "That is why there is a Work page and an Inner Life page. That is why Thoughts sits in the middle. The goal is not to present a polished version of certainty, but to make room for clearer seeing."
+  ];
+  const content = Array.isArray(contentRaw) ? contentRaw.join(' ') : contentRaw;
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.3], [0.9, 1]);
@@ -57,37 +67,40 @@ export default function AboutSiteMeaning() {
             <span className="w-8 h-px bg-primary/50" />
           </motion.span>
 
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.1] mb-12 text-white"
-          >
-            Why this site is built{" "}
-            <span className="italic text-primary">this way</span>
-          </motion.h2>
-
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="space-y-8 text-lg md:text-xl leading-relaxed text-stone-400 max-w-3xl mx-auto"
+            transition={{ delay: 0.1 }}
           >
-            <p className="text-stone-300">
-              This site brings together ideas that are often kept apart. Work and life are not separate here.
-            </p>
-            <p>
-              They are two ways of looking at the same deeper reality:{" "}
-              <span className="text-white font-serif italic text-2xl block mt-4 mb-4">
-                "systems shape outcomes"
+            {/* Header */}
+            <div className="flex items-center gap-6 mb-12">
+              <span className="text-[0.65rem] font-medium uppercase tracking-[0.3em] text-primary/70">
+                The Site
               </span>
-              whether those outcomes are visible in performance, leadership, or the inner life.
-            </p>
-            <p>
-              That is why there is a Work page and an Inner Life page. That is why Thoughts sits in the middle. The goal is not to present a polished version of certainty, but to make room for clearer seeing.
-            </p>
+              <div className="h-px flex-1 bg-gradient-to-r from-stone-700 to-transparent" />
+            </div>
+
+            {/* Content */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-stone-100 max-w-sm">
+                {mTitle}
+              </h2>
+              
+              <div className="space-y-6">
+                <p className="text-lg text-stone-400 leading-relaxed font-serif italic border-l-2 border-primary pl-6">
+                  "Not a finished answer. A clearer way of seeing."
+                </p>
+                
+                <div 
+                  className="relative overflow-hidden"
+                >
+                  <div className="text-stone-400 leading-relaxed max-w-lg mb-6">
+                    {content?.split('. ')?.map((s: string, i: number) => s.length > 0 ? <p className="mb-4" key={i}>{s.trim()}{s.endsWith('.') ? '' : '.'}</p> : null)}
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Decorative Element */}

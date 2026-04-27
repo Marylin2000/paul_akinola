@@ -5,7 +5,15 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowDown, Sparkles } from "lucide-react";
 
-export default function InnerLifeHero() {
+export default function InnerLifeHero({ data }: { data?: any }) {
+  const tb = data?.tabs?.[0] || {};
+  const prefix = tb.heroPrefix || "Systems in Life";
+  const tStatic = tb.heroTitleStatic || "You can feel it, ";
+  const tHigh = tb.heroTitleHighlight || "but you can't fully explain it.";
+  const p1 = tb.heroP1 || "You're thinking. You're trying. You're moving forward.";
+  const p2 = tb.heroP2 || "But something still doesn't sit right.";
+  const quote = tb.heroQuote || "The inner world has its own architecture.";
+
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-stone-50 transition-colors duration-500 dark:bg-stone-950">
       {/* Ambient gradient orbs - softer, more introspective */}
@@ -39,24 +47,24 @@ export default function InnerLifeHero() {
             <div className="mb-6 inline-flex items-center gap-3">
               <div className="h-px w-8 bg-gradient-to-r from-primary/60 to-transparent" />
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
-                Systems in Life
+                {prefix}
               </span>
             </div>
             
             <h1 className="mb-6 font-serif text-4xl font-light leading-[1.1] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
-              You can feel it,{" "}
+              {tStatic}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  but you can't fully explain it.
+                  {tHigh}
                 </span>
                 <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
               </span>
             </h1>
             
             <div className="mx-auto max-w-lg space-y-4 text-lg leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl lg:mx-0">
-              <p>You're thinking. You're trying. You're moving forward.</p>
+              <p>{p1}</p>
               <p className="font-serif text-2xl italic text-stone-400 dark:text-stone-500 sm:text-3xl">
-                But something still doesn't sit right.
+                {p2}
               </p>
             </div>
 
@@ -105,7 +113,7 @@ export default function InnerLifeHero() {
               >
                 <Sparkles className="mb-2 h-4 w-4 text-primary" />
                 <p className="max-w-[180px] text-sm italic text-stone-600 dark:text-stone-300">
-                  "The inner world has its own architecture."
+                  "{quote}"
                 </p>
               </motion.div>
             </div>

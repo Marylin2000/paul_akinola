@@ -14,20 +14,27 @@ const recognitionPoints = [
   "You are looking for a calmer, clearer way to think about what comes next."
 ];
 
-export default function WorkTogetherRelevance() {
+export default function WorkTogetherRelevance({ data }: { data?: any }) {
+  const tb = data?.tabs?.[1] || {};
+  const tTitle = tb.title || "This may be for you if any of these feel familiar.";
+  const p1 = tb.p1 || "You do not need to arrive with the full language for it. Sometimes it is enough to know that something is not adding up.";
+  const dynamicPoints = tb.recognitionPoints?.length 
+    ? tb.recognitionPoints.map((p: any) => p.point) 
+    : recognitionPoints;
+
   return (
     <section className="py-24 border-t border-rule bg-stone-50/30 dark:bg-stone-900/10">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <header className="mb-20">
-            <h2 className="font-serif text-3xl mb-6">This may be for you if any of these feel familiar.</h2>
+            <h2 className="font-serif text-3xl mb-6">{tTitle}</h2>
             <p className="text-foreground/50 italic font-light max-w-xl">
-              You do not need to arrive with the full language for it. Sometimes it is enough to know that something is not adding up.
+              {p1}
             </p>
           </header>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
-            {recognitionPoints.map((point, index) => (
+            {dynamicPoints.map((point: string, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -10 }}

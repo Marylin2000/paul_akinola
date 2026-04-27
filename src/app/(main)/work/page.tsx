@@ -12,16 +12,24 @@ import WorkSystemStories from "@/components/work/WorkSystemStories";
 import WorkGoDeeper from "@/components/work/WorkGoDeeper";
 import WorkNextPaths from "@/components/work/WorkNextPaths";
 
-export default function WorkPage() {
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
+
+export default async function WorkPage() {
+  const payload = await getPayload({ config: configPromise });
+  const data = await (payload.findGlobal as any)({
+    slug: 'work',
+  });
+
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">
-      <WorkHero />
-      <WorkSurfaceRoot />
-      <WorkReframes />
-      <WorkTheShift />
-      <WorkSystemStories />
-      <WorkGoDeeper />
-      <WorkNextPaths />
+      <WorkHero data={data} />
+      <WorkSurfaceRoot data={data} />
+      <WorkReframes data={data} />
+      <WorkTheShift data={data} />
+      <WorkSystemStories data={data} />
+      <WorkGoDeeper data={data} />
+      <WorkNextPaths data={data} />
 
       {/* Soulful Exit Line */}
       <section className="bg-background py-24 text-center border-t border-rule transition-colors duration-500">

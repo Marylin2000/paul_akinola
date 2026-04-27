@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
 
-export default function AboutHero() {
+export default function AboutHero({ data }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -13,6 +13,17 @@ export default function AboutHero() {
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  const prefix = data?.tabs?.[0]?.heroTitlePrefix || "I pay attention to what most people ";
+  const italic = data?.tabs?.[0]?.heroTitleItalic || "overlook";
+  const desc = data?.tabs?.[0]?.heroDescription || "I pay attention to how things work—in systems, in people, and in myself. This is the simplest place to understand the person behind the lens.";
+  const stats = data?.tabs?.[0]?.heroStats || [
+    { num: "10+", label: "Years Experience" },
+    { num: "50+", label: "Projects" },
+    { num: "∞", label: "Curiosity" }
+  ];
+  const imgUrl = data?.tabs?.[0]?.heroImage?.url || "/images/bg-clean.png";
+  const quote = data?.tabs?.[0]?.heroImage?.quote || "Systems shape outcomes";
 
   return (
     <section 
@@ -69,13 +80,13 @@ export default function AboutHero() {
               </motion.div>
 
               <h1 className="font-serif text-[clamp(2.5rem,8vw,5rem)] leading-[1.05] text-stone-900 dark:text-stone-100 mb-8 text-balance">
-                I pay attention to what most people{" "}
+                {prefix}{" "}
                 <motion.span 
                   className="italic text-primary relative inline-block"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  overlook
+                  {italic}
                   <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
                     <motion.path 
                       d="M2 8C50 2 150 2 198 8" 
@@ -96,8 +107,7 @@ export default function AboutHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                I pay attention to how things work—in systems, in people, and in myself. 
-                This is the simplest place to understand the person behind the lens.
+                {desc}
               </motion.p>
 
               {/* Stats/Bento Mini Grid */}
@@ -107,11 +117,7 @@ export default function AboutHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                {[
-                  { num: "10+", label: "Years Experience" },
-                  { num: "50+", label: "Projects" },
-                  { num: "∞", label: "Curiosity" }
-                ].map((stat, i) => (
+                {stats.map((stat: any, i: number) => (
                   <div key={i} className="text-center p-4 rounded-2xl bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm border border-stone-200/50 dark:border-stone-800/50">
                     <div className="font-serif text-2xl md:text-3xl text-primary mb-1">{stat.num}</div>
                     <div className="text-[0.65rem] uppercase tracking-wider text-stone-500">{stat.label}</div>
@@ -140,7 +146,7 @@ export default function AboutHero() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <Image
-                  src="/images/bg-clean.png"
+                  src={imgUrl}
                   alt="Paul Akinola"
                   fill
                   className="object-cover"
@@ -155,7 +161,7 @@ export default function AboutHero() {
                   transition={{ delay: 1 }}
                 >
                   <p className="font-serif italic text-sm text-stone-700 dark:text-stone-300 text-center">
-                    "Systems shape outcomes"
+                    "{quote}"
                   </p>
                 </motion.div>
               </motion.div>

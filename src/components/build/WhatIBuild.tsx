@@ -82,7 +82,11 @@ const buildItems: BuildItem[] = [
   }
 ];
 
-const WhatIBuild = () => {
+const WhatIBuild = ({ data }: { data?: any }) => {
+  const tb = data?.tabs?.[1] || {};
+  const tTitle = tb.whatIBuildTitle || "The architecture behind the growth.";
+  const dynamicItems = tb.buildItems?.length ? tb.buildItems.map((item: any, i: number) => ({ ...buildItems[i], ...item })) : buildItems;
+
   return (
     <section className="relative py-32 bg-stone-50 dark:bg-stone-950 overflow-hidden">
       {/* Animated Background Pattern */}
@@ -140,24 +144,14 @@ const WhatIBuild = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.1] text-stone-900 dark:text-white"
             >
-              The core components of a
-              <span className="block relative">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  revenue system
-                </span>
-                <motion.span
-                  className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
-                  animate={{ opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </span>
+              {tTitle}
             </motion.h2>
           </div>
         </motion.div>
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-[280px]">
-          {buildItems.map((item, i) => {
+          {dynamicItems.map((item: any, i: number) => {
             const Icon = item.icon;
             const gridClass = item.size === "large" 
               ? "md:col-span-2 lg:col-span-2 md:row-span-2" 

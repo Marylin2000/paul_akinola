@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useCallback } from "react";
 import { ArrowUpRight, X, Expand, Eye } from "lucide-react";
@@ -102,11 +102,20 @@ const textRevealVariants = {
   },
 };
 
-export default function AboutGallery() {
+export default function AboutGallery({ data }: { data?: any }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const tb = data?.tabs?.[4] || {};
+  const dynamicGallery = tb.galleryImages?.length ? tb.galleryImages : images;
 
   return (
     <>

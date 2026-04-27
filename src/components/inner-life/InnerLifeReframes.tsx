@@ -31,7 +31,11 @@ const reframes = [
   }
 ];
 
-export default function InnerLifeReframes() {
+export default function InnerLifeReframes({ data }: { data?: any }) {
+  const tb = data?.tabs?.[2] || {};
+  const reframesTitle = tb.reframesTitle || "The visible struggle is rarely the root issue.";
+  const dynamicReframes = tb.reframesList?.length ? tb.reframesList.map((r: any, i: number) => ({ ...reframes[i], ...r })) : reframes;
+
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-stone-50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-950 md:py-32">
       <div className="container-responsive">
@@ -45,17 +49,17 @@ export default function InnerLifeReframes() {
           <div className="mb-6 flex items-center gap-4">
             <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
             <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
-              Inner Reframes
+              Common Reframes
             </span>
           </div>
           
           <h2 className="font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl">
-            The visible struggle is rarely the real one.
+            {reframesTitle}
           </h2>
         </motion.div>
 
-        <div className="space-y-6 md:space-y-8">
-          {reframes.map((reframe, index) => (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+          {dynamicReframes.map((reframe: any, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 24 }}

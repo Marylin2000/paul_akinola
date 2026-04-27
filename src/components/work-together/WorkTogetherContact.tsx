@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send } from "lucide-react";
 
-export default function WorkTogetherContact() {
+export default function WorkTogetherContact({ data }: { data?: any }) {
+  const tb = data?.tabs?.[3] || {};
+  const contactTitle = tb.contactTitle || "Start a conversation";
+  const contactP = tb.contactP || "If you are trying to make sense of what is not adding up, send a short note. Start where you are. We can work out the rest from there.";
+
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -40,9 +44,9 @@ export default function WorkTogetherContact() {
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto">
           <header className="mb-16 text-center">
-            <h2 className="font-serif text-4xl mb-6">Start a conversation</h2>
+            <h2 className="font-serif text-4xl mb-6">{contactTitle}</h2>
             <p className="text-foreground/60 font-light">
-              If you are trying to make sense of what is not adding up, send a short note. Start where you are. We can work out the rest from there.
+              {contactP}
             </p>
           </header>
           

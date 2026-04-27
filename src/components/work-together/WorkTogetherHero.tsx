@@ -2,7 +2,12 @@
 
 import { motion } from "framer-motion";
 
-export default function WorkTogetherHero() {
+export default function WorkTogetherHero({ data }: { data?: any }) {
+  const tb = data?.tabs?.[0] || {};
+  const subTitle = tb.subTitle || "Work Together";
+  const mainTitle = tb.mainTitle || "If this feels familiar, this is a good place to start.";
+  const description = tb.description || "Sometimes what is missing is not more effort. It is a clearer understanding of what is actually shaping the outcome. This page is where that understanding turns into conversation.";
+
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden bg-background">
       <div className="container mx-auto px-6">
@@ -13,13 +18,13 @@ export default function WorkTogetherHero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-primary/60 mb-6 block">
-              Work Together
+              {subTitle}
             </span>
             <h1 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] text-foreground mb-8">
-              If this feels familiar, this is a <span className="italic text-primary">good place to start</span>.
+              {mainTitle}
             </h1>
             <p className="font-sans text-[clamp(1.1rem,1.3vw,1.35rem)] text-foreground/60 leading-relaxed max-w-2xl mx-auto font-light">
-              Sometimes what is missing is not more effort. It is a clearer understanding of what is actually shaping the outcome. This page is where that understanding turns into conversation.
+              {description}
             </p>
           </motion.div>
         </div>

@@ -4,13 +4,20 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export default function WorkTogetherContext() {
+export default function WorkTogetherContext({ data }: { data?: any }) {
+  const tb = data?.tabs?.[4] || {};
+  const contextTitle = tb.contextTitle || "Where this usually shows up";
+  const workLabel = tb.workLabel || "In work";
+  const workP = tb.workP || "This may show up in performance, growth, revenue, CRM structure, team alignment, leadership decisions, or the gap between activity and real outcomes.";
+  const lifeLabel = tb.lifeLabel || "In life";
+  const lifeP = tb.lifeP || "This may show up in clarity, identity, internal conflict, repeated patterns, direction, faith, hope, or the sense that something deeper is shaping how you respond.";
+
   return (
     <section className="py-24 border-t border-rule bg-stone-50/50 dark:bg-stone-900/10">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <header className="mb-16">
-            <h2 className="font-serif text-3xl mb-4">Where this usually shows up</h2>
+            <h2 className="font-serif text-3xl mb-4">{contextTitle}</h2>
           </header>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -21,9 +28,9 @@ export default function WorkTogetherContext() {
               viewport={{ once: true }}
               className="bg-background p-10 border border-rule/30 group hover:border-primary/40 transition-all duration-500"
             >
-              <h3 className="font-serif text-2xl mb-6">In work</h3>
+              <h3 className="font-serif text-2xl mb-6">{workLabel}</h3>
               <p className="text-foreground/60 leading-relaxed font-light mb-10 text-sm">
-                This may show up in performance, growth, revenue, CRM structure, team alignment, leadership decisions, or the gap between activity and real outcomes.
+                {workP}
               </p>
               <Link 
                 href="/work"
@@ -41,9 +48,9 @@ export default function WorkTogetherContext() {
               viewport={{ once: true }}
               className="bg-background p-10 border border-rule/30 group hover:border-primary/40 transition-all duration-500"
             >
-              <h3 className="font-serif text-2xl mb-6">In life</h3>
+              <h3 className="font-serif text-2xl mb-6">{lifeLabel}</h3>
               <p className="text-foreground/60 leading-relaxed font-light mb-10 text-sm">
-                This may show up in clarity, identity, internal conflict, repeated patterns, direction, faith, hope, or the sense that something deeper is shaping how you respond.
+                {lifeP}
               </p>
               <Link 
                 href="/inner-life"

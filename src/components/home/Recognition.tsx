@@ -3,20 +3,38 @@
 
 import { motion, Variants } from "framer-motion";
 
-const lines = [
-  {
-    text: "Performance drops, but the issue is not always effort.",
-    insight: "Look at the system, not just the person."
-  },
-  {
-    text: "Growth slows, but the issue is not always ambition.",
-    insight: "Examine the structure beneath the surface."
-  },
-  {
-    text: "Decisions feel unclear, but the issue is not always intelligence.",
-    insight: "Clarity often comes from seeing the whole picture."
-  },
-] as const;
+export interface RecognitionData {
+  titlePrefix: string;
+  titleSuffix: string;
+  lines?: Array<{ id?: string | null; text: string; insight?: string | null }> | null;
+  footerTitle: string;
+  footerBody: string;
+}
+
+interface RecognitionProps {
+  data?: RecognitionData | null;
+}
+
+const defaultData: RecognitionData = {
+  titlePrefix: "Most problems",
+  titleSuffix: "where they show up.",
+  lines: [
+    {
+      text: "Performance drops, but the issue is not always effort.",
+      insight: "Look at the system, not just the person."
+    },
+    {
+      text: "Growth slows, but the issue is not always ambition.",
+      insight: "Examine the structure beneath the surface."
+    },
+    {
+      text: "Decisions feel unclear, but the issue is not always intelligence.",
+      insight: "Clarity often comes from seeing the whole picture."
+    },
+  ],
+  footerTitle: "Beneath the surface",
+  footerBody: "Something is happening beneath the surface, and without clarity, it's hard to fix what you cannot fully see.",
+};
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -35,7 +53,10 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Recognition() {
+export default function Recognition({ data }: RecognitionProps) {
+  const d = data ?? defaultData;
+  const lines = d.lines && d.lines.length > 0 ? d.lines : defaultData.lines!;
+
   return (
     <section
       id="recognition"
@@ -57,19 +78,18 @@ export default function Recognition() {
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Beneath the Surface
+            {d.footerTitle}
           </div>
           
           <h2 className="font-serif text-3xl font-medium tracking-tight text-stone-900 sm:text-4xl md:text-5xl lg:text-6xl dark:text-white">
-            Most problems{" "}
-            <span className="relative inline-block">
+            {d.titlePrefix} <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
                 don't start
               </span>
               <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
             </span>
             <br />
-            where they show up.
+            {d.titleSuffix}
           </h2>
         </motion.header>
 
@@ -82,7 +102,7 @@ export default function Recognition() {
         >
           {lines.map((line, index) => (
             <motion.div
-              key={index}
+              key={line.id || index}
               variants={itemVariants}
               className="group relative"
             >
@@ -97,9 +117,11 @@ export default function Recognition() {
                   <p className="mb-2 text-lg font-medium text-stone-800 dark:text-stone-100 sm:text-xl">
                     {line.text}
                   </p>
-                  <p className="text-sm text-stone-500 dark:text-stone-400">
-                    {line.insight}
-                  </p>
+                  {line.insight && (
+                    <p className="text-sm text-stone-500 dark:text-stone-400">
+                      {line.insight}
+                    </p>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -115,8 +137,7 @@ export default function Recognition() {
         >
           <div className="rounded-3xl border border-primary/15 bg-gradient-to-br from-primary/5 via-white/50 to-amber-500/5 p-8 backdrop-blur-sm dark:from-primary/10 dark:via-stone-900/50 dark:to-amber-700/10 sm:p-10">
             <p className="font-serif text-xl leading-relaxed text-stone-700 dark:text-stone-200 sm:text-2xl">
-              Something is happening beneath the surface, and without clarity, 
-              it's hard to fix what you cannot fully see.
+              {d.footerBody}
             </p>
           </div>
         </motion.div>

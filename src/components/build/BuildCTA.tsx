@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Star, Send } from "lucide-react";
 import Link from "next/link";
 
-const BuildCTA = () => {
+const BuildCTA = ({ data }: { data?: any }) => {
+  const tb = data?.tabs?.[5] || {};
+  const tTitle = tb.ctaTitle || "Connect the dots between your systems, your teams, and your revenue.";
+  const tBtn = tb.ctaBtn || "Start a build conversation";
+  
   return (
     <section className="relative py-32 bg-stone-50 dark:bg-stone-950 overflow-hidden">
       {/* Animated Background */}
@@ -106,23 +110,9 @@ const BuildCTA = () => {
                 />
               </motion.div>
 
-              <h2 className="font-serif text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.1] mb-6 text-stone-900 dark:text-white">
-                Let's build
-                <span className="block relative">
-                  <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                    together
-                  </span>
-                  <motion.span
-                    className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
-                    animate={{ opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
-                </span>
+              <h2 className="font-serif text-[clamp(1.8rem,4vw,3.5rem)] leading-[1.1] mb-6 text-stone-900 dark:text-white max-w-2xl mx-auto">
+                {tTitle}
               </h2>
-
-              <p className="text-lg md:text-xl text-stone-600 dark:text-stone-300 mb-10 max-w-xl mx-auto leading-relaxed">
-                If something here connects with what you're working through, this is where a conversation can start.
-              </p>
 
               <Link 
                 href="/together#contact"
@@ -136,7 +126,7 @@ const BuildCTA = () => {
                   transition={{ duration: 2, repeat: Infinity }}
                 />
                 <span className="relative inline-flex items-center gap-4 bg-gradient-to-r from-primary to-primary/90 text-white px-10 py-5 rounded-full font-medium text-lg shadow-xl transition-all duration-300">
-                  <span>Start a Conversation</span>
+                  <span>{tBtn}</span>
                   <motion.div 
                     whileHover={{ rotate: 45 }}
                     className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center transition-colors"

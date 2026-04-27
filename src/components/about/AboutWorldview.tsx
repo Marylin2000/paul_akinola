@@ -412,7 +412,7 @@ function TooltipPortal({
 }
 
 // ---------- Main Component ----------
-export default function AboutWorldview() {
+export default function AboutWorldview({ data }: { data?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredItem, setHoveredItem] = useState<WorldviewItem | null>(null);
   const [hoveredRect, setHoveredRect] = useState<DOMRect | undefined>();
@@ -428,6 +428,21 @@ export default function AboutWorldview() {
     setHoveredItem(item);
     setHoveredRect(rect);
   }, []);
+
+  const titlePrefix = data?.tabs?.[1]?.worldviewTitle || "How I see the";
+  const titleItalic = data?.tabs?.[1]?.worldviewTitleItalic || "world";
+  const description = data?.tabs?.[1]?.worldviewDescription || "A lens that helps me make sense of what's really happening—beneath the surface, beyond the obvious, behind the noise.";
+  const blockquote = data?.tabs?.[1]?.worldviewQuote || "Most visible problems are being shaped by something deeper.";
+
+  // If payload worldviewCards exists, map them over icon components by index, else use default worldviewItems
+  const dynamicItems = data?.tabs?.[1]?.worldviewCards ? data.tabs[1].worldviewCards.map((c: any, i: number) => ({
+    ...worldviewItems[i],
+    title: c.title,
+    shortTitle: c.shortTitle,
+    content: c.content,
+    colorA: c.colorA,
+    colorB: c.colorB
+  })) : worldviewItems;
 
   return (
     <>
@@ -487,16 +502,16 @@ export default function AboutWorldview() {
 
               {/* Heading */}
               <h2 className="font-serif text-4xl font-normal leading-tight tracking-tight text-stone-900 dark:text-stone-100 sm:text-5xl lg:text-6xl xl:text-7xl">
-                How I see the{" "}
+                {titlePrefix}{" "}
                 <span className="relative inline-block italic text-[#c2622a]">
-                  world
+                  {titleItalic}
                   <span className="absolute -inset-x-1 bottom-0.5 h-0.5 rounded-full bg-gradient-to-r from-[#c2622a] to-transparent" />
                 </span>
               </h2>
 
               {/* Sub */}
               <p className="max-w-md text-base leading-relaxed text-stone-500 dark:text-stone-400 sm:text-lg">
-                A lens that helps me make sense of what's really happening—beneath the surface, beyond the obvious, behind the noise.
+                {description}
               </p>
 
               {/* Animated line */}
@@ -519,7 +534,7 @@ export default function AboutWorldview() {
                 <span className="absolute left-0 top-0 h-full w-0.5 rounded-l-2xl bg-gradient-to-b from-[#c2622a] to-[#e8943a]" />
                 <Quote className="mb-2 h-5 w-5 rotate-180 text-[#c2622a]/40" />
                 <p className="font-serif text-lg italic leading-relaxed text-stone-700 dark:text-stone-200">
-                  Most visible problems are being shaped by something deeper.
+                  {blockquote}
                 </p>
                 <div className="mt-4 flex items-center gap-3">
                   <div className="h-px w-6 bg-gradient-to-r from-[#c2622a]/40 to-transparent" />
@@ -620,7 +635,7 @@ export default function AboutWorldview() {
               </svg>
 
               {/* Orbit Cards */}
-              {worldviewItems.map((item, i) => (
+              {dynamicItems.map((item: any, i: number) => (
                 <OrbitCard 
                   key={item.title} 
                   item={item} 

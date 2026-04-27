@@ -9,8 +9,16 @@ const workAreas = [
   { id: "orgs", label: "Organizations", desc: "Systems & structure" }
 ];
 
-export default function AboutMechanics() {
+export default function AboutMechanics({ data }: { data?: any }) {
   const [activeArea, setActiveArea] = useState("individuals");
+
+  const tb = data?.tabs?.[4] || {};
+  const mTitle = tb.mechanicsTitle || "How I work";
+  const mP1 = tb.mechanicsP1 || "I work with individuals, teams, and organisations who are trying to make sense of what is really shaping their outcomes.";
+  const mP2 = tb.mechanicsP2 || "Sometimes that shows up in performance, growth, revenue, or structure. Sometimes it shows up more personally—clarity, direction, or the tension between what someone intends and how they are actually living.";
+  const mQuote = tb.mechanicsQuote || '"I am most useful where something important is happening, but the real issue has not been named clearly enough yet."';
+  
+  const dynamicAreas = tb.workAreas?.length ? tb.workAreas : workAreas;
 
   return (
     <section className="relative py-32 lg:py-40 bg-stone-50 dark:bg-stone-950 overflow-hidden">
@@ -36,7 +44,7 @@ export default function AboutMechanics() {
               Approach
             </span>
             <h2 className="font-serif text-4xl md:text-5xl text-stone-900 dark:text-stone-100">
-              How I work
+              {mTitle}
             </h2>
           </motion.div>
 
@@ -79,7 +87,7 @@ export default function AboutMechanics() {
                 </motion.div>
 
                 {/* Orbiting Nodes */}
-                {workAreas.map((area, index) => {
+                {dynamicAreas.map((area: any, index: number) => {
                   const angle = (index * 120) * (Math.PI / 180);
                   const radius = 45;
                   const x = Math.cos(angle) * radius;
@@ -117,12 +125,8 @@ export default function AboutMechanics() {
               className="space-y-8"
             >
               <div className="space-y-6 text-lg leading-relaxed text-stone-600 dark:text-stone-400">
-                <p>
-                  I work with individuals, teams, and organisations who are trying to make sense of what is really shaping their outcomes.
-                </p>
-                <p>
-                  Sometimes that shows up in performance, growth, revenue, or structure. Sometimes it shows up more personally—clarity, direction, or the tension between what someone intends and how they are actually living.
-                </p>
+                <p>{mP1}</p>
+                <p>{mP2}</p>
               </div>
 
               <motion.div 
@@ -131,7 +135,7 @@ export default function AboutMechanics() {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <p className="font-serif text-xl text-stone-900 dark:text-stone-100 italic">
-                  "I am most useful where something important is happening, but the real issue has not been named clearly enough yet."
+                  {mQuote}
                 </p>
               </motion.div>
 
@@ -143,7 +147,7 @@ export default function AboutMechanics() {
                 className="flex items-center gap-4 text-sm text-stone-500"
               >
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Currently focused on: {workAreas.find(a => a.id === activeArea)?.desc}
+                Currently focused on: {dynamicAreas.find((a: any) => a.id === activeArea)?.desc}
               </motion.div>
             </motion.div>
           </div>

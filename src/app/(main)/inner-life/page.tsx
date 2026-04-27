@@ -12,16 +12,24 @@ import InnerLifeStories from "@/components/inner-life/InnerLifeStories";
 import InnerLifeGoDeeper from "@/components/inner-life/InnerLifeGoDeeper";
 import InnerLifeNextPaths from "@/components/inner-life/InnerLifeNextPaths";
 
-export default function InnerLifePage() {
+import { getPayload } from "payload";
+import configPromise from "@payload-config";
+
+export default async function InnerLifePage() {
+  const payload = await getPayload({ config: configPromise });
+  const data = await (payload.findGlobal as any)({
+    slug: 'inner-life',
+  });
+
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">
-      <InnerLifeHero />
-      <InnerLifeSetup />
-      <InnerLifeReframes />
-      <InnerLifeShift />
-      <InnerLifeStories />
-      <InnerLifeGoDeeper />
-      <InnerLifeNextPaths />
+      <InnerLifeHero data={data} />
+      <InnerLifeSetup data={data} />
+      <InnerLifeReframes data={data} />
+      <InnerLifeShift data={data} />
+      <InnerLifeStories data={data} />
+      <InnerLifeGoDeeper data={data} />
+      <InnerLifeNextPaths data={data} />
 
       {/* Soulful Exit Line */}
       <section className="bg-background py-24 text-center border-t border-rule transition-colors duration-500">

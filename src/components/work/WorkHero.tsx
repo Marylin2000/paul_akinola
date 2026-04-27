@@ -5,7 +5,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 
-export default function WorkHero() {
+export default function WorkHero({ data }: { data?: any }) {
+  const tb = data?.tabs?.[0] || {};
+  const prefix = tb.heroPrefix || "Systems at Work";
+  const tStatic = tb.heroTitleStatic || "Something ";
+  const tHigh = tb.heroTitleHighlight || "isn't adding up.";
+  const p1 = tb.heroP1 || "You're putting in the work. The team is active. Things are moving.";
+  const p2 = tb.heroP2 || "But the results don't fully reflect it.";
+  const val = tb.heroStatValue || "95%";
+  const lblTop = tb.heroStatLabelTop || "Systems drive";
+  const lblBot = tb.heroStatLabelBot || "of outcomes";
+
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-stone-50 transition-colors duration-500 dark:bg-stone-950">
       {/* Ambient gradient orbs */}
@@ -38,24 +48,24 @@ export default function WorkHero() {
             <div className="mb-6 inline-flex items-center gap-3">
               <div className="h-px w-8 bg-gradient-to-r from-primary/60 to-transparent" />
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
-                Systems at Work
+                {prefix}
               </span>
             </div>
             
             <h1 className="mb-6 font-serif text-4xl font-medium leading-[1.1] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
-              Something{" "}
+              {tStatic}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  isn't adding up.
+                  {tHigh}
                 </span>
                 <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
               </span>
             </h1>
             
             <div className="mx-auto max-w-lg space-y-4 text-lg leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl lg:mx-0">
-              <p>You're putting in the work. The team is active. Things are moving.</p>
+              <p>{p1}</p>
               <p className="font-serif text-2xl italic text-stone-400 dark:text-stone-500 sm:text-3xl">
-                But the results don't fully reflect it.
+                {p2}
               </p>
             </div>
 
@@ -102,9 +112,9 @@ export default function WorkHero() {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="absolute -bottom-6 -left-6 rounded-2xl border border-white/30 bg-white/85 p-4 shadow-xl backdrop-blur-md dark:border-stone-700/50 dark:bg-stone-900/85"
               >
-                <p className="text-sm font-medium text-stone-500 dark:text-stone-400">Systems drive</p>
-                <p className="font-serif text-3xl font-semibold text-primary">95%</p>
-                <p className="text-xs text-stone-400">of outcomes</p>
+                <p className="text-sm font-medium text-stone-500 dark:text-stone-400">{lblTop}</p>
+                <p className="font-serif text-3xl font-semibold text-primary">{val}</p>
+                <p className="text-xs text-stone-400">{lblBot}</p>
               </motion.div>
             </div>
           </motion.div>
