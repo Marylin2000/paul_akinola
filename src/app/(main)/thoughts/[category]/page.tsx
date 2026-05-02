@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
 import { getThoughts } from "@/lib/cms-fetcher";
-import Navigation from "@/components/ui/Navigation";
 import { Thought } from "@/lib/types-cms";
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
@@ -36,8 +35,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
   return (
     <main className="min-h-screen bg-white dark:bg-stone-950 transition-colors duration-500">
-      <Navigation />
-      
       <section className="pt-32 pb-24 px-6">
         <div className="max-w-5xl mx-auto">
           <header className="mb-20">

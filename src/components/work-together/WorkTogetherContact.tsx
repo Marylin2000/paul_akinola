@@ -1,11 +1,12 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send } from "lucide-react";
 
 export default function WorkTogetherContact({ data }: { data?: any }) {
-  const tb = data?.tabs?.[3] || {};
+  const tb = getPageSection(data, 3);
   const contactTitle = tb.contactTitle || "Start a conversation";
   const contactP = tb.contactP || "If you are trying to make sense of what is not adding up, send a short note. Start where you are. We can work out the rest from there.";
 
@@ -134,7 +135,7 @@ export default function WorkTogetherContact({ data }: { data?: any }) {
                 <Send className={`w-4 h-4 transition-transform duration-500 ${formState === "submitting" ? 'translate-x-4 opacity-0' : ''}`} />
               </button>
               <p className="mt-6 text-[0.7rem] text-foreground/40 italic font-light">
-                I read every note personally and respond within a few days.
+                {tb.confirmationLine || "I read every note personally and respond within a few days. Most first conversations are 30 minutes. For clarity."}
               </p>
             </div>
           </form>

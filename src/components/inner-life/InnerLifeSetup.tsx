@@ -1,11 +1,12 @@
 // InnerLifeSetup.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { Eye } from "lucide-react";
 
 export default function InnerLifeSetup({ data }: { data?: any }) {
-  const tb = data?.tabs?.[1] || {};
+  const tb = getPageSection(data, 1);
   const setupLabel = tb.setupLabel || "The Invisible System";
   const setupP1 = tb.setupP1 || "What you're experiencing is not random. How you think, respond, and move through life is shaped by systems — beliefs, patterns, identity, memory, and pressure.";
   const setupP2 = tb.setupP2 || "Most of it runs quietly in the background, shaping the world you see and the choices you make.";

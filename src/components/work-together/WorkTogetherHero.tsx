@@ -1,11 +1,12 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 
 export default function WorkTogetherHero({ data }: { data?: any }) {
-  const tb = data?.tabs?.[0] || {};
+  const tb = getPageSection(data, 0);
   const subTitle = tb.subTitle || "Work Together";
-  const mainTitle = tb.mainTitle || "If this feels familiar, this is a good place to start.";
+  const mainTitle = tb.mainTitle === "If this feels familiar, this is a good place to start." || !tb.mainTitle ? "Let's find out what is actually going on." : tb.mainTitle;
   const description = tb.description || "Sometimes what is missing is not more effort. It is a clearer understanding of what is actually shaping the outcome. This page is where that understanding turns into conversation.";
 
   return (

@@ -7,6 +7,8 @@ import BuildCTA from "@/components/build/BuildCTA";
 
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { buildDefault } from "@/lib/defaults-cms";
+import type { BuildData } from "@/lib/types-cms";
 
 export const metadata = {
   title: "Builds | Paul Akinola",
@@ -14,10 +16,24 @@ export const metadata = {
 };
 
 export default async function BuildPage() {
-  const payload = await getPayload({ config: configPromise });
-  const data = await (payload.findGlobal as any)({
-    slug: 'build',
-  });
+  let data: BuildData = buildDefault;
+
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const cmsData = await (payload.findGlobal as any)({ slug: "build" });
+    // Payload globals can exist before every array is seeded, so merge shallow CMS edits over stable defaults.
+    data = {
+      ...buildDefault,
+      ...cmsData,
+      buildItems: cmsData?.buildItems?.length ? cmsData.buildItems : buildDefault.buildItems,
+      statsList: cmsData?.statsList?.length ? cmsData.statsList : buildDefault.statsList,
+      industriesList: cmsData?.industriesList?.length ? cmsData.industriesList : buildDefault.industriesList,
+      storiesList: cmsData?.storiesList?.length ? cmsData.storiesList : buildDefault.storiesList,
+      toolsList: cmsData?.toolsList?.length ? cmsData.toolsList : buildDefault.toolsList,
+    };
+  } catch {
+    // Keep the page renderable in local/dev environments where Payload or MongoDB is unavailable.
+  }
 
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">

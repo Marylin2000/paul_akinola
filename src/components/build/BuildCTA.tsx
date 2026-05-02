@@ -2,13 +2,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Star, Send } from "lucide-react";
+import { Sparkles, Star, Send } from "lucide-react";
 import Link from "next/link";
+import { buildDefault } from "@/lib/defaults-cms";
+import type { BuildData } from "@/lib/types-cms";
 
-const BuildCTA = ({ data }: { data?: any }) => {
-  const tb = data?.tabs?.[5] || {};
-  const tTitle = tb.ctaTitle || "Connect the dots between your systems, your teams, and your revenue.";
-  const tBtn = tb.ctaBtn || "Start a build conversation";
+const BuildCTA = ({ data = buildDefault }: { data?: BuildData }) => {
+  const tTitle = data.ctaTitle || buildDefault.ctaTitle;
+  const tBtn = data.ctaBtn || buildDefault.ctaBtn;
   
   return (
     <section className="relative py-32 bg-stone-50 dark:bg-stone-950 overflow-hidden">

@@ -102,7 +102,7 @@ export function LexicalEditor({ initialJson, onChange }: { initialJson: string; 
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="relative glass border border-foreground/10 bg-foreground/5 p-4 focus-within:border-primary/50 transition-colors">
+      <div className="relative bg-paper border border-rule p-4 focus-within:border-primary/50 transition-colors">
         <ToolbarPlugin />
         <div className="relative min-h-[300px]">
           <RichTextPlugin

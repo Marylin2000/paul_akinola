@@ -1,13 +1,25 @@
 // WorkSurfaceRoot.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 
+const defaultSources = [
+  { title: "The CRM", body: "Where deals live, but not always why they move or stall" },
+  { title: "The product", body: "Where behaviour happens, but rarely reaches the people responsible for pipeline" },
+  { title: "Web analytics", body: "Where intent shows up, but disconnected from revenue outcomes" },
+  { title: "Campaign tools", body: "Where activity is tracked, but attribution stays murky" },
+  { title: "The spreadsheet", body: "Where someone built the truth, outside every system" },
+  { title: "The conversation", body: "Where real intelligence lives, in Slack threads and email chains that never get recorded" },
+];
+
 export default function WorkSurfaceRoot({ data }: { data?: any }) {
-  const tb = data?.tabs?.[1] || {};
+  const tb = getPageSection(data, 1);
   const surfaceLabel = tb.surfaceLabel || "Surface vs Root Cause";
-  const surfaceTitle = tb.surfaceTitle || "What you're seeing is only part of the picture.";
-  const surfaceDesc = tb.surfaceDesc || "Most of what shapes performance, growth, and decision-making sits underneath — in how things are structured, how signals move, and how work actually connects.";
+  const surfaceTitle = tb.surfaceTitle === "What you're seeing is only part of the picture." || !tb.surfaceTitle ? "The data exists. The visibility doesn't." : tb.surfaceTitle;
+  const surfaceDesc = tb.surfaceDesc === "Most of what shapes performance, growth, and decision-making sits underneath — in how things are structured, how signals move, and how work actually connects." || !tb.surfaceDesc ? "Most revenue teams are not short of data. They are short of signal. Because the data that should tell the full story is scattered across six places that rarely talk to each other." : tb.surfaceDesc;
+  const sources = tb.sources?.length ? tb.sources : defaultSources;
+  const closingLine = tb.surfaceClosingLine || "When these six don't connect, no one can see what is driving revenue, what to scale, what to kill, or what is coming next.";
 
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-white py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-900 md:py-32">
@@ -37,6 +49,30 @@ export default function WorkSurfaceRoot({ data }: { data?: any }) {
             {surfaceDesc}
           </p>
         </motion.div>
+
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {sources.map((source: any, index: number) => (
+            <motion.div
+              key={source.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.06 }}
+              className="rounded-3xl border border-stone-200/60 bg-white/80 p-8 backdrop-blur-sm dark:border-stone-700/60 dark:bg-stone-900/80"
+            >
+              <h3 className="mb-3 font-serif text-xl font-semibold text-stone-900 dark:text-white">
+                {source.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+                {source.body}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        <p className="mx-auto mt-14 max-w-3xl text-center text-lg leading-relaxed text-stone-500 dark:text-stone-400">
+          {closingLine}
+        </p>
       </div>
     </section>
   );

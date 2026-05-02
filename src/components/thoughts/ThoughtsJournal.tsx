@@ -4,10 +4,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Search, X, Calendar, Clock } from "lucide-react";
-import { thoughts } from "@/data/thoughts";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import Image from "next/image";
+import { getPageSection } from "@/lib/payload/page-data";
+import type { Thought } from "@/lib/types-cms";
 
 const placeholderImages = {
   work: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop",
@@ -30,13 +31,16 @@ const categoryIcons: Record<string, typeof BookOpen> = {
   Clarity: BookOpen,
 };
 
-function JournalContent() {
+function JournalContent({ data, thoughts }: { data?: any; thoughts: Thought[] }) {
   const searchParams = useSearchParams();
   const categoryFilter = searchParams.get("category");
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const tb = getPageSection(data, 2);
 
-  const filteredThoughts = categoryFilter 
-    ? thoughts.filter(t => t.tag.toLowerCase() === categoryFilter.toLowerCase())
+  const normalizeCategory = (value: string) => value.toLowerCase().replace(/\s+/g, "-");
+
+  const filteredThoughts = categoryFilter
+    ? thoughts.filter((thought) => normalizeCategory(thought.tag) === normalizeCategory(categoryFilter) || (categoryFilter === "life" && normalizeCategory(thought.tag) === "inner-life"))
     : thoughts;
 
   const getCategoryPath = (tag: string) => {
@@ -55,9 +59,16 @@ function JournalContent() {
     return categoryGradients[tag] || categoryGradients.Clarity;
   };
 
-  const getReadTime = (excerpt: string) => {
-    const words = excerpt.split(' ').length;
-    return Math.ceil(words / 200);
+  const getReadTime = (thought: Thought) => {
+    const source = thought.content || thought.excerpt;
+    const words = source.trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 225));
+  };
+
+  const getDisplayDate = (thought: Thought, index: number) => {
+    if (thought.date) return thought.date;
+    const fallbackDates = ["May 2026", "April 2026", "March 2026", "February 2026", "January 2026", "December 2025"];
+    return fallbackDates[index % fallbackDates.length];
   };
 
   return (
@@ -80,19 +91,19 @@ function JournalContent() {
           <div className="mb-6 flex items-center gap-4">
             <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
             <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
-              Journal
+              {tb.journalLabel || "Journal"}
             </span>
           </div>
           
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <h2 className="mb-3 font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl lg:text-5xl">
-                Notes and Reflections
+                {tb.journalTitle || "Notes and Reflections"}
               </h2>
               <p className="text-lg text-stone-500 dark:text-stone-400">
                 {categoryFilter 
-                  ? `Showing reflections tagged with "${categoryFilter}"` 
-                  : "Ongoing reading, observations, and inquiries."}
+                  ? `${tb.journalFilteredPrefix || "Showing reflections tagged with"} "${categoryFilter}"`
+                  : tb.journalDescription || "Ongoing reading, observations, and inquiries."}
               </p>
             </div>
             
@@ -116,7 +127,8 @@ function JournalContent() {
                 const imageUrl = thought.image?.url || getPlaceholderImage(thought.tag);
                 const isHovered = hoveredSlug === thought.slug;
                 const categoryGradient = getCategoryGradient(thought.tag);
-                const readTime = getReadTime(thought.excerpt);
+                const readTime = getReadTime(thought);
+                const displayDate = getDisplayDate(thought, index);
                 
                 return (
                   <motion.article
@@ -162,7 +174,7 @@ function JournalContent() {
                         <div className="absolute bottom-4 right-4">
                           <span className="inline-flex items-center gap-1 rounded-full bg-stone-900/60 px-2 py-0.5 text-[10px] text-white/80 backdrop-blur-sm">
                             <Clock className="h-3 w-3" />
-                            {readTime} min
+                            {readTime} min read
                           </span>
                         </div>
                       </div>
@@ -170,12 +182,10 @@ function JournalContent() {
                       {/* Content */}
                       <div className="flex flex-1 flex-col p-5">
                         {/* Date */}
-                        {thought.date && (
-                          <div className="mb-2 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
-                            <Calendar className="h-3 w-3" />
-                            {thought.date}
-                          </div>
-                        )}
+                        <div className="mb-2 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
+                          <Calendar className="h-3 w-3" />
+                          {displayDate}
+                        </div>
                         
                         {/* Title */}
                         <h3 className="mb-3 font-serif text-lg font-semibold leading-snug text-stone-900 transition-colors duration-300 group-hover:text-primary dark:text-white line-clamp-2">
@@ -246,7 +256,7 @@ function JournalContent() {
   );
 }
 
-export default function ThoughtsJournal() {
+export default function ThoughtsJournal({ data, thoughts }: { data?: any; thoughts: Thought[] }) {
   return (
     <Suspense fallback={
       <div className="flex min-h-screen items-center justify-center bg-white dark:bg-stone-900">
@@ -256,7 +266,7 @@ export default function ThoughtsJournal() {
         </div>
       </div>
     }>
-      <JournalContent />
+      <JournalContent data={data} thoughts={thoughts} />
     </Suspense>
   );
 }

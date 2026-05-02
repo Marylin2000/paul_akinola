@@ -18,6 +18,8 @@ import { Work } from "./globals/Work";
 import { InnerLife } from "./globals/InnerLife";
 import { Build } from "./globals/Build";
 import { Together } from "./globals/Together";
+import { Thoughts } from "./globals/Thoughts";
+import { Navigation } from "./globals/Navigation";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -39,7 +41,7 @@ export default buildConfig({
     } as any,
   },
   collections: [Users, Media, Articles],
-  globals: [Hero, Offerings, Recognition, PersonalAnchor, About, Work, InnerLife, Build, Together],
+  globals: [Hero, Offerings, Recognition, PersonalAnchor, About, Work, InnerLife, Build, Together, Thoughts, Navigation],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

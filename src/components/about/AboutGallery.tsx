@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useInView, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { getPageSection } from "@/lib/payload/page-data";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState } from "react";
 import { ArrowUpRight, X, Expand, Eye } from "lucide-react";
 
 interface GalleryImage {
@@ -103,19 +104,18 @@ const textRevealVariants = {
 };
 
 export default function AboutGallery({ data }: { data?: any }) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
 
-  const tb = data?.tabs?.[4] || {};
-  const dynamicGallery = tb.galleryImages?.length ? tb.galleryImages : images;
+  const tb = getPageSection(data, 4);
+  const dynamicGallery = tb.galleryImages?.length
+    ? tb.galleryImages.map((image: any, index: number) => ({
+        ...images[index % images.length],
+        src: image.url || images[index % images.length].src,
+        alt: image.alt || images[index % images.length].alt,
+      }))
+    : images;
 
   return (
     <>
@@ -184,13 +184,11 @@ export default function AboutGallery({ data }: { data?: any }) {
             variants={containerVariants}
             className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[280px]"
           >
-            {images.map((image, index) => (
+            {dynamicGallery.map((image: GalleryImage, index: number) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
                 className={`${image.span} relative group cursor-pointer`}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => setSelectedImage(image)}
               >
                 {/* Image Container with sophisticated borders */}

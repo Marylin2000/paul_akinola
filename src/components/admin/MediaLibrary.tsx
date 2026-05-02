@@ -124,7 +124,7 @@ export function MediaLibrary({ initialMedia }: { initialMedia: any[] }) {
       )}
 
       {/* Toolbar */}
-      <div className="flex items-center justify-between gap-4 glass p-4">
+      <div className="flex items-center justify-between gap-4 bg-paper border border-rule p-4">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
           <input
@@ -211,7 +211,7 @@ export function MediaLibrary({ initialMedia }: { initialMedia: any[] }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="glass overflow-hidden"
+          className="bg-paper border border-rule overflow-hidden"
         >
           <table className="w-full text-left">
             <thead className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest border-b border-foreground/10">
@@ -291,7 +291,7 @@ export function MediaLibrary({ initialMedia }: { initialMedia: any[] }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={springConfig}
-              className="w-full max-w-lg glass-strong p-8"
+              className="w-full max-w-lg bg-paper border border-rule p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">

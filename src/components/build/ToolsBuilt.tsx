@@ -3,7 +3,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import * as Icons from "lucide-react";
 import { ArrowRight, Award, Bot, BarChart3, Layers, Sparkles } from "lucide-react";
+import { buildDefault } from "@/lib/defaults-cms";
+import type { BuildData } from "@/lib/types-cms";
 
 interface Tool {
   title: string;
@@ -44,10 +47,9 @@ const tools: Tool[] = [
   }
 ];
 
-const ToolsBuilt = ({ data }: { data?: any }) => {
-  const tb = data?.tabs?.[4] || {};
-  const tTitle = tb.toolsTitle || "The Stack";
-  const dynamicTools = tb.toolsList?.length ? tb.toolsList.map((t: any, i: number) => ({ ...tools[i], ...t })) : tools;
+const ToolsBuilt = ({ data = buildDefault }: { data?: BuildData }) => {
+  const tTitle = data.toolsTitle || buildDefault.toolsTitle;
+  const dynamicTools = data.toolsList?.length ? data.toolsList : buildDefault.toolsList;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -101,7 +103,9 @@ const ToolsBuilt = ({ data }: { data?: any }) => {
       {/* Horizontal Scrolling Cards */}
       <motion.div style={{ x }} className="flex gap-5 lg:gap-6 px-4 sm:px-6 lg:px-8">
         {dynamicTools.map((tool: any, i: number) => {
-          const Icon = tool.icon;
+          const Icon = (Icons as any)[tool.icon] || Icons.Award;
+          const gradient = tool.gradient || "from-violet-500 to-purple-600";
+          const tags = tool.tags?.map((tag: string | { value: string }) => (typeof tag === "string" ? tag : tag.value)).filter(Boolean) || [];
           return (
             <motion.div
               key={i}
@@ -115,7 +119,7 @@ const ToolsBuilt = ({ data }: { data?: any }) => {
               <div className="relative h-full bg-white dark:bg-stone-900 rounded-3xl p-7 lg:p-8 border border-stone-200/60 dark:border-stone-700/60 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
                 {/* Animated gradient line */}
                 <motion.div 
-                  className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${tool.gradient}`}
+                  className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${gradient}`}
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -124,19 +128,19 @@ const ToolsBuilt = ({ data }: { data?: any }) => {
                 />
                 
                 {/* Hover gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500`} />
                 
                 {/* Icon */}
                 <motion.div 
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${tool.gradient} mb-6 shadow-lg`}
+                  className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${gradient} mb-6 shadow-lg`}
                 >
                   <Icon className="w-6 h-6 text-white" />
                 </motion.div>
 
                 {/* Tags */}
-                <div className="flex gap-2 mb-4">
-                  {tool.tags?.map((tag: string, ti: number) => (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {tags.map((tag: string, ti: number) => (
                     <motion.span 
                       key={ti}
                       initial={{ opacity: 0, scale: 0.8 }}
@@ -151,9 +155,12 @@ const ToolsBuilt = ({ data }: { data?: any }) => {
                 </div>
 
                 {/* Content */}
-                <h3 className="font-serif text-2xl mb-3 text-stone-900 dark:text-white group-hover:text-primary transition-colors">
-                  {tool.title}
+                <h3 className="font-serif text-2xl mb-1 text-stone-900 dark:text-white group-hover:text-primary transition-colors">
+                  {tool.name}
                 </h3>
+                <div className="text-xs font-bold uppercase tracking-wider text-primary/60 mb-4">
+                  {tool.category}
+                </div>
                 <p className="text-stone-600 dark:text-stone-400 leading-relaxed mb-8">
                   {tool.description}
                 </p>

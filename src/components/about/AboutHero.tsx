@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Image from "next/image";
@@ -14,16 +15,18 @@ export default function AboutHero({ data }: { data?: any }) {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const prefix = data?.tabs?.[0]?.heroTitlePrefix || "I pay attention to what most people ";
-  const italic = data?.tabs?.[0]?.heroTitleItalic || "overlook";
-  const desc = data?.tabs?.[0]?.heroDescription || "I pay attention to how things work—in systems, in people, and in myself. This is the simplest place to understand the person behind the lens.";
-  const stats = data?.tabs?.[0]?.heroStats || [
+  const tb = getPageSection(data, 0);
+  const isOldTitle = tb.heroTitlePrefix === "I pay attention to what most people" || tb.heroTitlePrefix === "I pay attention to what most people " || !tb.heroTitlePrefix;
+  const prefix = isOldTitle ? "I try to arrive empty." : tb.heroTitlePrefix;
+  const italic = isOldTitle ? "" : tb.heroTitleItalic || "";
+  const desc = tb.heroDescription || "I pay attention to how things work—in systems, in people, and in myself. This is the simplest place to understand the person behind the lens.";
+  const stats = tb.heroStats || [
     { num: "10+", label: "Years Experience" },
     { num: "50+", label: "Projects" },
     { num: "∞", label: "Curiosity" }
   ];
-  const imgUrl = data?.tabs?.[0]?.heroImage?.url || "/images/bg-clean.png";
-  const quote = data?.tabs?.[0]?.heroImage?.quote || "Systems shape outcomes";
+  const imgUrl = tb.heroImage?.url || "/images/bg-clean.png";
+  const quote = tb.heroImage?.quote || "Systems shape outcomes";
 
   return (
     <section 
@@ -81,24 +84,26 @@ export default function AboutHero({ data }: { data?: any }) {
 
               <h1 className="font-serif text-[clamp(2.5rem,8vw,5rem)] leading-[1.05] text-stone-900 dark:text-stone-100 mb-8 text-balance">
                 {prefix}{" "}
-                <motion.span 
-                  className="italic text-primary relative inline-block"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  {italic}
-                  <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
-                    <motion.path 
-                      d="M2 8C50 2 150 2 198 8" 
-                      stroke="currentColor" 
-                      strokeWidth="3" 
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 1.5, delay: 1 }}
-                    />
-                  </svg>
-                </motion.span>
+                {italic && (
+                  <motion.span 
+                    className="italic text-primary relative inline-block"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {italic}
+                    <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
+                      <motion.path 
+                        d="M2 8C50 2 150 2 198 8" 
+                        stroke="currentColor" 
+                        strokeWidth="3" 
+                        strokeLinecap="round"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 1.5, delay: 1 }}
+                      />
+                    </svg>
+                  </motion.span>
+                )}
               </h1>
 
               <motion.p 

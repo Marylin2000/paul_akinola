@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, ChevronRight, Clock } from "lucide-react";
 import { getThoughts } from "@/lib/cms-fetcher";
-import Navigation from "@/components/ui/Navigation";
 import Image from "next/image";
 import { Thought } from "@/lib/types-cms";
 
@@ -56,8 +55,6 @@ export default async function ThoughtPage({ params }: { params: Promise<{ catego
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navigation />
-      
       <article className="pt-32 pb-24 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Breadcrumbs */}

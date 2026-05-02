@@ -1,17 +1,19 @@
 // WorkGoDeeper.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 export default function WorkGoDeeper({ data }: { data?: any }) {
-  const tb = data?.tabs?.[5] || {};
-  const goDeeperLabel = tb.goDeeperLabel || "Go Deeper";
-  const goDeeperTitle = tb.goDeeperTitle || "If this resonates, the next step is not to do more.";
-  const goDeeperP1 = tb.goDeeperP1 || "It is to understand what is actually shaping these outcomes.";
-  const goDeeperBtn = tb.goDeeperBtn || "Go deeper into Work";
-  const goDeeperBtnLink = tb.goDeeperBtnLink || "/thoughts";
+  const tb = getPageSection(data, 5);
+  const goDeeperLabel = tb.goDeeperLabel || "Closing";
+  const goDeeperTitle = tb.goDeeperTitle === "If this resonates, the next step is not to do more." || !tb.goDeeperTitle ? "Ready to see what is actually shaping your pipeline?" : tb.goDeeperTitle;
+  const goDeeperBtn = tb.goDeeperBtn === "Go deeper into Work" || !tb.goDeeperBtn ? "Start a Conversation" : tb.goDeeperBtn;
+  const goDeeperBtnLink = tb.goDeeperBtnLink === "/thoughts" || !tb.goDeeperBtnLink ? "/together#contact" : tb.goDeeperBtnLink;
+  const secondaryLabel = tb.secondaryCtaLabel || "Read the thinking behind the work";
+  const secondaryHref = tb.secondaryCtaHref || "/thoughts?category=work";
 
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-stone-50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-950 md:py-32">
@@ -37,10 +39,6 @@ export default function WorkGoDeeper({ data }: { data?: any }) {
             {goDeeperTitle}
           </h2>
           
-          <p className="mx-auto mb-10 max-w-xl text-lg leading-relaxed text-stone-500 dark:text-stone-400">
-            {goDeeperP1}
-          </p>
-          
           <Link
             href={goDeeperBtnLink}
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-stone-900 px-8 py-4 font-medium text-white shadow-lg shadow-stone-900/10 transition-all hover:shadow-xl hover:shadow-primary/20 dark:bg-gradient-to-r dark:from-stone-800 dark:to-stone-900"
@@ -51,6 +49,11 @@ export default function WorkGoDeeper({ data }: { data?: any }) {
             </span>
             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-primary via-primary to-orange-700 transition-transform duration-500 group-hover:translate-x-0" />
           </Link>
+          <div className="mt-6">
+            <Link href={secondaryHref} className="text-sm font-medium text-stone-500 transition-colors hover:text-primary dark:text-stone-400">
+              {secondaryLabel}
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

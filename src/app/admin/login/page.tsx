@@ -43,14 +43,14 @@ export default function LoginPage() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen admin-gradient flex items-center justify-center p-4 text-foreground selection:bg-primary/30">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4 text-foreground selection:bg-primary/30">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ...springConfig }}
           className="w-full max-w-md"
         >
-          <div className="glass-strong rounded-none p-8 relative overflow-hidden">
+          <div className="bg-paper border border-rule rounded-none p-8 relative overflow-hidden">
             {/* Logo Section */}
             <div className="flex flex-col items-center mb-8 relative z-10">
               <motion.div

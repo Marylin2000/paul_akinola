@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -26,7 +27,7 @@ const returns = [
 ];
 
 export default function WorkTogetherReturnPaths({ data }: { data?: any }) {
-  const tb = data?.tabs?.[5] || {};
+  const tb = getPageSection(data, 5);
   const returnTitle = tb.returnTitle || "Or keep exploring first.";
   const dynamicReturns = tb.returns?.length ? tb.returns.map((r: any, i: number) => ({ ...returns[i], ...r })) : returns;
 

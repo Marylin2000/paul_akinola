@@ -1,6 +1,7 @@
 // InnerLifeStories.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Heart, Lightbulb, Moon, Sparkles, Sun } from "lucide-react";
@@ -51,7 +52,7 @@ const stories = [
 ];
 
 export default function InnerLifeStories({ data }: { data?: any }) {
-  const tb = data?.tabs?.[4] || {};
+  const tb = getPageSection(data, 4);
   const storiesLabel = tb.storiesLabel || "Life Stories";
   const storiesTitle = tb.storiesTitle || "Recurring patterns that help make sense of what may be happening underneath.";
   const storiesDesc = tb.storiesDesc || "These are patterns observed in people working through complex professional and personal transitions.";

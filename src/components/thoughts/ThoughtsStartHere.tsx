@@ -4,6 +4,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Compass, Eye, Lightbulb } from "lucide-react";
+import { getPageSection } from "@/lib/payload/page-data";
 
 const startItems = [
   {
@@ -32,7 +33,13 @@ const startItems = [
   }
 ];
 
-export default function ThoughtsStartHere() {
+export default function ThoughtsStartHere({ data }: { data?: any }) {
+  const tb = getPageSection(data, 1);
+  const label = tb.startLabel || "Orientation";
+  const title = tb.startTitle || "New to the systems lens?";
+  const description = tb.startDescription || "These three reflections offer a helpful foundation for how to read everything else on this site.";
+  const dynamicItems = tb.startItems?.length ? tb.startItems.map((item: any, index: number) => ({ ...startItems[index], ...item })) : startItems;
+
   return (
     <section className="relative overflow-hidden border-y border-stone-200/60 bg-stone-50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-950 md:py-32">
       {/* Background accent */}
@@ -51,21 +58,21 @@ export default function ThoughtsStartHere() {
           <div className="mb-6 flex items-center gap-4">
             <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
             <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
-              Orientation
+              {label}
             </span>
           </div>
           
           <h2 className="mb-4 font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl">
-            New to the systems lens?
+            {title}
           </h2>
           
           <p className="max-w-2xl text-lg text-stone-500 dark:text-stone-400">
-            These three reflections offer a helpful foundation for how to read everything else on this site.
+            {description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {startItems.map((item, index) => {
+          {dynamicItems.map((item: any, index: number) => {
             const Icon = item.icon;
             return (
               <motion.div

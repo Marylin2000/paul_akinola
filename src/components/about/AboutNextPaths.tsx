@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -36,7 +37,7 @@ const paths = [
 ];
 
 export default function AboutNextPaths({ data }: { data?: any }) {
-  const tb = data?.tabs?.[5] || {};
+  const tb = getPageSection(data, 5);
   const pathsTitle = tb.nextPathsTitle || "Where to next?";
   const dynamicPaths = tb.nextPathsList?.length ? tb.nextPathsList : paths;
 

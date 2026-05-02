@@ -25,7 +25,7 @@ interface Field {
   tabs?: { label: string; fields: Field[] }[];
 }
 
-export function GlobalEditor({ slug, label, config }: { slug: string; label: string; config: { fields: Field[] } }) {
+export function GlobalEditor({ slug, label, config, hideHeader = false }: { slug: string; label: string; config: { fields: Field[] }, hideHeader?: boolean }) {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -109,7 +109,7 @@ export function GlobalEditor({ slug, label, config }: { slug: string; label: str
 
       if (field.type === 'group') {
         return (
-          <div key={field.name} className="space-y-6 glass p-6">
+          <div key={field.name} className="space-y-6 bg-paper border border-rule p-6">
             <h4 className="font-serif font-semibold flex items-center gap-2">
               <span className="w-1.5 h-6 bg-primary/50" />
               {field.label || field.name}
@@ -140,7 +140,7 @@ export function GlobalEditor({ slug, label, config }: { slug: string; label: str
                 value.map((item, idx) => (
                   <div
                     key={idx}
-                    className="relative group/item glass p-6 pr-12"
+                    className="relative group/item bg-paper border border-rule p-6 pr-12"
                   >
                     <div className="space-y-4">
                       {renderFields(field.fields || [], [...currentPath, idx.toString()])}
@@ -222,33 +222,51 @@ export function GlobalEditor({ slug, label, config }: { slug: string; label: str
       className="space-y-8 pb-20"
     >
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 border-b border-foreground/10 pb-8">
-        <div className="flex items-center gap-4">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={springConfig}>
-            <Link
-              href="/admin/dashboard"
-              className="w-10 h-10 flex items-center justify-center border border-foreground/10 hover:bg-foreground/5 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5 text-foreground/60" />
-            </Link>
-          </motion.div>
-          <div>
-            <h1 className="font-serif text-3xl font-bold text-foreground">{label}</h1>
-            <p className="text-foreground/60 text-sm mt-1">Global Settings • {slug}</p>
+      {!hideHeader && (
+        <div className="flex items-center justify-between gap-4 border-b border-foreground/10 pb-8">
+          <div className="flex items-center gap-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={springConfig}>
+              <Link
+                href="/admin/dashboard"
+                className="w-10 h-10 flex items-center justify-center border border-foreground/10 hover:bg-foreground/5 transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5 text-foreground/60" />
+              </Link>
+            </motion.div>
+            <div>
+              <h1 className="font-serif text-3xl font-bold text-foreground">{label}</h1>
+              <p className="text-foreground/60 text-sm mt-1">Global Settings • {slug}</p>
+            </div>
           </div>
-        </div>
 
-        <motion.button
-          type="submit"
-          disabled={isSaving}
-          whileTap={{ scale: 0.98 }}
-          transition={springConfig}
-          className="bg-primary hover:bg-primary/90 text-white px-8 py-3 font-semibold flex items-center gap-2 transition-all disabled:opacity-50"
-        >
-          {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          {isSaving ? 'Saving...' : 'Save Changes'}
-        </motion.button>
-      </div>
+          <motion.button
+            type="submit"
+            disabled={isSaving}
+            whileTap={{ scale: 0.98 }}
+            transition={springConfig}
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 font-semibold flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            {isSaving ? 'Saving...' : 'Save Changes'}
+          </motion.button>
+        </div>
+      )}
+
+      {/* Save button if header is hidden */}
+      {hideHeader && (
+        <div className="flex justify-end mb-4">
+          <motion.button
+            type="submit"
+            disabled={isSaving}
+            whileTap={{ scale: 0.98 }}
+            transition={springConfig}
+            className="bg-primary hover:bg-primary/90 text-white px-8 py-3 font-semibold flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            {isSaving ? 'Saving...' : 'Save Section'}
+          </motion.button>
+        </div>
+      )}
 
       {error && (
         <motion.div

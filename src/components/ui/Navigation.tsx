@@ -7,20 +7,40 @@ import { Moon, Sun, Mail, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
-export default function Navigation() {
+const fallbackNavItems = [
+  { name: "Home", href: "/" },
+  { name: "Work", href: "/work" },
+  { name: "Build", href: "/build" },
+  { name: "Thoughts", href: "/thoughts" },
+  { name: "Inner Life", href: "/inner-life" },
+  { name: "About", href: "/about" },
+  { name: "Together", href: "/together" },
+];
+
+type NavItem = {
+  name: string;
+  href: string;
+};
+
+export default function Navigation({ data }: { data?: any }) {
   const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [hasBuildAccess, setHasBuildAccess] = useState(() => pathname.startsWith("/build"));
 
-  const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Work", href: "/work" },
-    { name: "Inner Life", href: "/inner-life" },
-    { name: "Thoughts", href: "/thoughts" },
-    { name: "About", href: "/about" },
-    { name: "Together", href: "/together" },
-    {name:"Build",href:"/build"}
-  ];
+  const sourceNavItems: NavItem[] = data?.items?.length ? data.items : fallbackNavItems;
+  const navOrder = ["Home", "Work", "Build", "Thoughts", "Inner Life", "About", "Together"];
+  const navItems: NavItem[] = sourceNavItems
+    .filter((item) => item.name !== "Build" || hasBuildAccess)
+    .sort((a, b) => {
+      const aIndex = navOrder.indexOf(a.name);
+      const bIndex = navOrder.indexOf(b.name);
+      return (aIndex === -1 ? navOrder.length : aIndex) - (bIndex === -1 ? navOrder.length : bIndex);
+    });
+  const ctaLabel = data?.ctaLabel || "Start a Conversation";
+  const ctaMobileLabel = data?.ctaMobileLabel || "Contact";
+  const ctaHref = data?.ctaHref || "/together#contact";
+  const mobileBrand = data?.mobileBrand || "Paul Akinola";
 
   const isActive = (href: string) => {
     if (href === "/" && pathname !== "/") return false;
@@ -30,6 +50,12 @@ export default function Navigation() {
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    if (pathname.startsWith("/build")) {
+      sessionStorage.setItem("visitedBuild", "true");
+      setHasBuildAccess(true);
+      return;
+    }
+    setHasBuildAccess(sessionStorage.getItem("visitedBuild") === "true");
   }, [pathname]);
 
   // Prevent scroll when mobile menu is open
@@ -69,7 +95,7 @@ export default function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
-              {navItems.filter(item => item.name !== "Work Together").map((item) => (
+              {navItems.filter((item: NavItem) => item.name !== "Work Together").map((item: NavItem) => (
                 <Link
                   key={item.name}
                   href={item.href}
@@ -99,14 +125,14 @@ export default function Navigation() {
               </button>
 
               <Link
-                href="/together/#contact"
+                href={ctaHref}
                 className={`hidden sm:flex bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg font-medium transition-colors items-center ${
                   isActive("/together") ? "ring-2 ring-primary ring-offset-2 dark:ring-offset-stone-900" : ""
                 }`}
               >
                 <Mail className="w-4 h-4 mr-2" />
-                <span className="hidden md:inline">Start a Conversation</span>
-                <span className="md:hidden">Contact</span>
+                <span className="hidden md:inline">{ctaLabel}</span>
+                <span className="md:hidden">{ctaMobileLabel}</span>
               </Link>
 
               {/* Mobile menu button */}
@@ -155,7 +181,7 @@ export default function Navigation() {
                     className="text-2xl font-bold text-gradient"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Paul Akinola
+                    {mobileBrand}
                   </Link>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -168,7 +194,7 @@ export default function Navigation() {
                 {/* Navigation Items */}
                 <div className="flex-1 overflow-y-auto py-6">
                   <nav className="space-y-2 px-6">
-                    {navItems.map((item, index) => (
+                    {navItems.map((item: NavItem, index: number) => (
                       <motion.div
                         key={item.name}
                         initial={{ opacity: 0, x: 20 }}
@@ -194,12 +220,12 @@ export default function Navigation() {
                 {/* Footer */}
                 <div className="p-6 border-t border-gray-200 dark:border-stone-700">
                   <Link
-                    href="/together#contact"
+                    href={ctaHref}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center justify-center w-full bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-lg font-medium transition-colors"
                   >
                     <Mail className="w-4 h-4 mr-2" />
-                    Start a Conversation
+                    {ctaLabel}
                   </Link>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
@@ -15,7 +16,7 @@ const recognitionPoints = [
 ];
 
 export default function WorkTogetherRelevance({ data }: { data?: any }) {
-  const tb = data?.tabs?.[1] || {};
+  const tb = getPageSection(data, 1);
   const tTitle = tb.title || "This may be for you if any of these feel familiar.";
   const p1 = tb.p1 || "You do not need to arrive with the full language for it. Sometimes it is enough to know that something is not adding up.";
   const dynamicPoints = tb.recognitionPoints?.length 

@@ -30,10 +30,16 @@ export default async function AboutPage() {
     ]
   };
 
-  const payload = await getPayload({ config: configPromise });
-  const aboutData = await (payload.findGlobal as any)({
-    slug: 'about',
-  }).catch(() => null);
+  let aboutData = null;
+
+  try {
+    const payload = await getPayload({ config: configPromise });
+    aboutData = await (payload.findGlobal as any)({ slug: "about" });
+  } catch {
+    // Components keep their existing fallback copy when Payload is unavailable.
+  }
+
+  const professionalBlock = aboutData?.professionalBlock || "Professionally I work as a Revenue Architect, building the systems between marketing, sales and product that make growth visible and trustworthy. Over ten years in B2B SaaS and technology. The same lens I apply to organisations I apply to people. It has always been the same work.";
 
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">
@@ -44,6 +50,13 @@ export default async function AboutPage() {
       <AboutHero data={aboutData} />
       <AboutWorldview data={aboutData} />
       <AboutJourney data={aboutData} />
+      <section className="bg-background py-16 transition-colors duration-500">
+        <div className="container mx-auto px-6">
+          <p className="mx-auto max-w-3xl font-sans text-lg leading-relaxed text-foreground/60 md:text-xl">
+            {professionalBlock}
+          </p>
+        </div>
+      </section>
       <AboutValues data={aboutData} />
       <AboutGallery data={aboutData} />
       <AboutMechanics data={aboutData} />

@@ -164,7 +164,7 @@ export function ArticleEditor({ articleId, initialData }: { articleId: string; i
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, ...springConfig }}
-            className="glass p-8 space-y-6"
+            className="bg-paper border border-rule p-8 space-y-6"
           >
             <div className="space-y-2">
               <label className="text-xs font-bold text-foreground/40 ml-1 uppercase tracking-wider">
@@ -246,7 +246,7 @@ export function ArticleEditor({ articleId, initialData }: { articleId: string; i
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, ...springConfig }}
-            className="glass p-6 space-y-4"
+            className="bg-paper border border-rule p-6 space-y-4"
           >
             <h3 className="font-serif font-semibold text-lg flex items-center gap-2">
               <ImageIcon className="w-5 h-5 text-primary" />
@@ -319,7 +319,7 @@ export function ArticleEditor({ articleId, initialData }: { articleId: string; i
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, ...springConfig }}
-            className="glass p-6 space-y-4"
+            className="bg-paper border border-rule p-6 space-y-4"
           >
             <h3 className="font-serif font-semibold text-lg flex items-center gap-2">
               <Calendar className="w-5 h-5 text-secondary" />

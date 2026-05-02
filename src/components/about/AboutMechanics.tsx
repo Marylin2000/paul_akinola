@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ const workAreas = [
 export default function AboutMechanics({ data }: { data?: any }) {
   const [activeArea, setActiveArea] = useState("individuals");
 
-  const tb = data?.tabs?.[4] || {};
+  const tb = getPageSection(data, 4);
   const mTitle = tb.mechanicsTitle || "How I work";
   const mP1 = tb.mechanicsP1 || "I work with individuals, teams, and organisations who are trying to make sense of what is really shaping their outcomes.";
   const mP2 = tb.mechanicsP2 || "Sometimes that shows up in performance, growth, revenue, or structure. Sometimes it shows up more personally—clarity, direction, or the tension between what someone intends and how they are actually living.";
@@ -90,8 +91,9 @@ export default function AboutMechanics({ data }: { data?: any }) {
                 {dynamicAreas.map((area: any, index: number) => {
                   const angle = (index * 120) * (Math.PI / 180);
                   const radius = 45;
-                  const x = Math.cos(angle) * radius;
-                  const y = Math.sin(angle) * radius;
+                  // Keep SSR and hydration strings identical by avoiding raw floating-point output.
+                  const x = (Math.cos(angle) * radius).toFixed(4);
+                  const y = (Math.sin(angle) * radius).toFixed(4);
                   
                   return (
                     <motion.div
@@ -101,9 +103,9 @@ export default function AboutMechanics({ data }: { data?: any }) {
                           ? "bg-primary text-white shadow-xl shadow-primary/30" 
                           : "bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-400 shadow-lg"
                       }`}
-                      style={{ 
-                        left: `calc(50% + ${x}% - 3rem)`, 
-                        top: `calc(50% + ${y}% - 3rem)` 
+                      style={{
+                        left: `calc(50% + ${x}% - 3rem)`,
+                        top: `calc(50% + ${y}% - 3rem)`
                       }}
                       onClick={() => setActiveArea(area.id)}
                       whileHover={{ scale: 1.1 }}

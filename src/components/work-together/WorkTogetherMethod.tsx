@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 
 const principles = [
@@ -37,7 +38,7 @@ const steps = [
 ];
 
 export default function WorkTogetherMethod({ data }: { data?: any }) {
-  const tb = data?.tabs?.[2] || {};
+  const tb = getPageSection(data, 2);
   const principlesTitle = tb.principlesTitle || "We start by understanding what is actually going on.";
   const principlesP = tb.principlesP || "I do not start by forcing a framework over your situation. I start by listening carefully... helping you see the structure more clearly.";
   const stepsTitle = tb.stepsTitle || "How it starts";

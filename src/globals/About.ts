@@ -16,8 +16,8 @@ export const About: GlobalConfig = {
         {
           label: 'Hero',
           fields: [
-            { name: 'heroTitlePrefix', type: 'text', required: true, defaultValue: 'I pay attention to what most people' },
-            { name: 'heroTitleItalic', type: 'text', required: true, defaultValue: 'overlook' },
+            { name: 'heroTitlePrefix', type: 'text', required: true, defaultValue: 'I try to arrive empty.' },
+            { name: 'heroTitleItalic', type: 'text', defaultValue: '' },
             { name: 'heroDescription', type: 'textarea', required: true, defaultValue: 'I pay attention to how things work—in systems, in people, and in myself. This is the simplest place to understand the person behind the lens.' },
             {
               name: 'heroStats',
@@ -99,7 +99,8 @@ export const About: GlobalConfig = {
               fields: [
                 { name: 'quote', type: 'textarea', required: true, defaultValue: '"This site is an expression of that journey. Not a finished answer. A clearer way of seeing."' }
               ]
-            }
+            },
+            { name: 'professionalBlock', type: 'textarea', defaultValue: 'Professionally I work as a Revenue Architect, building the systems between marketing, sales and product that make growth visible and trustworthy. Over ten years in B2B SaaS and technology. The same lens I apply to organisations I apply to people. It has always been the same work.' }
           ]
         },
         {

@@ -11,21 +11,19 @@ export const Hero: GlobalConfig = {
       name: 'titlePrefix',
       type: 'text',
       required: true,
-      defaultValue: 'When',
+      defaultValue: "You've never looked at it this way before.",
       admin: { description: 'Text before the italic word (e.g. "When")' },
     },
     {
       name: 'titleItalic',
       type: 'text',
-      required: true,
-      defaultValue: 'something',
+      defaultValue: '',
       admin: { description: 'The highlighted italic word in the headline' },
     },
     {
       name: 'titleSuffix',
       type: 'text',
-      required: true,
-      defaultValue: "isn't adding up.",
+      defaultValue: '',
       admin: { description: 'Text after the italic word' },
     },
     {
@@ -33,14 +31,24 @@ export const Hero: GlobalConfig = {
       type: 'textarea',
       required: true,
       defaultValue:
-        'Most outcomes are shaped by something beneath the surface. I help you see it clearly—so you can move with better judgment, stronger direction, and real change.',
+        'Most outcomes are shaped by something just beneath the surface. I help organisations find it in their revenue. I help people find it in themselves.',
+    },
+    {
+      name: 'eyebrow',
+      type: 'text',
+      defaultValue: 'Organisational Systems · Human Systems',
     },
     {
       name: 'quote',
       type: 'text',
       required: true,
-      defaultValue: 'Most problems do not start where they show up.',
-      admin: { description: 'Floating quote card text' },
+      defaultValue: 'Organisational systems · Revenue, GTM & CRM · Human systems · Behaviour, clarity & transformation',
+      admin: { description: 'Legacy fallback for the credential anchor' },
+    },
+    {
+      name: 'credentialAnchor',
+      type: 'text',
+      defaultValue: 'Organisational systems · Revenue, GTM & CRM · Human systems · Behaviour, clarity & transformation',
     },
     {
       name: 'image',

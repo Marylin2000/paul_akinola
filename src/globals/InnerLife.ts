@@ -79,11 +79,13 @@ export const InnerLife: GlobalConfig = {
         {
           label: 'Go Deeper & Next Paths',
           fields: [
-            { name: 'goDeeperLabel', type: 'text', defaultValue: 'Go Deeper' },
-            { name: 'goDeeperTitle', type: 'text', defaultValue: 'If this resonates, the next step is not to force change.' },
-            { name: 'goDeeperP1', type: 'text', defaultValue: 'It is to understand yourself more clearly.' },
-            { name: 'goDeeperBtn', type: 'text', defaultValue: 'Go deeper into Life' },
-            { name: 'goDeeperBtnLink', type: 'text', defaultValue: '/thoughts?category=life' },
+            { name: 'goDeeperLabel', type: 'text', defaultValue: 'Closing' },
+            { name: 'goDeeperTitle', type: 'text', defaultValue: 'Ready to understand what is actually shaping your outcomes?' },
+            { name: 'goDeeperP1', type: 'text', defaultValue: '' },
+            { name: 'goDeeperBtn', type: 'text', defaultValue: 'Start a Conversation' },
+            { name: 'goDeeperBtnLink', type: 'text', defaultValue: '/together#contact' },
+            { name: 'secondaryCtaLabel', type: 'text', defaultValue: 'Read the thinking behind the life lens' },
+            { name: 'secondaryCtaHref', type: 'text', defaultValue: '/thoughts?category=life' },
             { name: 'nextPathsTitle', type: 'text', defaultValue: 'Where to next?' },
             {
               name: 'nextPathsList',

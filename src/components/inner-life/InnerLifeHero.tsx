@@ -1,12 +1,13 @@
 // InnerLifeHero.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowDown, Sparkles } from "lucide-react";
 
 export default function InnerLifeHero({ data }: { data?: any }) {
-  const tb = data?.tabs?.[0] || {};
+  const tb = getPageSection(data, 0);
   const prefix = tb.heroPrefix || "Systems in Life";
   const tStatic = tb.heroTitleStatic || "You can feel it, ";
   const tHigh = tb.heroTitleHighlight || "but you can't fully explain it.";

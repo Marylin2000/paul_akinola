@@ -4,6 +4,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Briefcase, Heart, MessageCircle, User } from "lucide-react";
+import { getPageSection } from "@/lib/payload/page-data";
 
 const paths = [
   {
@@ -36,7 +37,10 @@ const paths = [
   }
 ];
 
-export default function ThoughtsCrossPaths() {
+export default function ThoughtsCrossPaths({ data }: { data?: any }) {
+  const tb = getPageSection(data, 3);
+  const dynamicPaths = tb.crossPaths?.length ? tb.crossPaths.map((path: any, index: number) => ({ ...paths[index], ...path })) : paths;
+
   return (
     <section className="relative overflow-hidden border-t border-stone-200/60 bg-stone-50 py-24 transition-colors duration-500 dark:border-stone-700/60 dark:bg-stone-950 md:py-32">
       {/* Ambient light */}
@@ -53,15 +57,15 @@ export default function ThoughtsCrossPaths() {
           className="mb-16 text-center"
         >
           <h2 className="mb-4 font-serif text-3xl font-light italic text-stone-900 dark:text-white sm:text-4xl">
-            Not sure where to go next?
+            {tb.crossTitle || "Not sure where to go next?"}
           </h2>
           <p className="text-lg text-stone-500 dark:text-stone-400">
-            Choose a path that resonates with where you are.
+            {tb.crossDescription || "Choose a path that resonates with where you are."}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {paths.map((path, index) => {
+          {dynamicPaths.map((path: any, index: number) => {
             const Icon = path.icon;
             return (
               <motion.div
@@ -92,7 +96,7 @@ export default function ThoughtsCrossPaths() {
                   </p>
                   
                   <div className="flex items-center text-xs font-medium text-primary opacity-0 transition-all duration-300 group-hover:gap-2 group-hover:opacity-100">
-                    <span>Explore</span>
+                    <span>{path.cta || "Explore"}</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
                 </Link>

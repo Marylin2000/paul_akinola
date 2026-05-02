@@ -1,11 +1,12 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default function WorkTogetherContext({ data }: { data?: any }) {
-  const tb = data?.tabs?.[4] || {};
+  const tb = getPageSection(data, 4);
   const contextTitle = tb.contextTitle || "Where this usually shows up";
   const workLabel = tb.workLabel || "In work";
   const workP = tb.workP || "This may show up in performance, growth, revenue, CRM structure, team alignment, leadership decisions, or the gap between activity and real outcomes.";

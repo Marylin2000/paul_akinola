@@ -2,90 +2,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Database, Workflow, BarChart3, Layers, Target, Bot, Award, TrendingUp, ArrowUpRight 
-} from "lucide-react";
+import * as Icons from "lucide-react";
+import { buildDefault } from "@/lib/defaults-cms";
+import type { BuildData } from "@/lib/types-cms";
 
-interface BuildItem {
-  title: string;
-  description: string;
-  icon: any;
-  size: "large" | "medium" | "small";
-  gradient: string;
-  color: string;
-}
-
-const buildItems: BuildItem[] = [
-  {
-    title: "CRM Architecture",
-    description: "Lifecycle design, object structure, data models that create clarity instead of confusion.",
-    icon: Database,
-    size: "large",
-    gradient: "from-blue-500 to-indigo-600",
-    color: "blue",
-  },
-  {
-    title: "Signal-to-Routing",
-    description: "Real-time processing that moves product usage into actionable GTM workflows.",
-    icon: Workflow,
-    size: "small",
-    gradient: "from-purple-500 to-pink-600",
-    color: "purple",
-  },
-  {
-    title: "Attribution Systems",
-    description: "Multi-touch models that leadership can trust for real decisions about spend and focus.",
-    icon: BarChart3,
-    size: "small",
-    gradient: "from-emerald-500 to-teal-600",
-    color: "emerald",
-  },
-  {
-    title: "Lifecycle Design",
-    description: "Behavioral triggers, nurture sequences, and the logic that moves people through stages.",
-    icon: Layers,
-    size: "medium",
-    gradient: "from-orange-500 to-red-600",
-    color: "orange",
-  },
-  {
-    title: "GTM Motion Fit",
-    description: "Aligning growth strategy with business stage—PLG, sales-led, or hybrid.",
-    icon: Target,
-    size: "small",
-    gradient: "from-cyan-500 to-blue-600",
-    color: "cyan",
-  },
-  {
-    title: "MarVis",
-    description: "AI research and enablement for GTM—surfacing context from system data so teams focus on orchestration.",
-    icon: Bot,
-    size: "large",
-    gradient: "from-violet-500 to-purple-600",
-    color: "violet",
-  },
-  {
-    title: "Scoring Framework",
-    description: "MQL → PQL → MQA + ABM → SQL. A unified model that combines marketing, product, and account signals.",
-    icon: Award,
-    size: "medium",
-    gradient: "from-amber-500 to-orange-600",
-    color: "amber",
-  },
-  {
-    title: "Reporting Diagnostic",
-    description: "Pipeline pulse check—dig into executive reporting to know where and what fails before revenue collapses.",
-    icon: TrendingUp,
-    size: "small",
-    gradient: "from-rose-500 to-pink-600",
-    color: "rose",
-  }
-];
-
-const WhatIBuild = ({ data }: { data?: any }) => {
-  const tb = data?.tabs?.[1] || {};
-  const tTitle = tb.whatIBuildTitle || "The architecture behind the growth.";
-  const dynamicItems = tb.buildItems?.length ? tb.buildItems.map((item: any, i: number) => ({ ...buildItems[i], ...item })) : buildItems;
+const WhatIBuild = ({ data = buildDefault }: { data?: BuildData }) => {
+  const tTitle = data.whatIBuildTitle || buildDefault.whatIBuildTitle;
+  const dynamicItems = data.buildItems?.length ? data.buildItems : buildDefault.buildItems;
 
   return (
     <section className="relative py-32 bg-stone-50 dark:bg-stone-950 overflow-hidden">
@@ -152,7 +75,7 @@ const WhatIBuild = ({ data }: { data?: any }) => {
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-[280px]">
           {dynamicItems.map((item: any, i: number) => {
-            const Icon = item.icon;
+            const IconComponent = (Icons as any)[item.icon] || Icons.Database;
             const gridClass = item.size === "large" 
               ? "md:col-span-2 lg:col-span-2 md:row-span-2" 
               : item.size === "medium"
@@ -183,7 +106,7 @@ const WhatIBuild = ({ data }: { data?: any }) => {
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${item.gradient} mb-5 shadow-lg`}
                   >
-                    <Icon className="w-6 h-6 text-white" />
+                    <IconComponent className="w-6 h-6 text-white" />
                   </motion.div>
 
                   {/* Content */}
@@ -201,7 +124,7 @@ const WhatIBuild = ({ data }: { data?: any }) => {
                     className="absolute bottom-6 right-6"
                   >
                     <div className={`p-2 rounded-full bg-gradient-to-br ${item.gradient} shadow-lg`}>
-                      <ArrowUpRight className="w-5 h-5 text-white" />
+                      <Icons.ArrowUpRight className="w-5 h-5 text-white" />
                     </div>
                   </motion.div>
                 </div>

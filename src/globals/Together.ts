@@ -18,7 +18,7 @@ export const Together: GlobalConfig = {
           label: 'Hero',
           fields: [
             { name: 'subTitle', type: 'text', defaultValue: 'Work Together' },
-            { name: 'mainTitle', type: 'text', defaultValue: 'If this feels familiar, this is a good place to start.' },
+            { name: 'mainTitle', type: 'text', defaultValue: "Let's find out what is actually going on." },
             { name: 'description', type: 'textarea', defaultValue: 'Sometimes what is missing is not more effort. It is a clearer understanding of what is actually shaping the outcome. This page is where that understanding turns into conversation.' },
           ],
         },
@@ -66,6 +66,7 @@ export const Together: GlobalConfig = {
           fields: [
             { name: 'contactTitle', type: 'text', defaultValue: 'Start a conversation' },
             { name: 'contactP', type: 'textarea', defaultValue: 'If you are trying to make sense of what is not adding up, send a short note. Start where you are. We can work out the rest from there.' },
+            { name: 'confirmationLine', type: 'text', defaultValue: 'I read every note personally and respond within a few days. Most first conversations are 30 minutes. For clarity.' },
           ],
         },
         {

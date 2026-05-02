@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
@@ -12,7 +13,7 @@ export default function AboutJourney({ data }: { data?: any }) {
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
-  const tb = data?.tabs?.[2] || {};
+  const tb = getPageSection(data, 2);
   const mainTitle = tb.journeyTitle || "My Journey";
   const rCard = tb.realizationCard || {
     title: "The Visible vs. The Real",

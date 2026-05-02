@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 
@@ -11,7 +12,7 @@ export default function AboutSiteMeaning({ data }: { data?: any }) {
   });
 
   // Dynamic payload values
-  const tb = data?.tabs?.[5] || {};
+  const tb = getPageSection(data, 5);
   const mTitle = tb.siteMeaningTitle || "Why this site is built this way";
   const contentRaw = tb.siteMeaningContent || [
     "This site brings together ideas that are often kept apart. Work and life are not separate here.",

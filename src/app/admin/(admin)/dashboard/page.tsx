@@ -79,7 +79,7 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1, ...springConfig }}
             whileHover={{ y: -4 }}
-            className="glass p-6 group cursor-pointer"
+            className="bg-paper border border-rule p-6 group cursor-pointer"
           >
             <div className="flex items-center justify-between mb-4">
               <p className="text-xs font-bold text-foreground/40 uppercase tracking-wider">
@@ -105,7 +105,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, ...springConfig }}
-          className="glass p-6"
+          className="bg-paper border border-rule p-6"
         >
           <h4 className="font-serif font-semibold mb-6 text-lg flex items-center gap-2">
             <span className="w-1.5 h-6 bg-primary" />
@@ -156,7 +156,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, ...springConfig }}
-          className="glass p-6"
+          className="bg-paper border border-rule p-6"
         >
           <h4 className="font-serif font-semibold mb-6 text-lg flex items-center gap-2">
             <span className="w-1.5 h-6 bg-green-500" />
@@ -190,7 +190,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, ...springConfig }}
-        className="glass p-6"
+        className="bg-paper border border-rule p-6"
       >
         <h4 className="font-serif font-semibold mb-4 text-lg flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-primary" />

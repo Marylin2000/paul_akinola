@@ -12,7 +12,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <AdminAuthProvider>
       <ThemeProvider>
-        <div suppressHydrationWarning className="flex h-screen admin-gradient text-foreground font-sans selection:bg-primary/30">
+        <div suppressHydrationWarning className="flex h-screen bg-background text-foreground font-sans selection:bg-primary/30">
         {/* Sidebar */}
         <Sidebar
           collapsed={sidebarCollapsed}

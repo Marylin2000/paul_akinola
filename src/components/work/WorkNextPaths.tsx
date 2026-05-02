@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -40,7 +41,7 @@ const paths = [
 ];
 
 export default function WorkNextPaths({ data }: { data?: any }) {
-  const tb = data?.tabs?.[5] || {};
+  const tb = getPageSection(data, 5);
   const pathsTitle = tb.nextPathsTitle || "Where systems thinking meets practical reality.";
   const dynamicPaths = tb.nextPathsList?.length ? tb.nextPathsList.map((p: any, i: number) => ({ ...paths[i], ...p })) : paths;
 

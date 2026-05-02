@@ -3,66 +3,13 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Zap, Target, TrendingUp, Users, Database, ArrowRight, Sparkles } from "lucide-react";
+import * as Icons from "lucide-react";
+import { buildDefault } from "@/lib/defaults-cms";
+import type { BuildData } from "@/lib/types-cms";
 
-interface Story {
-  id: number;
-  title: string;
-  pain: string;
-  change: string;
-  metrics: string[];
-  icon: any;
-  gradient: string;
-  accentColor: string;
-}
-
-const stories: Story[] = [
-  {
-    id: 1,
-    title: "When the growth motion did not fit the business",
-    pain: "The brief was growth. But installs were not the real problem. People were coming in and leaving. The motion and the stage were mismatched.",
-    change: "Rebuilt the activation flow around time-to-first-insight. Shifted focus from acquisition volume to retention quality.",
-    metrics: ["60% faster activation", "78% retention", "200%+ revenue"],
-    icon: TrendingUp,
-    gradient: "from-orange-500 to-red-600",
-    accentColor: "orange",
-  },
-  {
-    id: 2,
-    title: "When SDRs spent more time searching than selling",
-    pain: "Research and talk-point prep consumed the day. SDRs needed context from existing system data without the manual dig.",
-    change: "MarVis—an AI research and enablement assistant—surfaced context automatically, enabling SDRs to focus on orchestration instead of search.",
-    metrics: ["40% faster ramp", "3x productivity", "65% less research time"],
-    icon: Users,
-    gradient: "from-blue-500 to-cyan-600",
-    accentColor: "blue",
-  },
-  {
-    id: 3,
-    title: "When CRM structure hid the revenue truth",
-    pain: "The pipeline existed. Leads were coming in. But leadership couldn't trust what they saw. The CRM was collecting without creating clarity.",
-    change: "Redesigned lifecycle stages, signal definitions, and handoff criteria. Built attribution that leadership could trust for actual decisions.",
-    metrics: ["91% attribution accuracy", "32% lower CAC", "2.5x pipeline"],
-    icon: Database,
-    gradient: "from-purple-500 to-pink-600",
-    accentColor: "purple",
-  },
-  {
-    id: 4,
-    title: "When product signal never became GTM action",
-    pain: "Product data existed. Signals were being generated. But Sales didn't know which accounts were active. The data wasn't reaching the right people.",
-    change: "Built real-time signal routing from product to CRM. Created scoring that combined usage with firmographics. Sales now knew what mattered before outreach.",
-    metrics: ["85% lead quality", "<5min routing", "50% higher conversion"],
-    icon: Zap,
-    gradient: "from-emerald-500 to-teal-600",
-    accentColor: "emerald",
-  }
-];
-
-const SystemStories = ({ data }: { data?: any }) => {
-  const tb = data?.tabs?.[3] || {};
-  const tTitle = tb.storiesTitle || "Real systems. Real impact.";
-  const dynamicStories = tb.storiesList?.length ? tb.storiesList.map((s: any, i: number) => ({ ...stories[i], ...s })) : stories;
+const SystemStories = ({ data = buildDefault }: { data?: BuildData }) => {
+  const tTitle = data.storiesTitle || buildDefault.storiesTitle;
+  const dynamicStories = data.storiesList?.length ? data.storiesList : buildDefault.storiesList;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -138,12 +85,13 @@ const SystemStories = ({ data }: { data?: any }) => {
         {/* Stories Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {dynamicStories.map((story: any, i: number) => {
-            const Icon = story.icon;
+            const IconComponent = (Icons as any)[story.icon] || Icons.Sparkles;
             const isLarge = i === 0 || i === 3;
+            const storyId = i + 1;
             
             return (
               <motion.div
-                key={story.id}
+                key={i}
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -166,7 +114,7 @@ const SystemStories = ({ data }: { data?: any }) => {
                   
                   {/* Background number */}
                   <div className="absolute top-6 right-6 text-8xl font-serif font-bold text-stone-100 dark:text-stone-800 select-none">
-                    0{story.id}
+                    0{storyId}
                   </div>
                   
                   <div className="relative p-8 lg:p-10">
@@ -175,7 +123,7 @@ const SystemStories = ({ data }: { data?: any }) => {
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${story.gradient} mb-6 shadow-lg`}
                     >
-                      <Icon className="w-6 h-6 text-white" />
+                      <IconComponent className="w-6 h-6 text-white" />
                     </motion.div>
 
                     {/* Title */}
@@ -211,7 +159,7 @@ const SystemStories = ({ data }: { data?: any }) => {
 
                     {/* Metrics */}
                     <div className="flex flex-wrap gap-2 pt-6 border-t border-stone-200 dark:border-stone-800">
-                      {story.metrics?.map((metric: string, mi: number) => (
+                      {story.metrics?.map((metric: { value: string }, mi: number) => (
                         <motion.span 
                           key={mi}
                           initial={{ opacity: 0, scale: 0.8 }}
@@ -228,7 +176,7 @@ const SystemStories = ({ data }: { data?: any }) => {
                           }}
                         >
                           <span className="bg-white/10 dark:bg-stone-900/50 px-3 py-1 rounded-full backdrop-blur-sm">
-                            {metric}
+                            {metric.value}
                           </span>
                         </motion.span>
                       ))}

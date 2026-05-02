@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { getPageSection } from "@/lib/payload/page-data";
+import { motion } from "framer-motion";
 
 const values = [
   {
@@ -37,15 +37,7 @@ const values = [
 ];
 
 export default function AboutValues({ data }: { data?: any }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]);
-
-  const tb = data?.tabs?.[3] || {};
+  const tb = getPageSection(data, 3);
   const vTitle = tb.valuesTitle || "What I care about";
   const dynamicValues = tb.valuesList?.length ? tb.valuesList.map((v: any, i: number) => ({...values[i], ...v})) : values;
 

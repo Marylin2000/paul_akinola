@@ -1,17 +1,21 @@
 // WorkHero.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function WorkHero({ data }: { data?: any }) {
-  const tb = data?.tabs?.[0] || {};
+  const tb = getPageSection(data, 0);
   const prefix = tb.heroPrefix || "Systems at Work";
-  const tStatic = tb.heroTitleStatic || "Something ";
-  const tHigh = tb.heroTitleHighlight || "isn't adding up.";
-  const p1 = tb.heroP1 || "You're putting in the work. The team is active. Things are moving.";
-  const p2 = tb.heroP2 || "But the results don't fully reflect it.";
+  const isOldHero = tb.heroTitleStatic === "Something " || !tb.heroTitleStatic;
+  const defaultSubCopy = "I work with B2B organisations to find what is actually shaping their pipeline: the architecture, the signals, the gaps between teams. Then build the infrastructure that makes growth visible, trustworthy and repeatable.";
+  const tStatic = isOldHero ? "Do you know what's driving your pipeline, what's slowing it down, and what needs to change before it costs you?" : tb.heroTitleStatic;
+  const tHigh = isOldHero ? "" : tb.heroTitleHighlight || "";
+  const p1 = isOldHero ? defaultSubCopy : tb.heroP1 || defaultSubCopy;
+  const p2 = isOldHero ? "" : tb.heroP2 || "";
   const val = tb.heroStatValue || "95%";
   const lblTop = tb.heroStatLabelTop || "Systems drive";
   const lblBot = tb.heroStatLabelBot || "of outcomes";
@@ -54,19 +58,36 @@ export default function WorkHero({ data }: { data?: any }) {
             
             <h1 className="mb-6 font-serif text-4xl font-medium leading-[1.1] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
               {tStatic}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  {tHigh}
+              {tHigh && (
+                <span className="relative inline-block">
+                  <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
+                    {tHigh}
+                  </span>
+                  <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
                 </span>
-                <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
-              </span>
+              )}
             </h1>
             
             <div className="mx-auto max-w-lg space-y-4 text-lg leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl lg:mx-0">
               <p>{p1}</p>
-              <p className="font-serif text-2xl italic text-stone-400 dark:text-stone-500 sm:text-3xl">
-                {p2}
-              </p>
+              {p2 && (
+                <p className="font-serif text-2xl italic text-stone-400 dark:text-stone-500 sm:text-3xl">
+                  {p2}
+                </p>
+              )}
+            </div>
+
+            <div className="mt-10 flex justify-center lg:justify-start">
+              <Link
+                href="/together#contact"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-stone-900 px-8 py-4 font-medium text-white shadow-lg shadow-stone-900/10 transition-all hover:shadow-xl hover:shadow-primary/20 dark:bg-gradient-to-r dark:from-stone-800 dark:to-stone-900"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Start a Conversation
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                </span>
+                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-primary via-primary to-orange-700 transition-transform duration-500 group-hover:translate-x-0" />
+              </Link>
             </div>
 
             {/* Scroll indicator - mobile only */}

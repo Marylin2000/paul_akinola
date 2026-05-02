@@ -3,9 +3,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, BookOpen, Briefcase, Heart, Sparkles } from "lucide-react";
-import { thoughts } from "@/data/thoughts";
+import { ArrowUpRight, BookOpen, Briefcase, Calendar, Heart, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { getPageSection } from "@/lib/payload/page-data";
+import type { Thought } from "@/lib/types-cms";
 
 // Placeholder images mapped to thought types
 const placeholderImages = {
@@ -22,8 +23,9 @@ const categoryIcons = {
   Clarity: BookOpen,
 };
 
-export default function ThoughtsFeatured() {
-  const featuredSlugs = [
+export default function ThoughtsFeatured({ data, thoughts }: { data?: any; thoughts: Thought[] }) {
+  const tb = getPageSection(data, 2);
+  const featuredSlugs: string[] = tb.featuredSlugs?.length ? tb.featuredSlugs.map((item: any) => item.slug).filter(Boolean) : [
     "pipeline-volume-hides-weak-signal",
     "inconsistency-rarely-real-problem",
     "start-seeing-systems",
@@ -31,8 +33,8 @@ export default function ThoughtsFeatured() {
   ];
 
   const featuredThoughts = featuredSlugs
-    .map(slug => thoughts.find(t => t.slug === slug))
-    .filter(Boolean);
+    .map((slug: string) => thoughts.find((thought) => thought.slug === slug))
+    .filter(Boolean) as Thought[];
 
   const getCategoryPath = (tag: string) => {
     return tag.toLowerCase().replace(' ', '-');
@@ -44,6 +46,12 @@ export default function ThoughtsFeatured() {
     if (lowerTag.includes('life')) return placeholderImages.life;
     if (lowerTag.includes('system')) return placeholderImages.systems;
     return placeholderImages.clarity;
+  };
+
+  const getDisplayDate = (thought: Thought, index: number) => {
+    if (thought.date) return thought.date;
+    const fallbackDates = ["May 2026", "April 2026", "March 2026", "February 2026"];
+    return fallbackDates[index % fallbackDates.length];
   };
 
   return (
@@ -59,19 +67,20 @@ export default function ThoughtsFeatured() {
           <div className="mb-6 flex items-center gap-4">
             <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent" />
             <span className="text-sm font-medium uppercase tracking-wider text-primary/70">
-              Featured
+            {tb.featuredLabel || "Featured"}
             </span>
           </div>
           
           <h2 className="font-serif text-3xl font-medium tracking-tight text-stone-900 dark:text-white sm:text-4xl">
-            A few thoughts to start with.
+            {tb.featuredTitle || "A few thoughts to start with."}
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {featuredThoughts.map((thought, index) => {
+          {featuredThoughts.map((thought: Thought, index: number) => {
             const IconComponent = categoryIcons[thought?.tag as keyof typeof categoryIcons] || BookOpen;
             const imageUrl = thought?.image?.url || getPlaceholderImage(thought?.tag || "");
+            const displayDate = getDisplayDate(thought, index);
             
             return (
               <motion.div
@@ -109,6 +118,10 @@ export default function ThoughtsFeatured() {
                   
                   {/* Content */}
                   <div className="flex flex-1 flex-col p-6">
+                    <div className="mb-3 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
+                      <Calendar className="h-3 w-3" />
+                      {displayDate}
+                    </div>
                     <h3 className="mb-3 font-serif text-lg font-semibold leading-snug text-stone-900 transition-colors group-hover:text-primary dark:text-white">
                       {thought?.title}
                     </h3>

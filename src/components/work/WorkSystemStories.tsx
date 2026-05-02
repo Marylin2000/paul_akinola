@@ -1,6 +1,7 @@
 // WorkSystemStories.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight, TrendingUp, Users, BarChart3, Zap } from "lucide-react";
 import { useState } from "react";
@@ -10,7 +11,7 @@ const stories = [
   {
     num: "01",
     title: "When the growth motion does not fit the business",
-    preview: "The brief was growth. More installs, more users, more momentum. The team was focused on acquisition — getting people in. But installs were not the real problem. People were coming in and leaving.",
+    preview: "The motion was built for acquisition. The business needed activation. Changing the system changed everything.",
     full: (
       <>
         <p>The brief was growth. More installs, more users, more momentum. The team was focused on acquisition: getting people in. That was the motion they had inherited — and it felt like the right one because the numbers were moving.</p>
@@ -36,7 +37,7 @@ const stories = [
   {
     num: "02",
     title: "When CRM architecture blocks revenue clarity",
-    preview: "The pipeline existed. Leads were coming in. Marketing was active. Sales was working. On the surface, the revenue system looked functional. But when you looked at what the CRM was actually doing, the picture changed.",
+    preview: "The CRM was recording activity. It was not supporting decisions. Rebuilding the architecture changed what leadership could see and trust.",
     full: (
       <>
         <p>The pipeline existed. Leads were coming in. Marketing was active. Sales was working. On the surface, the revenue system looked functional.</p>
@@ -62,7 +63,7 @@ const stories = [
   {
     num: "03",
     title: "When revenue systems hide what matters",
-    preview: "The reporting existed. Dashboards were built. Numbers were visible. But when leadership looked at the data, they weren't confident in what they were seeing. Forecasts felt unreliable.",
+    preview: "The dashboards existed. But the foundation underneath them was not built for clarity. Fixing the structure fixed the reporting.",
     full: (
       <>
         <p>The reporting existed. Dashboards were built. Numbers were visible. But when leadership looked at the data, they weren't confident in what they were seeing. Forecasts felt unreliable. Pipeline reviews felt uncertain.</p>
@@ -87,7 +88,7 @@ const stories = [
   {
     num: "04",
     title: "When product signal never becomes go-to-market action",
-    preview: "There was no shortage of product data. Users were interacting, signals were being generated. But that data was not reaching the people responsible for pipeline. Sales didn't know which accounts were active.",
+    preview: "Product data existed. It just never reached the people responsible for pipeline. Connecting the systems changed what sales could act on.",
     full: (
       <>
         <p>There was no shortage of product data. Users were interacting with the product, signals were being generated, and the product team had visibility into what was happening. But that data was not reaching the people responsible for pipeline.</p>
@@ -115,10 +116,10 @@ const stories = [
 export default function WorkSystemStories({ data }: { data?: any }) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   
-  const tb = data?.tabs?.[4] || {};
-  const storiesLabel = tb.storiesLabel || "System Stories";
-  const storiesTitle = tb.storiesTitle || "Real examples of how structure changes outcomes.";
-  const storiesDesc = tb.storiesDesc || "These stories are where systems thinking becomes practical. They show how motion, architecture, signal, and workflow design change what teams can see, trust, and act on.";
+  const tb = getPageSection(data, 4);
+  const storiesLabel = tb.storiesLabel || "Case Studies";
+  const storiesTitle = tb.storiesTitle === "Systems in Practice" || tb.storiesTitle === "Real examples of how structure changes outcomes." || !tb.storiesTitle ? "Real examples. Real outcomes." : tb.storiesTitle;
+  const storiesDesc = tb.storiesDesc || "";
   const dynamicStories = tb.storiesList?.length ? tb.storiesList.map((s: any, i: number) => ({ ...stories[i], ...s })) : stories;
 
   return (
@@ -143,15 +144,17 @@ export default function WorkSystemStories({ data }: { data?: any }) {
             </h2>
           </motion.div>
           
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-base leading-relaxed text-stone-500 dark:text-stone-400 lg:pt-14"
-          >
-            {storiesDesc}
-          </motion.p>
+          {storiesDesc && (
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="text-base leading-relaxed text-stone-500 dark:text-stone-400 lg:pt-14"
+            >
+              {storiesDesc}
+            </motion.p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
@@ -186,7 +189,7 @@ export default function WorkSystemStories({ data }: { data?: any }) {
                           Story {story.num}
                         </div>
                         <div className="flex items-baseline gap-2">
-                          <span className="font-serif text-2xl font-semibold text-primary">{story.metric}</span>
+                          <span className="font-serif text-5xl font-semibold text-primary sm:text-6xl">{story.metric}</span>
                           <span className="text-xs text-stone-400">{story.metricLabel}</span>
                         </div>
                       </div>

@@ -3,8 +3,15 @@
 
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { getPageSection } from "@/lib/payload/page-data";
 
-export default function ThoughtsHero() {
+export default function ThoughtsHero({ data }: { data?: any }) {
+  const tb = getPageSection(data, 0);
+  const badge = tb.heroBadge || "Thoughts & Reflections";
+  const titlePrefix = tb.heroTitlePrefix || "This is where I think";
+  const titleHighlight = tb.heroTitleHighlight || "out loud";
+  const description = tb.heroDescription || "Most of these ideas do not start as frameworks. They start as observations. Things I notice in work, in people, and in myself. Over time, they begin to connect.";
+
   return (
     <section className="relative overflow-hidden bg-stone-50 pt-32 pb-20 transition-colors duration-500 dark:bg-stone-950 md:pt-48 md:pb-32">
       {/* Ambient gradient orbs */}
@@ -36,15 +43,15 @@ export default function ThoughtsHero() {
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-2 backdrop-blur-sm">
               <Sparkles className="h-4 w-4 text-primary" />
               <span className="text-sm font-medium uppercase tracking-wider text-primary">
-                Thoughts & Reflections
+                {badge}
               </span>
             </div>
 
             <h1 className="mb-6 font-serif text-4xl font-light leading-[1.1] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
-              This is where I think{" "}
+              {titlePrefix}{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text italic text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  out loud
+                  {titleHighlight}
                 </span>
                 <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
               </span>
@@ -52,8 +59,7 @@ export default function ThoughtsHero() {
             </h1>
 
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl">
-              Most of these ideas do not start as frameworks. They start as observations. 
-              Things I notice in work, in people, and in myself. Over time, they begin to connect.
+              {description}
             </p>
           </motion.div>
         </div>

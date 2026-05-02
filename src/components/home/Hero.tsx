@@ -13,6 +13,8 @@ interface HeroData {
   titleSuffix: string;
   description: string;
   quote: string;
+  eyebrow?: string;
+  credentialAnchor?: string;
   image?: { url?: string | null; alt?: string | null } | null;
 }
 
@@ -21,18 +23,21 @@ interface HeroProps {
 }
 
 const defaults: HeroData = {
-  titlePrefix: "When",
-  titleItalic: "something",
-  titleSuffix: "isn't adding up.",
+  titlePrefix: "You've never looked at it this way before.",
+  titleItalic: "",
+  titleSuffix: "",
   description:
-    "Most outcomes are shaped by something beneath the surface. I help you see it clearly—so you can move with better judgment, stronger direction, and real change.",
-  quote: "Most problems do not start where they show up.",
+    "Most outcomes are shaped by something just beneath the surface. I help organisations find it in their revenue. I help people find it in themselves.",
+  quote: "Organisational systems · Revenue, GTM & CRM · Human systems · Behaviour, clarity & transformation",
+  eyebrow: "Organisational Systems · Human Systems",
+  credentialAnchor: "Organisational systems · Revenue, GTM & CRM · Human systems · Behaviour, clarity & transformation",
   image: { url: "/images/bg-clean.png", alt: "Paul Akinola portrait" },
 };
 
 export default function Hero({ data }: HeroProps) {
   const parallaxOffset = useParallax(0.12);
-  const d = data ?? defaults;
+  const isOldDefault = data?.titlePrefix === "When" && data?.titleItalic === "something";
+  const d = isOldDefault ? defaults : { ...defaults, ...data };
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-stone-50 dark:bg-stone-950">
@@ -57,18 +62,24 @@ export default function Hero({ data }: HeroProps) {
           >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur-sm dark:border-primary/30 dark:bg-primary/10">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Systems at Work &amp; in Life</span>
+              <span>{d.eyebrow || defaults.eyebrow}</span>
             </div>
 
             <h1 className="mb-6 font-serif text-4xl font-medium leading-[1.12] tracking-tight text-stone-900 dark:text-stone-50 sm:text-5xl md:text-6xl lg:text-7xl">
-              {d.titlePrefix}{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                  {d.titleItalic}
-                </span>
-                <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/20 via-amber-300/20 to-orange-400/20 blur-sm dark:from-primary/30 dark:to-amber-500/30" />
-              </span>{" "}
-              {d.titleSuffix}
+              {d.titleItalic ? (
+                <>
+                  {d.titlePrefix}{" "}
+                  <span className="relative inline-block">
+                    <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
+                      {d.titleItalic}
+                    </span>
+                    <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/20 via-amber-300/20 to-orange-400/20 blur-sm dark:from-primary/30 dark:to-amber-500/30" />
+                  </span>{" "}
+                  {d.titleSuffix}
+                </>
+              ) : (
+                d.titlePrefix
+              )}
             </h1>
 
             <p className="mx-auto mb-10 max-w-xl text-lg font-light leading-relaxed text-stone-600 dark:text-stone-300 sm:text-xl lg:mx-0">
@@ -81,7 +92,7 @@ export default function Hero({ data }: HeroProps) {
                 className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-stone-900 px-8 py-4 font-medium text-white shadow-lg shadow-stone-900/10 transition-all hover:shadow-xl hover:shadow-primary/20 dark:bg-gradient-to-r dark:from-stone-800 dark:to-stone-900"
               >
                 <span className="relative z-10 flex items-center">
-                  Explore Work
+                  Systems at Work
                   <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                 </span>
                 <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-primary via-primary to-orange-700 transition-transform duration-500 group-hover:translate-x-0" />
@@ -90,7 +101,7 @@ export default function Hero({ data }: HeroProps) {
                 href="/inner-life"
                 className="group inline-flex items-center justify-center rounded-full border border-stone-300/80 bg-white/60 px-8 py-4 font-medium text-stone-800 backdrop-blur-sm transition-all hover:border-primary/40 hover:bg-white/80 hover:shadow-md dark:border-stone-700 dark:bg-stone-900/60 dark:text-stone-100 dark:hover:border-stone-500 dark:hover:bg-stone-800/80"
               >
-                Explore Inner Life
+                Systems in Life
                 <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
               </Link>
             </div>
@@ -127,14 +138,13 @@ export default function Hero({ data }: HeroProps) {
                 </div>
               </div>
 
-              {/* Floating insight card */}
+              {/* Credential anchor replaces the old pull quote while keeping the image treatment intact. */}
               <motion.div
                 style={{ y: parallaxOffset * -0.4 }}
                 className="absolute -bottom-6 -left-4 rounded-2xl border border-white/30 bg-white/85 p-4 shadow-xl backdrop-blur-md dark:border-stone-700/50 dark:bg-stone-900/85 sm:-left-6 sm:p-5"
               >
-                <div className="mb-1 font-serif text-2xl text-primary sm:text-3xl">&ldquo;</div>
-                <p className="max-w-[200px] text-sm font-medium italic text-stone-700 dark:text-stone-200 sm:text-base">
-                  {d.quote}
+                <p className="max-w-[240px] text-xs font-medium uppercase tracking-[0.16em] text-stone-500 dark:text-stone-300 sm:text-sm">
+                  {d.credentialAnchor || d.quote}
                 </p>
               </motion.div>
             </div>

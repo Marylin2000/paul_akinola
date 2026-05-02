@@ -6,7 +6,9 @@ export const globalSchemas: Record<string, any> = {
       { name: 'titleItalic', label: 'Title Italic', type: 'text' },
       { name: 'titleSuffix', label: 'Title Suffix', type: 'text' },
       { name: 'description', label: 'Description', type: 'textarea' },
-      { name: 'quote', label: 'Quote Card', type: 'text' },
+      { name: 'eyebrow', label: 'Eyebrow', type: 'text' },
+      { name: 'quote', label: 'Legacy Quote Fallback', type: 'text' },
+      { name: 'credentialAnchor', label: 'Credential Anchor', type: 'text' },
       {
         name: 'image',
         label: 'Main Image',
@@ -77,6 +79,78 @@ export const globalSchemas: Record<string, any> = {
         fields: [
           { name: 'url', label: 'Image URL', type: 'text' },
           { name: 'alt', label: 'Alt Text', type: 'text' },
+        ],
+      },
+    ],
+  },
+  'thoughts-page': {
+    label: 'Thoughts Page',
+    fields: [
+      {
+        name: 'tabs',
+        type: 'tabs',
+        tabs: [
+          {
+            label: 'Hero',
+            fields: [
+              { name: 'heroBadge', type: 'text' },
+              { name: 'heroTitlePrefix', type: 'text' },
+              { name: 'heroTitleHighlight', type: 'text' },
+              { name: 'heroDescription', type: 'textarea' },
+            ],
+          },
+          {
+            label: 'Start Here',
+            fields: [
+              { name: 'startLabel', type: 'text' },
+              { name: 'startTitle', type: 'text' },
+              { name: 'startDescription', type: 'textarea' },
+              {
+                name: 'startItems',
+                type: 'array',
+                fields: [
+                  { name: 'num', type: 'text' },
+                  { name: 'title', type: 'text' },
+                  { name: 'description', type: 'textarea' },
+                  { name: 'slug', type: 'text' },
+                ],
+              },
+            ],
+          },
+          {
+            label: 'Featured & Journal',
+            fields: [
+              { name: 'featuredLabel', type: 'text' },
+              { name: 'featuredTitle', type: 'text' },
+              {
+                name: 'featuredSlugs',
+                type: 'array',
+                fields: [{ name: 'slug', type: 'text' }],
+              },
+              { name: 'journalLabel', type: 'text' },
+              { name: 'journalTitle', type: 'text' },
+              { name: 'journalDescription', type: 'text' },
+              { name: 'journalFilteredPrefix', type: 'text' },
+            ],
+          },
+          {
+            label: 'Cross Paths',
+            fields: [
+              { name: 'crossTitle', type: 'text' },
+              { name: 'crossDescription', type: 'textarea' },
+              {
+                name: 'crossPaths',
+                type: 'array',
+                fields: [
+                  { name: 'label', type: 'text' },
+                  { name: 'support', type: 'textarea' },
+                  { name: 'href', type: 'text' },
+                  { name: 'cta', type: 'text' },
+                ],
+              },
+              { name: 'footerLine', type: 'text' },
+            ],
+          },
         ],
       },
     ],
@@ -169,6 +243,7 @@ export const globalSchemas: Record<string, any> = {
                   { name: 'quote', type: 'textarea' },
                 ],
               },
+              { name: 'professionalBlock', type: 'textarea' },
             ],
           },
           {
@@ -261,21 +336,24 @@ export const globalSchemas: Record<string, any> = {
               { name: 'surfaceLabel', type: 'text' },
               { name: 'surfaceTitle', type: 'textarea' },
               { name: 'surfaceDesc', type: 'textarea' },
+              {
+                name: 'sources',
+                type: 'array',
+                fields: [
+                  { name: 'title', type: 'text' },
+                  { name: 'body', type: 'textarea' },
+                ],
+              },
+              { name: 'surfaceClosingLine', type: 'textarea' },
             ],
           },
           {
             label: 'Reframes',
             fields: [
               { name: 'reframesTitle', type: 'text' },
-              { name: 'reframesDesc', type: 'textarea' },
-              {
-                name: 'reframesList',
-                type: 'array',
-                fields: [
-                  { name: 'surfaceProblem', type: 'text' },
-                  { name: 'rootCause', type: 'text' },
-                ],
-              },
+              { name: 'reframesBody1', type: 'textarea' },
+              { name: 'reframesBody2', type: 'textarea' },
+              { name: 'reframesClosingLine', type: 'text' },
             ],
           },
           {
@@ -314,6 +392,8 @@ export const globalSchemas: Record<string, any> = {
               { name: 'goDeeperP1', type: 'text' },
               { name: 'goDeeperBtn', type: 'text' },
               { name: 'goDeeperBtnLink', type: 'text' },
+              { name: 'secondaryCtaLabel', type: 'text' },
+              { name: 'secondaryCtaHref', type: 'text' },
               { name: 'nextPathsTitle', type: 'text' },
               {
                 name: 'nextPathsList',
@@ -409,6 +489,8 @@ export const globalSchemas: Record<string, any> = {
               { name: 'goDeeperP1', type: 'text' },
               { name: 'goDeeperBtn', type: 'text' },
               { name: 'goDeeperBtnLink', type: 'text' },
+              { name: 'secondaryCtaLabel', type: 'text' },
+              { name: 'secondaryCtaHref', type: 'text' },
               { name: 'nextPathsTitle', type: 'text' },
               {
                 name: 'nextPathsList',
@@ -453,9 +535,19 @@ export const globalSchemas: Record<string, any> = {
                 type: 'array',
                 fields: [
                   { name: 'title', type: 'text' },
-                  { name: 'category', type: 'text' },
-                  { name: 'metric', type: 'text' },
                   { name: 'description', type: 'textarea' },
+                  { name: 'icon', type: 'text' },
+                  {
+                    name: 'size',
+                    type: 'select',
+                    options: [
+                      { label: 'Large', value: 'large' },
+                      { label: 'Medium', value: 'medium' },
+                      { label: 'Small', value: 'small' },
+                    ],
+                  },
+                  { name: 'gradient', type: 'text' },
+                  { name: 'color', type: 'text' },
                 ],
               },
             ],
@@ -472,6 +564,8 @@ export const globalSchemas: Record<string, any> = {
                   { name: 'suffix', type: 'text' },
                   { name: 'label', type: 'text' },
                   { name: 'description', type: 'textarea' },
+                  { name: 'icon', type: 'text' },
+                  { name: 'gradient', type: 'text' },
                 ],
               },
               {
@@ -479,6 +573,9 @@ export const globalSchemas: Record<string, any> = {
                 type: 'array',
                 fields: [
                   { name: 'name', type: 'text' },
+                  { name: 'company', type: 'text' },
+                  { name: 'color', type: 'text' },
+                  { name: 'icon', type: 'text' },
                 ],
               },
             ],
@@ -492,9 +589,18 @@ export const globalSchemas: Record<string, any> = {
                 type: 'array',
                 fields: [
                   { name: 'title', type: 'text' },
-                  { name: 'metric', type: 'text' },
-                  { name: 'description', type: 'textarea' },
-                  { name: 'category', type: 'text' },
+                  { name: 'pain', type: 'textarea' },
+                  { name: 'change', type: 'textarea' },
+                  {
+                    name: 'metrics',
+                    type: 'array',
+                    fields: [
+                      { name: 'value', type: 'text' },
+                    ],
+                  },
+                  { name: 'icon', type: 'text' },
+                  { name: 'gradient', type: 'text' },
+                  { name: 'accentColor', type: 'text' },
                 ],
               },
             ],
@@ -510,6 +616,15 @@ export const globalSchemas: Record<string, any> = {
                   { name: 'name', type: 'text' },
                   { name: 'category', type: 'text' },
                   { name: 'description', type: 'textarea' },
+                  { name: 'icon', type: 'text' },
+                  {
+                    name: 'tags',
+                    type: 'array',
+                    fields: [
+                      { name: 'value', type: 'text' },
+                    ],
+                  },
+                  { name: 'gradient', type: 'text' },
                 ],
               },
             ],
@@ -584,6 +699,7 @@ export const globalSchemas: Record<string, any> = {
             fields: [
               { name: 'contactTitle', type: 'text' },
               { name: 'contactP', type: 'textarea' },
+              { name: 'confirmationLine', type: 'text' },
             ],
           },
           {

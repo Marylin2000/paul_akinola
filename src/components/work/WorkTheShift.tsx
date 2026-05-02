@@ -1,11 +1,12 @@
 // WorkTheShift.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
 export default function WorkTheShift({ data }: { data?: any }) {
-  const tb = data?.tabs?.[3] || {};
+  const tb = getPageSection(data, 3);
   const shiftLabel = tb.shiftLabel || "The Shift";
   const shiftTitle1 = tb.shiftTitle1 || "Most of what you're trying to fix ";
   const shiftHighlight = tb.shiftHighlight || "is not the real problem.";

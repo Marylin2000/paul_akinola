@@ -28,16 +28,14 @@ const collections = [
   { name: 'Users', href: '/admin/users', icon: Settings },
 ];
 
-const globals = [
-  { name: 'Hero', href: '/admin/globals/hero' },
-  { name: 'Offerings', href: '/admin/globals/offerings' },
-  { name: 'About', href: '/admin/globals/about' },
-  { name: 'Work', href: '/admin/globals/work' },
-  { name: 'Inner Life', href: '/admin/globals/inner-life' },
-  { name: 'Recognition', href: '/admin/globals/recognition' },
-  { name: 'Personal Anchor', href: '/admin/globals/personal-anchor' },
-  { name: 'Build', href: '/admin/globals/build' },
-  { name: 'Together', href: '/admin/globals/together' },
+const pages = [
+  { name: 'Home', href: '/admin/pages/home' },
+  { name: 'Work', href: '/admin/pages/work' },
+  { name: 'Inner Life', href: '/admin/pages/inner-life' },
+  { name: 'Thoughts', href: '/admin/pages/thoughts' },
+  { name: 'About', href: '/admin/pages/about' },
+  { name: 'Together', href: '/admin/pages/together' },
+  { name: 'Build', href: '/admin/pages/build' },
 ];
 
 const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
@@ -63,8 +61,8 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       animate={{ width: collapsed ? 80 : 280 }}
       transition={springConfig}
       className={cn(
-        'h-full flex flex-col glass-strong',
-        'border-r'
+        'h-full flex flex-col bg-paper',
+        'border-r border-rule'
       )}
     >
       {/* Header */}
@@ -161,11 +159,11 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           <div>
             {!collapsed && (
               <p className="px-2 text-[10px] font-bold text-foreground/40 uppercase tracking-widest mb-3">
-                Page Globals
+                Pages
               </p>
             )}
             <nav className="space-y-1">
-              {globals.map((item) => {
+              {pages.map((item) => {
                 const isActive = pathname === item.href;
                 return (
                   <Link

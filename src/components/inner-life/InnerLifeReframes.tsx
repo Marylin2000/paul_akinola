@@ -1,6 +1,7 @@
 // InnerLifeReframes.tsx
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
@@ -32,7 +33,7 @@ const reframes = [
 ];
 
 export default function InnerLifeReframes({ data }: { data?: any }) {
-  const tb = data?.tabs?.[2] || {};
+  const tb = getPageSection(data, 2);
   const reframesTitle = tb.reframesTitle || "The visible struggle is rarely the root issue.";
   const dynamicReframes = tb.reframesList?.length ? tb.reframesList.map((r: any, i: number) => ({ ...reframes[i], ...r })) : reframes;
 

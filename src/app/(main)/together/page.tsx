@@ -16,10 +16,14 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 
 export default async function WorkTogetherPage() {
-  const payload = await getPayload({ config: configPromise });
-  const data = await (payload.findGlobal as any)({
-    slug: 'together',
-  });
+  let data = null;
+
+  try {
+    const payload = await getPayload({ config: configPromise });
+    data = await (payload.findGlobal as any)({ slug: "together" });
+  } catch {
+    // Components keep their existing fallback copy when Payload is unavailable.
+  }
 
   return (
     <main className="min-h-screen bg-background transition-colors duration-500">

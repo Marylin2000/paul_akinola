@@ -1,5 +1,6 @@
 "use client";
 
+import { getPageSection } from "@/lib/payload/page-data";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { TrendingUp, Heart, Eye, Quote, ArrowRight } from "lucide-react";
@@ -429,13 +430,14 @@ export default function AboutWorldview({ data }: { data?: any }) {
     setHoveredRect(rect);
   }, []);
 
-  const titlePrefix = data?.tabs?.[1]?.worldviewTitle || "How I see the";
-  const titleItalic = data?.tabs?.[1]?.worldviewTitleItalic || "world";
-  const description = data?.tabs?.[1]?.worldviewDescription || "A lens that helps me make sense of what's really happening—beneath the surface, beyond the obvious, behind the noise.";
-  const blockquote = data?.tabs?.[1]?.worldviewQuote || "Most visible problems are being shaped by something deeper.";
+  const tb = getPageSection(data, 1);
+  const titlePrefix = tb.worldviewTitle || "How I see the";
+  const titleItalic = tb.worldviewTitleItalic || "world";
+  const description = tb.worldviewDescription || "A lens that helps me make sense of what's really happening—beneath the surface, beyond the obvious, behind the noise.";
+  const blockquote = tb.worldviewQuote || "Most visible problems are being shaped by something deeper.";
 
   // If payload worldviewCards exists, map them over icon components by index, else use default worldviewItems
-  const dynamicItems = data?.tabs?.[1]?.worldviewCards ? data.tabs[1].worldviewCards.map((c: any, i: number) => ({
+  const dynamicItems = tb.worldviewCards ? tb.worldviewCards.map((c: any, i: number) => ({
     ...worldviewItems[i],
     title: c.title,
     shortTitle: c.shortTitle,

@@ -2,9 +2,10 @@
 "use client";
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { useRef, useEffect, useState, ReactNode } from "react";
+import { useRef, useEffect, ReactNode } from "react";
 import { Sparkles, Zap, Target, TrendingUp, ArrowDown, Star } from "lucide-react";
-import Image from "next/image";
+import type { BuildData } from "@/lib/types-cms";
+import { buildDefault } from "@/lib/defaults-cms";
 
 interface FloatingElementProps {
   children: ReactNode;
@@ -77,13 +78,12 @@ function AnimatedGrid() {
   );
 }
 
-const BuildHero = ({ data }: { data?: any }) => {
-  const tb = data?.tabs?.[0] || {};
-  const badge = tb.heroBadge || "Systems at Work";
-  const title1 = tb.heroTitle1 || "Builds";
-  const title2 = tb.heroTitle2 || "That Scale";
-  const p1 = tb.heroP1 || "A closer look at the systems I design across growth, revenue, CRM, and GTM.";
-  const p2 = tb.heroP2 || "I work in the space between Marketing, Sales, Product, and Engineering—building the architecture that makes visibility from lead to profit possible. Some call this Revenue Operations. Others call it Marketing Operations. I think of it as revenue systems design.";
+const BuildHero = ({ data = buildDefault }: { data?: BuildData }) => {
+  const badge = data.heroBadge || buildDefault.heroBadge;
+  const title1 = data.heroTitle1 === "Builds" || !data.heroTitle1 ? "Systems" : data.heroTitle1;
+  const title2 = data.heroTitle1 === "Builds" || !data.heroTitle1 ? "" : data.heroTitle2 || buildDefault.heroTitle2;
+  const p1 = data.heroP1 === "A closer look at the systems I design across growth, revenue, CRM, and GTM." || !data.heroP1 ? "A closer look at the systems I built across growth, revenue, CRM, and GTM." : data.heroP1;
+  const p2 = data.heroP2 || buildDefault.heroP2;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -215,29 +215,31 @@ const BuildHero = ({ data }: { data?: any }) => {
                   {title1}
                 </motion.span>
               </span>
-              <span className="block overflow-hidden">
-                <motion.span
-                  initial={{ y: "100%" }}
-                  animate={{ y: "0%" }}
-                  transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="block relative"
-                >
-                  <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
-                    {title2}
-                  </span>
+              {title2 && (
+                <span className="block overflow-hidden">
                   <motion.span
-                    className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
-                    animate={{
-                      opacity: [0.3, 0.6, 0.3],
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                    }}
-                  />
-                </motion.span>
-              </span>
+                    initial={{ y: "100%" }}
+                    animate={{ y: "0%" }}
+                    transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="block relative"
+                  >
+                    <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
+                      {title2}
+                    </span>
+                    <motion.span
+                      className="absolute -inset-x-4 bottom-2 h-6 bg-gradient-to-r from-primary/20 via-amber-500/20 to-orange-500/20 blur-xl"
+                      animate={{
+                        opacity: [0.3, 0.6, 0.3],
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                      }}
+                    />
+                  </motion.span>
+                </span>
+              )}
             </motion.h1>
           </div>
 

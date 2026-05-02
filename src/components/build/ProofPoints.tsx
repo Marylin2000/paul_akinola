@@ -1,9 +1,12 @@
 // ProofPoints.tsx
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import * as Icons from "lucide-react";
 import { Briefcase, ChevronRight, Trophy, Building2, TrendingUp } from "lucide-react";
+import { buildDefault } from "@/lib/defaults-cms";
+import type { BuildData } from "@/lib/types-cms";
 
 interface Stat {
   label: string;
@@ -40,21 +43,33 @@ const industries: Industry[] = [
 function AnimatedCounter({ value, suffix, gradient }: { value: string; suffix: string; gradient: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
+  const isInView = useInView(ref, { once: true, amount: 0.35 });
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      if (latest > 0.3) {
-        const targetValue = parseInt(value);
-        const currentCount = Math.min(Math.floor(targetValue * (latest - 0.3) * 2), targetValue);
-        setCount(currentCount);
+    if (!isInView) return;
+
+    const targetValue = parseInt(value, 10);
+    if (Number.isNaN(targetValue)) {
+      setCount(0);
+      return;
+    }
+
+    let frame = 0;
+    const totalFrames = 45;
+    const animate = () => {
+      frame += 1;
+      const progress = Math.min(frame / totalFrames, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(targetValue * eased));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
       }
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress, value]);
+    };
+
+    const animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isInView, value]);
 
   return (
     <span ref={ref} className={`font-serif text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
@@ -63,11 +78,10 @@ function AnimatedCounter({ value, suffix, gradient }: { value: string; suffix: s
   );
 }
 
-const ProofPoints = ({ data }: { data?: any }) => {
-  const tb = data?.tabs?.[2] || {};
-  const proofTitle = tb.proofTitle || "Impact & Scale";
-  const dynamicStats = tb.statsList?.length ? tb.statsList.map((s: any, i: number) => ({ ...stats[i], ...s })) : stats;
-  const dynamicInd = tb.industriesList?.length ? tb.industriesList.map((ind: any, i: number) => ({ ...industries[i], ...ind })) : industries;
+const ProofPoints = ({ data = buildDefault }: { data?: BuildData }) => {
+  const tTitle = data.proofTitle || buildDefault.proofTitle;
+  const dynamicStats = data.statsList?.length ? data.statsList : buildDefault.statsList;
+  const dynamicIndustries = data.industriesList?.length ? data.industriesList : buildDefault.industriesList;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -134,7 +148,7 @@ const ProofPoints = ({ data }: { data?: any }) => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.1]"
             >
-              {proofTitle}
+              {tTitle}
             </motion.h2>
           </div>
         </motion.div>
@@ -142,7 +156,7 @@ const ProofPoints = ({ data }: { data?: any }) => {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-24 lg:mb-32">
           {dynamicStats.map((stat: any, i: number) => {
-            const Icon = stat.icon;
+            const Icon = (Icons as any)[stat.icon] || Icons.Trophy;
             return (
               <motion.div
                 key={i}
@@ -163,7 +177,7 @@ const ProofPoints = ({ data }: { data?: any }) => {
                   </motion.div>
                   
                   <div className="mb-3">
-                    <AnimatedCounter value={stat.value} suffix={stat.suffix} gradient={stat.gradient} />
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix || ""} gradient={stat.gradient} />
                   </div>
                   
                   <div className="text-stone-400 text-xs uppercase tracking-widest font-medium">
@@ -187,34 +201,37 @@ const ProofPoints = ({ data }: { data?: any }) => {
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {dynamicInd.map((item: any, i: number) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ x: 6 }}
-                className="group relative"
-              >
-                <div className={`absolute -inset-0.5 bg-gradient-to-r ${item.color} rounded-2xl opacity-0 group-hover:opacity-30 transition-opacity blur`} />
-                <div className="relative flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
-                  <motion.div 
-                    whileHover={{ scale: 1.1 }}
-                    className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg`}
-                  >
-                    <Briefcase className="w-5 h-5 text-white" />
-                  </motion.div>
-                  <div className="flex-1">
-                    <div className="text-stone-400 text-xs mb-1">{item.name}</div>
-                    <div className="text-white font-medium text-sm group-hover:text-primary transition-colors">
-                      {item.company}
+            {dynamicIndustries.map((item: any, i: number) => {
+              const Icon = (Icons as any)[item.icon] || Icons.Briefcase;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  whileHover={{ x: 6 }}
+                  className="group relative"
+                >
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${item.color} rounded-2xl opacity-0 group-hover:opacity-30 transition-opacity blur`} />
+                  <div className="relative flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg`}
+                    >
+                      <Icon className="w-5 h-5 text-white" />
+                    </motion.div>
+                    <div className="flex-1">
+                      <div className="text-stone-400 text-xs mb-1">{item.name}</div>
+                      <div className="text-white font-medium text-sm group-hover:text-primary transition-colors">
+                        {item.company}
+                      </div>
                     </div>
+                    <ChevronRight className="w-4 h-4 text-stone-600 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
-                  <ChevronRight className="w-4 h-4 text-stone-600 group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       </div>

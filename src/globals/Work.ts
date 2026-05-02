@@ -18,10 +18,10 @@ export const Work: GlobalConfig = {
           label: 'Hero',
           fields: [
             { name: 'heroPrefix', type: 'text', defaultValue: 'Systems at Work' },
-            { name: 'heroTitleStatic', type: 'text', defaultValue: 'Something ' },
-            { name: 'heroTitleHighlight', type: 'text', defaultValue: "isn't adding up." },
-            { name: 'heroP1', type: 'textarea', defaultValue: "You're putting in the work. The team is active. Things are moving." },
-            { name: 'heroP2', type: 'textarea', defaultValue: "But the results don't fully reflect it." },
+            { name: 'heroTitleStatic', type: 'text', defaultValue: "Do you know what's driving your pipeline, what's slowing it down, and what needs to change before it costs you?" },
+            { name: 'heroTitleHighlight', type: 'text', defaultValue: "" },
+            { name: 'heroP1', type: 'textarea', defaultValue: "I work with B2B organisations to find what is actually shaping their pipeline: the architecture, the signals, the gaps between teams. Then build the infrastructure that makes growth visible, trustworthy and repeatable." },
+            { name: 'heroP2', type: 'textarea', defaultValue: "" },
             { name: 'heroStatValue', type: 'text', defaultValue: '95%' },
             { name: 'heroStatLabelTop', type: 'text', defaultValue: 'Systems drive' },
             { name: 'heroStatLabelBot', type: 'text', defaultValue: 'of outcomes' },
@@ -31,23 +31,26 @@ export const Work: GlobalConfig = {
           label: 'Surface vs Root',
           fields: [
             { name: 'surfaceLabel', type: 'text', defaultValue: 'Surface vs Root Cause' },
-            { name: 'surfaceTitle', type: 'textarea', defaultValue: "What you're seeing is only part of the picture." },
-            { name: 'surfaceDesc', type: 'textarea', defaultValue: "Most of what shapes performance, growth, and decision-making sits underneath — in how things are structured, how signals move, and how work actually connects." },
+            { name: 'surfaceTitle', type: 'textarea', defaultValue: "The data exists. The visibility doesn't." },
+            { name: 'surfaceDesc', type: 'textarea', defaultValue: "Most revenue teams are not short of data. They are short of signal. Because the data that should tell the full story is scattered across six places that rarely talk to each other." },
+            {
+              name: 'sources',
+              type: 'array',
+              fields: [
+                { name: 'title', type: 'text', required: true },
+                { name: 'body', type: 'textarea', required: true },
+              ],
+            },
+            { name: 'surfaceClosingLine', type: 'textarea', defaultValue: "When these six don't connect, no one can see what is driving revenue, what to scale, what to kill, or what is coming next." },
           ],
         },
         {
           label: 'Reframes',
           fields: [
-            { name: 'reframesTitle', type: 'text', defaultValue: 'The Reframes' },
-            { name: 'reframesDesc', type: 'textarea', defaultValue: 'Common organisational problems, and what they usually look like when you view them as systemic issues.' },
-            {
-              name: 'reframesList',
-              type: 'array',
-              fields: [
-                { name: 'surfaceProblem', type: 'text', required: true },
-                { name: 'rootCause', type: 'text', required: true },
-              ],
-            },
+            { name: 'reframesTitle', type: 'text', defaultValue: 'Your system is either working for your revenue, or quietly working against it.' },
+            { name: 'reframesBody1', type: 'textarea', defaultValue: 'The starting point is always an audit. Not of effort or headcount, but of what exists, how it is being used, how it connects, and where the signal breaks down before it reaches the people who need it.' },
+            { name: 'reframesBody2', type: 'textarea', defaultValue: 'When you can see that clearly, the picture changes. You stop fixing symptoms and start building infrastructure that actually supports how revenue moves.' },
+            { name: 'reframesClosingLine', type: 'text', defaultValue: 'That is the work.' },
           ],
         },
         {
@@ -63,9 +66,9 @@ export const Work: GlobalConfig = {
         {
           label: 'Examples',
           fields: [
-            { name: 'storiesLabel', type: 'text', defaultValue: 'Examples' },
-            { name: 'storiesTitle', type: 'text', defaultValue: 'Systems in Practice' },
-            { name: 'storiesDesc', type: 'textarea', defaultValue: 'How this approach has looked across different contexts—from growing startups to established teams.' },
+            { name: 'storiesLabel', type: 'text', defaultValue: 'Case Studies' },
+            { name: 'storiesTitle', type: 'text', defaultValue: 'Real examples. Real outcomes.' },
+            { name: 'storiesDesc', type: 'textarea', defaultValue: '' },
             {
               name: 'storiesList',
               type: 'array',
@@ -81,11 +84,13 @@ export const Work: GlobalConfig = {
         {
           label: 'Go Deeper & Next',
           fields: [
-            { name: 'goDeeperLabel', type: 'text', defaultValue: 'Go Deeper' },
-            { name: 'goDeeperTitle', type: 'text', defaultValue: 'If this resonates, the next step is not to do more.' },
-            { name: 'goDeeperP1', type: 'text', defaultValue: 'It is to understand what is actually shaping these outcomes.' },
-            { name: 'goDeeperBtn', type: 'text', defaultValue: 'Go deeper into Work' },
-            { name: 'goDeeperBtnLink', type: 'text', defaultValue: '/thoughts' },
+            { name: 'goDeeperLabel', type: 'text', defaultValue: 'Closing' },
+            { name: 'goDeeperTitle', type: 'text', defaultValue: 'Ready to see what is actually shaping your pipeline?' },
+            { name: 'goDeeperP1', type: 'text', defaultValue: '' },
+            { name: 'goDeeperBtn', type: 'text', defaultValue: 'Start a Conversation' },
+            { name: 'goDeeperBtnLink', type: 'text', defaultValue: '/together#contact' },
+            { name: 'secondaryCtaLabel', type: 'text', defaultValue: 'Read the thinking behind the work' },
+            { name: 'secondaryCtaHref', type: 'text', defaultValue: '/thoughts?category=work' },
             { name: 'nextPathsTitle', type: 'text', defaultValue: 'Where to next?' },
             {
               name: 'nextPathsList',
