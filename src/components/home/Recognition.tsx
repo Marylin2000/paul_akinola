@@ -83,9 +83,9 @@ export default function Recognition({ data }: RecognitionProps) {
           
           <h2 className="font-serif text-3xl font-medium tracking-tight text-stone-900 sm:text-4xl md:text-5xl lg:text-6xl dark:text-white">
             {d.titlePrefix} <span className="relative inline-block">
-              <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
+              {/* <span className="relative z-10 bg-gradient-to-r from-primary via-amber-600 to-orange-700 bg-clip-text text-transparent dark:from-orange-400 dark:via-primary dark:to-amber-300">
                 don't start
-              </span>
+              </span> */}
               <span className="absolute -inset-x-2 bottom-1 h-3 bg-gradient-to-r from-primary/15 via-amber-300/15 to-orange-400/15 blur-sm" />
             </span>
             <br />
