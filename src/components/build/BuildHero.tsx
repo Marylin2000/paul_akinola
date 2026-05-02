@@ -80,9 +80,9 @@ function AnimatedGrid() {
 
 const BuildHero = ({ data = buildDefault }: { data?: BuildData }) => {
   const badge = data.heroBadge || buildDefault.heroBadge;
-  const title1 = data.heroTitle1 === "Builds" || !data.heroTitle1 ? "Systems" : data.heroTitle1;
-  const title2 = data.heroTitle1 === "Builds" || !data.heroTitle1 ? "" : data.heroTitle2 || buildDefault.heroTitle2;
-  const p1 = data.heroP1 === "A closer look at the systems I design across growth, revenue, CRM, and GTM." || !data.heroP1 ? "A closer look at the systems I built across growth, revenue, CRM, and GTM." : data.heroP1;
+  const title1 = data.heroTitle1 || buildDefault.heroTitle1;
+  const title2 = data.heroTitle2 || buildDefault.heroTitle2;
+  const p1 = data.heroP1 || buildDefault.heroP1;
   const p2 = data.heroP2 || buildDefault.heroP2;
 
   const containerRef = useRef<HTMLDivElement>(null);

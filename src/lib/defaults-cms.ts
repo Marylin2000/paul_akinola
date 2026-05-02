@@ -261,4 +261,5 @@ export const buildDefault: BuildData = {
   ],
   ctaTitle: "Connect the dots between your systems, your teams, and your revenue.",
   ctaBtn: "Start a build conversation",
+  footerLine: "Architecture that connects growth to revenue and signal to action.",
 };

@@ -10,12 +10,11 @@ import Link from "next/link";
 export default function WorkHero({ data }: { data?: any }) {
   const tb = getPageSection(data, 0);
   const prefix = tb.heroPrefix || "Systems at Work";
-  const isOldHero = tb.heroTitleStatic === "Something " || !tb.heroTitleStatic;
   const defaultSubCopy = "I work with B2B organisations to find what is actually shaping their pipeline: the architecture, the signals, the gaps between teams. Then build the infrastructure that makes growth visible, trustworthy and repeatable.";
-  const tStatic = isOldHero ? "Do you know what's driving your pipeline, what's slowing it down, and what needs to change before it costs you?" : tb.heroTitleStatic;
-  const tHigh = isOldHero ? "" : tb.heroTitleHighlight || "";
-  const p1 = isOldHero ? defaultSubCopy : tb.heroP1 || defaultSubCopy;
-  const p2 = isOldHero ? "" : tb.heroP2 || "";
+  const tStatic = tb.heroTitleStatic || "Do you know what's driving your pipeline, what's slowing it down, and what needs to change before it costs you?";
+  const tHigh = tb.heroTitleHighlight || "";
+  const p1 = tb.heroP1 || defaultSubCopy;
+  const p2 = tb.heroP2 || "";
   const val = tb.heroStatValue || "95%";
   const lblTop = tb.heroStatLabelTop || "Systems drive";
   const lblBot = tb.heroStatLabelBot || "of outcomes";

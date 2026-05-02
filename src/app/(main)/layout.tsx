@@ -4,6 +4,8 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { isProductionBuild } from "@/lib/payload/build";
 
+export const dynamic = "force-dynamic";
+
 export default async function MainLayout({
   children,
 }: {

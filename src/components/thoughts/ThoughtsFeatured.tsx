@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, BookOpen, Briefcase, Calendar, Heart, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Briefcase, Calendar, Clock, Heart, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { getPageSection } from "@/lib/payload/page-data";
 import type { Thought } from "@/lib/types-cms";
@@ -54,6 +54,12 @@ export default function ThoughtsFeatured({ data, thoughts }: { data?: any; thoug
     return fallbackDates[index % fallbackDates.length];
   };
 
+  const getReadTime = (thought: Thought) => {
+    const source = thought.content || thought.excerpt;
+    const words = source.trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 225));
+  };
+
   return (
     <section className="relative overflow-hidden bg-white py-24 transition-colors duration-500 dark:bg-stone-900 md:py-32">
       <div className="container-responsive">
@@ -81,6 +87,7 @@ export default function ThoughtsFeatured({ data, thoughts }: { data?: any; thoug
             const IconComponent = categoryIcons[thought?.tag as keyof typeof categoryIcons] || BookOpen;
             const imageUrl = thought?.image?.url || getPlaceholderImage(thought?.tag || "");
             const displayDate = getDisplayDate(thought, index);
+            const readTime = getReadTime(thought);
             
             return (
               <motion.div
@@ -118,9 +125,15 @@ export default function ThoughtsFeatured({ data, thoughts }: { data?: any; thoug
                   
                   {/* Content */}
                   <div className="flex flex-1 flex-col p-6">
-                    <div className="mb-3 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
-                      <Calendar className="h-3 w-3" />
-                      {displayDate}
+                    <div className="mb-3 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Calendar className="h-3 w-3" />
+                        {displayDate}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3 w-3" />
+                        {readTime} min read
+                      </span>
                     </div>
                     <h3 className="mb-3 font-serif text-lg font-semibold leading-snug text-stone-900 transition-colors group-hover:text-primary dark:text-white">
                       {thought?.title}

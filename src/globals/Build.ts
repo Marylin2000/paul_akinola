@@ -131,6 +131,7 @@ export const Build: GlobalConfig = {
           fields: [
             { name: 'ctaTitle', type: 'text', defaultValue: buildDefault.ctaTitle },
             { name: 'ctaBtn', type: 'text', defaultValue: buildDefault.ctaBtn },
+            { name: 'footerLine', type: 'text', defaultValue: buildDefault.footerLine },
           ],
         },
       ],

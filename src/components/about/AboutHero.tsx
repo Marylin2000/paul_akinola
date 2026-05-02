@@ -16,9 +16,8 @@ export default function AboutHero({ data }: { data?: any }) {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const tb = getPageSection(data, 0);
-  const isOldTitle = tb.heroTitlePrefix === "I pay attention to what most people" || tb.heroTitlePrefix === "I pay attention to what most people " || !tb.heroTitlePrefix;
-  const prefix = isOldTitle ? "I try to arrive empty." : tb.heroTitlePrefix;
-  const italic = isOldTitle ? "" : tb.heroTitleItalic || "";
+  const prefix = tb.heroTitlePrefix || "I try to arrive empty.";
+  const italic = tb.heroTitleItalic || "";
   const desc = tb.heroDescription || "I pay attention to how things work—in systems, in people, and in myself. This is the simplest place to understand the person behind the lens.";
   const stats = tb.heroStats || [
     { num: "10+", label: "Years Experience" },

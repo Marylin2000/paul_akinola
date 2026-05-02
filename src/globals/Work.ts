@@ -1,5 +1,49 @@
 import type { GlobalConfig } from 'payload';
 
+const defaultSources = [
+  { title: 'The CRM', body: 'Where deals live, but not always why they move or stall' },
+  { title: 'The product', body: 'Where behaviour happens, but rarely reaches the people responsible for pipeline' },
+  { title: 'Web analytics', body: 'Where intent shows up, but disconnected from revenue outcomes' },
+  { title: 'Campaign tools', body: 'Where activity is tracked, but attribution stays murky' },
+  { title: 'The spreadsheet', body: 'Where someone built the truth, outside every system' },
+  { title: 'The conversation', body: 'Where real intelligence lives, in Slack threads and email chains that never get recorded' },
+];
+
+const defaultStories = [
+  {
+    num: '01',
+    metric: '+196%',
+    metricLabel: 'Subscriber Growth',
+    title: 'When the growth motion does not fit the business',
+    preview: 'The motion was built for acquisition. The business needed activation. Changing the system changed everything.',
+    slug: 'growth-motion-fits-business',
+  },
+  {
+    num: '02',
+    metric: '+40%',
+    metricLabel: 'Pipeline Growth',
+    title: 'When CRM architecture blocks revenue clarity',
+    preview: 'The CRM was recording activity. It was not supporting decisions. Rebuilding the architecture changed what leadership could see and trust.',
+    slug: 'crm-structure-revenue-outcomes',
+  },
+  {
+    num: '03',
+    metric: '96%',
+    metricLabel: 'Faster Insights',
+    title: 'When revenue systems hide what matters',
+    preview: 'The dashboards existed. But the foundation underneath them was not built for clarity. Fixing the structure fixed the reporting.',
+    slug: 'revenue-system-truth',
+  },
+  {
+    num: '04',
+    metric: '+50%',
+    metricLabel: 'Activation',
+    title: 'When product signal never becomes go-to-market action',
+    preview: 'Product data existed. It just never reached the people responsible for pipeline. Connecting the systems changed what sales could act on.',
+    slug: 'pipeline-volume-hides-weak-signal',
+  },
+];
+
 export const Work: GlobalConfig = {
   slug: 'work',
   label: 'Work Page',
@@ -36,6 +80,7 @@ export const Work: GlobalConfig = {
             {
               name: 'sources',
               type: 'array',
+              defaultValue: defaultSources,
               fields: [
                 { name: 'title', type: 'text', required: true },
                 { name: 'body', type: 'textarea', required: true },
@@ -54,16 +99,6 @@ export const Work: GlobalConfig = {
           ],
         },
         {
-          label: 'The Shift',
-          fields: [
-            { name: 'shiftLabel', type: 'text', defaultValue: 'The Shift' },
-            { name: 'shiftTitle1', type: 'text', defaultValue: "Most of what you're trying to fix " },
-            { name: 'shiftHighlight', type: 'text', defaultValue: 'is not the real problem.' },
-            { name: 'shiftP1', type: 'textarea', defaultValue: 'It is the system underneath it.' },
-            { name: 'shiftP2', type: 'textarea', defaultValue: 'When you see that clearly, the problem — and your response — both change.' },
-          ],
-        },
-        {
           label: 'Examples',
           fields: [
             { name: 'storiesLabel', type: 'text', defaultValue: 'Case Studies' },
@@ -72,17 +107,20 @@ export const Work: GlobalConfig = {
             {
               name: 'storiesList',
               type: 'array',
+              defaultValue: defaultStories,
               fields: [
+                { name: 'num', type: 'text' },
+                { name: 'metric', type: 'text' },
+                { name: 'metricLabel', type: 'text' },
                 { name: 'title', type: 'text', required: true },
-                { name: 'context', type: 'textarea', required: true },
-                { name: 'intervention', type: 'textarea', required: true },
-                { name: 'outcome', type: 'textarea', required: true },
+                { name: 'preview', type: 'textarea', required: true },
+                { name: 'slug', type: 'text' },
               ],
             },
           ],
         },
         {
-          label: 'Go Deeper & Next',
+          label: 'Closing CTA',
           fields: [
             { name: 'goDeeperLabel', type: 'text', defaultValue: 'Closing' },
             { name: 'goDeeperTitle', type: 'text', defaultValue: 'Ready to see what is actually shaping your pipeline?' },
@@ -91,18 +129,7 @@ export const Work: GlobalConfig = {
             { name: 'goDeeperBtnLink', type: 'text', defaultValue: '/together#contact' },
             { name: 'secondaryCtaLabel', type: 'text', defaultValue: 'Read the thinking behind the work' },
             { name: 'secondaryCtaHref', type: 'text', defaultValue: '/thoughts?category=work' },
-            { name: 'nextPathsTitle', type: 'text', defaultValue: 'Where to next?' },
-            {
-              name: 'nextPathsList',
-              type: 'array',
-              fields: [
-                { name: 'title', type: 'text', required: true },
-                { name: 'description', type: 'textarea', required: true },
-                { name: 'href', type: 'text', required: true },
-                { name: 'label', type: 'text', required: true },
-                { name: 'color', type: 'text' },
-              ],
-            },
+            { name: 'footerLine', type: 'text', defaultValue: 'Clarity on the systems that shape how we live, lead, and grow.' },
           ],
         },
       ],

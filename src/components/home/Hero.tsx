@@ -36,8 +36,7 @@ const defaults: HeroData = {
 
 export default function Hero({ data }: HeroProps) {
   const parallaxOffset = useParallax(0.12);
-  const isOldDefault = data?.titlePrefix === "When" && data?.titleItalic === "something";
-  const d = isOldDefault ? defaults : { ...defaults, ...data };
+  const d = { ...defaults, ...data };
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden bg-stone-50 dark:bg-stone-950">

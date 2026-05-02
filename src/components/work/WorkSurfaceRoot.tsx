@@ -16,8 +16,8 @@ const defaultSources = [
 export default function WorkSurfaceRoot({ data }: { data?: any }) {
   const tb = getPageSection(data, 1);
   const surfaceLabel = tb.surfaceLabel || "Surface vs Root Cause";
-  const surfaceTitle = tb.surfaceTitle === "What you're seeing is only part of the picture." || !tb.surfaceTitle ? "The data exists. The visibility doesn't." : tb.surfaceTitle;
-  const surfaceDesc = tb.surfaceDesc === "Most of what shapes performance, growth, and decision-making sits underneath — in how things are structured, how signals move, and how work actually connects." || !tb.surfaceDesc ? "Most revenue teams are not short of data. They are short of signal. Because the data that should tell the full story is scattered across six places that rarely talk to each other." : tb.surfaceDesc;
+  const surfaceTitle = tb.surfaceTitle || "The data exists. The visibility doesn't.";
+  const surfaceDesc = tb.surfaceDesc || "Most revenue teams are not short of data. They are short of signal. Because the data that should tell the full story is scattered across six places that rarely talk to each other.";
   const sources = tb.sources?.length ? tb.sources : defaultSources;
   const closingLine = tb.surfaceClosingLine || "When these six don't connect, no one can see what is driving revenue, what to scale, what to kill, or what is coming next.";
 

@@ -3,15 +3,14 @@
 
 import { getPageSection } from "@/lib/payload/page-data";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function InnerLifeGoDeeper({ data }: { data?: any }) {
   const tb = getPageSection(data, 5);
-  const goDeeperLabel = tb.goDeeperLabel || "Closing";
-  const goDeeperTitle = tb.goDeeperTitle === "If this resonates, the next step is not to force change." || !tb.goDeeperTitle ? "Ready to understand what is actually shaping your outcomes?" : tb.goDeeperTitle;
-  const goDeeperBtn = tb.goDeeperBtn === "Go deeper into Life" || !tb.goDeeperBtn ? "Start a Conversation" : tb.goDeeperBtn;
-  const goDeeperBtnLink = tb.goDeeperBtnLink === "/thoughts?category=life" || !tb.goDeeperBtnLink ? "/together#contact" : tb.goDeeperBtnLink;
+  const goDeeperTitle = tb.goDeeperTitle || "Ready to understand what is actually shaping your outcomes?";
+  const goDeeperBtn = tb.goDeeperBtn || "Start a Conversation";
+  const goDeeperBtnLink = tb.goDeeperBtnLink || "/together#contact";
   const secondaryLabel = tb.secondaryCtaLabel || "Read the thinking behind the life lens";
   const secondaryHref = tb.secondaryCtaHref || "/thoughts?category=life";
 
@@ -30,11 +29,6 @@ export default function InnerLifeGoDeeper({ data }: { data?: any }) {
            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
            className="mx-auto max-w-3xl text-center"
         >
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
-            <BookOpen className="h-4 w-4" />
-            {goDeeperLabel}
-          </div>
-          
           <h2 className="mb-6 font-serif text-3xl font-light leading-[1.2] text-stone-900 dark:text-white sm:text-4xl md:text-5xl">
             {goDeeperTitle}
           </h2>

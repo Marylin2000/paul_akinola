@@ -77,7 +77,7 @@ export const InnerLife: GlobalConfig = {
           ],
         },
         {
-          label: 'Go Deeper & Next Paths',
+          label: 'Closing CTA',
           fields: [
             { name: 'goDeeperLabel', type: 'text', defaultValue: 'Closing' },
             { name: 'goDeeperTitle', type: 'text', defaultValue: 'Ready to understand what is actually shaping your outcomes?' },
@@ -86,18 +86,7 @@ export const InnerLife: GlobalConfig = {
             { name: 'goDeeperBtnLink', type: 'text', defaultValue: '/together#contact' },
             { name: 'secondaryCtaLabel', type: 'text', defaultValue: 'Read the thinking behind the life lens' },
             { name: 'secondaryCtaHref', type: 'text', defaultValue: '/thoughts?category=life' },
-            { name: 'nextPathsTitle', type: 'text', defaultValue: 'Where to next?' },
-            {
-              name: 'nextPathsList',
-              type: 'array',
-              fields: [
-                { name: 'title', type: 'text', required: true },
-                { name: 'description', type: 'textarea', required: true },
-                { name: 'href', type: 'text', required: true },
-                { name: 'label', type: 'text', required: true },
-                { name: 'color', type: 'text' },
-              ],
-            },
+            { name: 'footerLine', type: 'text', defaultValue: 'Clarity on the systems that shape how we live, lead, and grow.' },
           ],
         },
       ],

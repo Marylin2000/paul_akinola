@@ -357,16 +357,6 @@ export const globalSchemas: Record<string, any> = {
             ],
           },
           {
-            label: 'The Shift',
-            fields: [
-              { name: 'shiftLabel', type: 'text' },
-              { name: 'shiftTitle1', type: 'text' },
-              { name: 'shiftHighlight', type: 'text' },
-              { name: 'shiftP1', type: 'textarea' },
-              { name: 'shiftP2', type: 'textarea' },
-            ],
-          },
-          {
             label: 'Examples',
             fields: [
               { name: 'storiesLabel', type: 'text' },
@@ -376,16 +366,18 @@ export const globalSchemas: Record<string, any> = {
                 name: 'storiesList',
                 type: 'array',
                 fields: [
+                  { name: 'num', type: 'text' },
+                  { name: 'metric', type: 'text' },
+                  { name: 'metricLabel', type: 'text' },
                   { name: 'title', type: 'text' },
-                  { name: 'context', type: 'textarea' },
-                  { name: 'intervention', type: 'textarea' },
-                  { name: 'outcome', type: 'textarea' },
+                  { name: 'preview', type: 'textarea' },
+                  { name: 'slug', type: 'text' },
                 ],
               },
             ],
           },
           {
-            label: 'Go Deeper & Next',
+            label: 'Closing CTA',
             fields: [
               { name: 'goDeeperLabel', type: 'text' },
               { name: 'goDeeperTitle', type: 'text' },
@@ -394,18 +386,7 @@ export const globalSchemas: Record<string, any> = {
               { name: 'goDeeperBtnLink', type: 'text' },
               { name: 'secondaryCtaLabel', type: 'text' },
               { name: 'secondaryCtaHref', type: 'text' },
-              { name: 'nextPathsTitle', type: 'text' },
-              {
-                name: 'nextPathsList',
-                type: 'array',
-                fields: [
-                  { name: 'title', type: 'text' },
-                  { name: 'description', type: 'textarea' },
-                  { name: 'href', type: 'text' },
-                  { name: 'label', type: 'text' },
-                  { name: 'color', type: 'text' },
-                ],
-              },
+              { name: 'footerLine', type: 'text' },
             ],
           },
         ],
@@ -482,7 +463,7 @@ export const globalSchemas: Record<string, any> = {
             ],
           },
           {
-            label: 'Go Deeper & Next',
+            label: 'Closing CTA',
             fields: [
               { name: 'goDeeperLabel', type: 'text' },
               { name: 'goDeeperTitle', type: 'text' },
@@ -491,18 +472,7 @@ export const globalSchemas: Record<string, any> = {
               { name: 'goDeeperBtnLink', type: 'text' },
               { name: 'secondaryCtaLabel', type: 'text' },
               { name: 'secondaryCtaHref', type: 'text' },
-              { name: 'nextPathsTitle', type: 'text' },
-              {
-                name: 'nextPathsList',
-                type: 'array',
-                fields: [
-                  { name: 'title', type: 'text' },
-                  { name: 'description', type: 'textarea' },
-                  { name: 'href', type: 'text' },
-                  { name: 'label', type: 'text' },
-                  { name: 'color', type: 'text' },
-                ],
-              },
+              { name: 'footerLine', type: 'text' },
             ],
           },
         ],
@@ -634,6 +604,7 @@ export const globalSchemas: Record<string, any> = {
             fields: [
               { name: 'ctaTitle', type: 'text' },
               { name: 'ctaBtn', type: 'text' },
+              { name: 'footerLine', type: 'text' },
             ],
           },
         ],
@@ -716,6 +687,7 @@ export const globalSchemas: Record<string, any> = {
             label: 'Return Paths',
             fields: [
               { name: 'returnTitle', type: 'text' },
+              { name: 'footerLine', type: 'text' },
               {
                 name: 'returns',
                 type: 'array',

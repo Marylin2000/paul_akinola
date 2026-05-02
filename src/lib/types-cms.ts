@@ -122,4 +122,5 @@ export interface BuildData {
   toolsList: BuildTool[];
   ctaTitle: string;
   ctaBtn: string;
+  footerLine?: string;
 }

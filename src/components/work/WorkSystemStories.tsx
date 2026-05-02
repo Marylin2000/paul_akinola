@@ -4,6 +4,7 @@
 import { getPageSection } from "@/lib/payload/page-data";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowRight, TrendingUp, Users, BarChart3, Zap } from "lucide-react";
+import * as Icons from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -83,7 +84,7 @@ const stories = [
     icon: Zap,
     metric: "96%",
     metricLabel: "Faster Insights",
-    slug: "revenue-systems-hide-matters",
+    slug: "revenue-system-truth",
   },
   {
     num: "04",
@@ -109,7 +110,7 @@ const stories = [
     icon: Users,
     metric: "+50%",
     metricLabel: "Activation",
-    slug: "product-signal-gtm-action",
+    slug: "pipeline-volume-hides-weak-signal",
   },
 ];
 
@@ -118,7 +119,7 @@ export default function WorkSystemStories({ data }: { data?: any }) {
   
   const tb = getPageSection(data, 4);
   const storiesLabel = tb.storiesLabel || "Case Studies";
-  const storiesTitle = tb.storiesTitle === "Systems in Practice" || tb.storiesTitle === "Real examples of how structure changes outcomes." || !tb.storiesTitle ? "Real examples. Real outcomes." : tb.storiesTitle;
+  const storiesTitle = tb.storiesTitle || "Real examples. Real outcomes.";
   const storiesDesc = tb.storiesDesc || "";
   const dynamicStories = tb.storiesList?.length ? tb.storiesList.map((s: any, i: number) => ({ ...stories[i], ...s })) : stories;
 
@@ -159,7 +160,7 @@ export default function WorkSystemStories({ data }: { data?: any }) {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
           {dynamicStories.map((story: any, index: number) => {
-            const Icon = story.icon;
+            const Icon = typeof story.icon === "string" ? (Icons as any)[story.icon] || TrendingUp : story.icon;
             const isExpanded = expandedIndex === index;
             
             return (
@@ -189,8 +190,8 @@ export default function WorkSystemStories({ data }: { data?: any }) {
                           Story {story.num}
                         </div>
                         <div className="flex items-baseline gap-2">
-                          <span className="font-serif text-5xl font-semibold text-primary sm:text-6xl">{story.metric}</span>
-                          <span className="text-xs text-stone-400">{story.metricLabel}</span>
+                          <span className="font-serif text-6xl font-semibold text-primary sm:text-7xl">{story.metric}</span>
+                          <span className="max-w-[8rem] text-xs uppercase tracking-wider text-stone-400">{story.metricLabel}</span>
                         </div>
                       </div>
                     </div>
@@ -203,6 +204,10 @@ export default function WorkSystemStories({ data }: { data?: any }) {
                   <h3 className="mb-4 font-serif text-xl font-semibold leading-snug text-stone-900 dark:text-white sm:text-2xl">
                     {story.title}
                   </h3>
+
+                  <p className="mb-6 text-base leading-relaxed text-stone-600 dark:text-stone-300">
+                    {story.preview}
+                  </p>
                   
                   <AnimatePresence mode="wait">
                     {isExpanded ? (
@@ -229,17 +234,7 @@ export default function WorkSystemStories({ data }: { data?: any }) {
                           </Link>
                         </div>
                       </motion.div>
-                    ) : (
-                      <motion.p
-                        key="preview"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="text-base leading-relaxed text-stone-600 dark:text-stone-300 line-clamp-3"
-                      >
-                        {story.preview}
-                      </motion.p>
-                    )}
+                    ) : null}
                   </AnimatePresence>
                 </div>
               </motion.div>

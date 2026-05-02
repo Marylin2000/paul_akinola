@@ -83,6 +83,7 @@ export const Together: GlobalConfig = {
           label: 'Return Paths',
           fields: [
             { name: 'returnTitle', type: 'text', defaultValue: 'Or keep exploring first.' },
+            { name: 'footerLine', type: 'text', defaultValue: 'Clarity on the systems that shape how we live, lead, and grow.' },
             {
               name: 'returns',
               type: 'array',

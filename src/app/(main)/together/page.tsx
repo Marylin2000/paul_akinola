@@ -16,6 +16,8 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { isProductionBuild } from "@/lib/payload/build";
 
+export const dynamic = "force-dynamic";
+
 export default async function WorkTogetherPage() {
   let data = null;
 
@@ -41,7 +43,7 @@ export default async function WorkTogetherPage() {
       {/* Footer Transition Line */}
       <section className="bg-stone-50 dark:bg-stone-900/40 py-12 text-center border-t border-rule transition-colors duration-500">
         <p className="font-sans text-[0.65rem] font-medium uppercase tracking-[0.25em] text-foreground/40 px-6">
-          Clarity on the systems that shape how we live, lead, and grow.
+          {data?.footerLine || "Clarity on the systems that shape how we live, lead, and grow."}
         </p>
       </section>
     </main>

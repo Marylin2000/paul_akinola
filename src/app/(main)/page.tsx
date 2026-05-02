@@ -12,6 +12,8 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { isProductionBuild } from "@/lib/payload/build";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   // Fetch CMS globals, fall back gracefully on error
   let heroData = null;

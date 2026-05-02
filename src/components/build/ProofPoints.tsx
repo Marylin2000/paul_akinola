@@ -40,13 +40,11 @@ const industries: Industry[] = [
   { name: "RevOps", company: "MartandMall", color: "from-amber-500 to-orange-500", icon: Briefcase }
 ];
 
-function AnimatedCounter({ value, suffix, gradient }: { value: string; suffix: string; gradient: string }) {
+function AnimatedCounter({ gradient, isActive, suffix, value }: { gradient: string; isActive: boolean; suffix: string; value: string }) {
   const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.35 });
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isActive) return;
 
     const targetValue = parseInt(value, 10);
     if (Number.isNaN(targetValue)) {
@@ -69,10 +67,10 @@ function AnimatedCounter({ value, suffix, gradient }: { value: string; suffix: s
 
     const animationFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrame);
-  }, [isInView, value]);
+  }, [isActive, value]);
 
   return (
-    <span ref={ref} className={`font-serif text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+    <span className={`font-serif text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
       {count}{suffix}
     </span>
   );
@@ -84,6 +82,8 @@ const ProofPoints = ({ data = buildDefault }: { data?: BuildData }) => {
   const dynamicIndustries = data.industriesList?.length ? data.industriesList : buildDefault.industriesList;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const statsInView = useInView(statsRef, { once: true, amount: 0.1, margin: "0px 0px -10% 0px" });
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -154,7 +154,7 @@ const ProofPoints = ({ data = buildDefault }: { data?: BuildData }) => {
         </motion.div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-24 lg:mb-32">
+        <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-24 lg:mb-32">
           {dynamicStats.map((stat: any, i: number) => {
             const Icon = (Icons as any)[stat.icon] || Icons.Trophy;
             return (
@@ -177,7 +177,7 @@ const ProofPoints = ({ data = buildDefault }: { data?: BuildData }) => {
                   </motion.div>
                   
                   <div className="mb-3">
-                    <AnimatedCounter value={stat.value} suffix={stat.suffix || ""} gradient={stat.gradient} />
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix || ""} gradient={stat.gradient} isActive={statsInView} />
                   </div>
                   
                   <div className="text-stone-400 text-xs uppercase tracking-widest font-medium">

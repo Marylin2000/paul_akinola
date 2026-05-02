@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   description: "Learn more about Paul Akinola, his worldview, and his work at the intersection of systems, clarity, and growth.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
   const jsonLd = {
     "@context": "https://schema.org",

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function WorkReframes({ data }: { data?: any }) {
   const tb = getPageSection(data, 2);
-  const reframesTitle = tb.reframesTitle === "The Reframes" || tb.reframesTitle === "The visible problem is rarely the real one." || !tb.reframesTitle ? "Your system is either working for your revenue, or quietly working against it." : tb.reframesTitle;
+  const reframesTitle = tb.reframesTitle || "Your system is either working for your revenue, or quietly working against it.";
   const body1 = tb.reframesBody1 || "The starting point is always an audit. Not of effort or headcount, but of what exists, how it is being used, how it connects, and where the signal breaks down before it reaches the people who need it.";
   const body2 = tb.reframesBody2 || "When you can see that clearly, the picture changes. You stop fixing symptoms and start building infrastructure that actually supports how revenue moves.";
   const closingLine = tb.reframesClosingLine || "That is the work.";

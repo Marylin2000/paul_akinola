@@ -1,5 +1,6 @@
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -20,6 +21,7 @@ import { Build } from "./globals/Build";
 import { Together } from "./globals/Together";
 import { Thoughts } from "./globals/Thoughts";
 import { Navigation } from "./globals/Navigation";
+import { cloudinaryAdapter, hasCloudinaryConfig } from "./lib/payload/cloudinary-adapter";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -53,5 +55,18 @@ export default buildConfig({
     url: process.env.DATABASE_URL || "",
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    cloudStoragePlugin({
+      collections: {
+        media: {
+          adapter: cloudinaryAdapter({
+            folder: process.env.CLOUDINARY_FOLDER || "paul-akinola/media",
+          }),
+          disableLocalStorage: true,
+          disablePayloadAccessControl: true,
+        },
+      },
+      enabled: hasCloudinaryConfig,
+    }),
+  ],
 });
