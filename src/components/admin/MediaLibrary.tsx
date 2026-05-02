@@ -19,7 +19,7 @@ import {
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 export function MediaLibrary({ initialMedia }: { initialMedia: any[] }) {
   const [media, setMedia] = useState(initialMedia);

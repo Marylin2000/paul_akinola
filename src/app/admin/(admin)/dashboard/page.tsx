@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { FileText, ImageIcon, Users, ChevronRight, TrendingUp } from 'lucide-react';
 import { api } from '@/lib/api';
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 interface Stats {
   articlesCount: number;

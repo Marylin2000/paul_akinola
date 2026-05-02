@@ -24,21 +24,23 @@ import { Navigation } from "./globals/Navigation";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+const adminComponents = {
+  graphics: {
+    Logo: "/components/admin/Logo#default",
+    Icon: "/components/admin/Icon#default",
+  },
+  views: {
+    Dashboard: "/components/admin/Dashboard#default",
+  },
+} as any;
+
 export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components: {
-      graphics: {
-        Logo: "/components/admin/Logo#default",
-        Icon: "/components/admin/Icon#default",
-      },
-      views: {
-        Dashboard: "/components/admin/Dashboard#default",
-      },
-    } as any,
+    components: adminComponents,
   },
   collections: [Users, Media, Articles],
   globals: [Hero, Offerings, Recognition, PersonalAnchor, About, Work, InnerLife, Build, Together, Thoughts, Navigation],

@@ -14,15 +14,18 @@ import ScrollToHash from "@/components/work-together/ScrollToHash";
 
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { isProductionBuild } from "@/lib/payload/build";
 
 export default async function WorkTogetherPage() {
   let data = null;
 
-  try {
-    const payload = await getPayload({ config: configPromise });
-    data = await (payload.findGlobal as any)({ slug: "together" });
-  } catch {
-    // Components keep their existing fallback copy when Payload is unavailable.
+  if (!isProductionBuild()) {
+    try {
+      const payload = await getPayload({ config: configPromise });
+      data = await (payload.findGlobal as any)({ slug: "together" });
+    } catch {
+      // Components keep their existing fallback copy when Payload is unavailable.
+    }
   }
 
   return (

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Plus, Search, Filter, Calendar, Tag, ChevronRight, FileText } from 'lucide-react';
 import { api } from '@/lib/api';
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<any[]>([]);

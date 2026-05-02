@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Mail, Loader2, AlertCircle } from 'lucide-react';
 import { ThemeProvider } from '@/components/admin/ThemeProvider';
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');

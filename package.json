@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "db:migrate:atlas": "node src/scripts/migrate-mongo-to-atlas.mjs",
     "start": "next start"
   },
   "dependencies": {

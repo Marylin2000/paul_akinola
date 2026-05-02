@@ -12,16 +12,19 @@ import ThoughtsCrossPaths from "@/components/thoughts/ThoughtsCrossPaths";
 import { getThoughts } from "@/lib/cms-fetcher";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { isProductionBuild } from "@/lib/payload/build";
 
 export default async function ThoughtsPage() {
   const thoughts = await getThoughts();
   let data = null;
 
-  try {
-    const payload = await getPayload({ config: configPromise });
-    data = await (payload.findGlobal as any)({ slug: "thoughts-page" });
-  } catch {
-    // Article and component fallbacks keep the page renderable if Payload is unavailable.
+  if (!isProductionBuild()) {
+    try {
+      const payload = await getPayload({ config: configPromise });
+      data = await (payload.findGlobal as any)({ slug: "thoughts-page" });
+    } catch {
+      // Article and component fallbacks keep the page renderable if Payload is unavailable.
+    }
   }
 
   return (

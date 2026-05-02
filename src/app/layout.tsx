@@ -3,7 +3,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import FloatingParticles from "@/components/old/FloatingParticles";
 import localFont from "next/font/local";
-import { Outfit } from "next/font/google";
 import Script from "next/script";
 
 const allura = localFont({
@@ -48,8 +47,6 @@ const playfair = localFont({
   variable: "--font-playfair",
   display: "swap",
 });
-
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: "Paul Akinola | Systems at Work and in Life",
@@ -111,7 +108,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${playfair.variable} ${outfit.variable} ${allura.variable} font-sans antialiased bg-background text-foreground transition-colors duration-500`}>
+      <body suppressHydrationWarning className={`${playfair.variable} ${allura.variable} font-sans antialiased bg-background text-foreground transition-colors duration-500`}>
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();`}
         </Script>

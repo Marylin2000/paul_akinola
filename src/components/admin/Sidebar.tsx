@@ -38,7 +38,7 @@ const pages = [
   { name: 'Build', href: '/admin/pages/build' },
 ];
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 interface SidebarProps {
   collapsed?: boolean;

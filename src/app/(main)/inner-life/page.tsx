@@ -13,15 +13,18 @@ import InnerLifeGoDeeper from "@/components/inner-life/InnerLifeGoDeeper";
 
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { isProductionBuild } from "@/lib/payload/build";
 
 export default async function InnerLifePage() {
   let data = null;
 
-  try {
-    const payload = await getPayload({ config: configPromise });
-    data = await (payload.findGlobal as any)({ slug: "inner-life" });
-  } catch {
-    // Components keep their existing fallback copy when Payload is unavailable.
+  if (!isProductionBuild()) {
+    try {
+      const payload = await getPayload({ config: configPromise });
+      data = await (payload.findGlobal as any)({ slug: "inner-life" });
+    } catch {
+      // Components keep their existing fallback copy when Payload is unavailable.
+    }
   }
 
   return (

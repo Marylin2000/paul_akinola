@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 interface Field {
   name: string;

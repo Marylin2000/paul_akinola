@@ -9,6 +9,7 @@ import AboutNextPaths from "@/components/about/AboutNextPaths";
 import { Metadata } from 'next';
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { isProductionBuild } from "@/lib/payload/build";
 
 export const metadata: Metadata = {
   title: "About Paul Akinola",
@@ -32,11 +33,13 @@ export default async function AboutPage() {
 
   let aboutData = null;
 
-  try {
-    const payload = await getPayload({ config: configPromise });
-    aboutData = await (payload.findGlobal as any)({ slug: "about" });
-  } catch {
-    // Components keep their existing fallback copy when Payload is unavailable.
+  if (!isProductionBuild()) {
+    try {
+      const payload = await getPayload({ config: configPromise });
+      aboutData = await (payload.findGlobal as any)({ slug: "about" });
+    } catch {
+      // Components keep their existing fallback copy when Payload is unavailable.
+    }
   }
 
   const professionalBlock = aboutData?.professionalBlock || "Professionally I work as a Revenue Architect, building the systems between marketing, sales and product that make growth visible and trustworthy. Over ten years in B2B SaaS and technology. The same lens I apply to organisations I apply to people. It has always been the same work.";

@@ -12,15 +12,18 @@ import WorkGoDeeper from "@/components/work/WorkGoDeeper";
 
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { isProductionBuild } from "@/lib/payload/build";
 
 export default async function WorkPage() {
   let data = null;
 
-  try {
-    const payload = await getPayload({ config: configPromise });
-    data = await (payload.findGlobal as any)({ slug: "work" });
-  } catch {
-    // Components keep their existing fallback copy when Payload is unavailable.
+  if (!isProductionBuild()) {
+    try {
+      const payload = await getPayload({ config: configPromise });
+      data = await (payload.findGlobal as any)({ slug: "work" });
+    } catch {
+      // Components keep their existing fallback copy when Payload is unavailable.
+    }
   }
 
   return (

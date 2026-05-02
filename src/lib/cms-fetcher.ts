@@ -2,6 +2,7 @@ import { thoughts as fallbackThoughts } from "@/data/thoughts";
 import { Thought } from "./types-cms";
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { isProductionBuild } from "@/lib/payload/build";
 
 // Helper to convert Payload's Lexical JSON back into the simple newline-delimited string the frontend expects
 function extractLexicalText(node: any): string {
@@ -26,6 +27,10 @@ function adaptThought(doc: any): Thought {
 }
 
 export async function getThoughts(): Promise<Thought[]> {
+  if (isProductionBuild()) {
+    return fallbackThoughts as Thought[];
+  }
+
   try {
     const payload = await getPayload({ config });
     const result = await (payload.find as any)({
@@ -46,6 +51,11 @@ export async function getThoughts(): Promise<Thought[]> {
 }
 
 export async function getThoughtBySlug(slug: string): Promise<Thought | null> {
+  if (isProductionBuild()) {
+    const thought = fallbackThoughts.find((t) => t.slug === slug);
+    return (thought as Thought) || null;
+  }
+
   try {
     const payload = await getPayload({ config });
     const result = await (payload.find as any)({
@@ -70,6 +80,10 @@ export async function getThoughtBySlug(slug: string): Promise<Thought | null> {
 }
 
 export async function getFeaturedThoughts(): Promise<Thought[]> {
+  if (isProductionBuild()) {
+    return fallbackThoughts.slice(0, 3) as Thought[];
+  }
+
   try {
     const payload = await getPayload({ config });
     // Just fetch latest 3

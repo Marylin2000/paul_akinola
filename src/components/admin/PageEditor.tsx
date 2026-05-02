@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { GlobalEditor } from './GlobalEditor';
 import { globalSchemas } from './schemas';
 
-const springConfig = { type: 'spring', stiffness: 300, damping: 25 };
+const springConfig = { type: 'spring', stiffness: 300, damping: 25 } as const;
 
 const pageMap: Record<string, { title: string; description: string; globals: string[]; showArticlesCTA?: boolean }> = {
   home: {
