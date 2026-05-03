@@ -203,7 +203,7 @@ const BuildHero = ({ data = buildDefault }: { data?: BuildData }) => {
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="font-serif text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] text-stone-900 dark:text-white mb-8 tracking-tight"
+              className="font-serif text-[clamp(1.5rem,5rem,5rem)] text-stone-900 dark:text-white mb-8 tracking-tight"
             >
               <span className="block overflow-hidden">
                 <motion.span
